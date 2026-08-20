@@ -120,7 +120,7 @@ export default async function Home() {
           <div className="header-actions">
             <a
               className="text-link demo-link"
-              href="#product-preview"
+              href="/demo/northstar-coffee"
             >
               See demo
             </a>
@@ -538,6 +538,13 @@ export default async function Home() {
                   Clear response when information is missing
                 </li>
               </ul>
+
+              <a
+                className="button-secondary preview-demo-button"
+                href="/demo/northstar-coffee"
+              >
+                View live demo
+              </a>
             </div>
 
             <div className="preview-chat">
