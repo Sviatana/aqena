@@ -1,3 +1,4 @@
+import { AnveraLogo } from "@/components/anvera-brand";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -61,10 +62,13 @@ export default async function DashboardLayout({
     <div className={styles.shell}>
       <aside className={styles.sidebar}>
         <Link
+          aria-label="Anvera home"
           className={styles.brand}
           href="/"
         >
-          Anvera
+          <AnveraLogo
+            width={104}
+          />
         </Link>
 
         <nav

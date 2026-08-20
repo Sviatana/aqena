@@ -16,6 +16,7 @@ export type Database = {
     Tables: {
       assistants: {
         Row: {
+          brand_color: string
           created_at: string
           description: string
           fallback_message: string
@@ -30,6 +31,7 @@ export type Database = {
           welcome_message: string
         }
         Insert: {
+          brand_color?: string
           created_at?: string
           description?: string
           fallback_message?: string
@@ -44,6 +46,7 @@ export type Database = {
           welcome_message?: string
         }
         Update: {
+          brand_color?: string
           created_at?: string
           description?: string
           fallback_message?: string

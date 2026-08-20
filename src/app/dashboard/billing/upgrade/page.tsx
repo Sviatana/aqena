@@ -209,8 +209,9 @@ export default async function UpgradePage({
           </h2>
 
           <p>
-            This test checkout activates Pro without collecting
-            or storing payment card information
+            No real payment will be processed. This demo checkout
+            activates Pro without collecting or storing payment
+            card information
           </p>
 
           <div

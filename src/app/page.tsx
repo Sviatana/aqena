@@ -1,3 +1,6 @@
+import Link from "next/link";
+import { AnveraLogo, AnveraMark } from "@/components/anvera-brand";
+import { createClient } from "@/lib/supabase/server";
 const CheckIcon = () => (
   <svg viewBox="0 0 20 20" aria-hidden="true">
     <path
@@ -68,19 +71,44 @@ const CodeIcon = () => (
   </svg>
 );
 
-export default function Home() {
+export default async function Home() {
+  const supabase =
+    await createClient();
+
+  const {
+    data: claimsData,
+  } =
+    await supabase.auth.getClaims();
+
+  const isAuthenticated =
+    Boolean(
+      claimsData?.claims?.sub,
+    );
+
+  const primaryHref =
+    isAuthenticated
+      ? "/dashboard"
+      : "/auth/sign-up";
+
+  const primaryLabel =
+    isAuthenticated
+      ? "Open dashboard"
+      : "Build your assistant";
+
   return (
     <main>
       <header className="site-header">
         <div className="container header-inner">
-          <a className="brand" href="#" aria-label="Anvera home">
-            <span className="brand-mark" aria-hidden="true">
-              <span />
-              <span />
-              <span />
-            </span>
-            Anvera
-          </a>
+          <Link
+            className="brand"
+            href="/"
+            aria-label="Anvera home"
+          >
+            <AnveraLogo
+              priority
+              width={108}
+            />
+          </Link>
 
           <nav className="desktop-nav" aria-label="Main navigation">
             <a href="#how-it-works">How it works</a>
@@ -90,11 +118,31 @@ export default function Home() {
           </nav>
 
           <div className="header-actions">
-            <a className="text-link" href="#product-preview">
+            <a
+              className="text-link demo-link"
+              href="#product-preview"
+            >
               See demo
             </a>
-            <a className="button button-small" href="/auth/sign-up">
-              Build your assistant
+
+            <a
+              className="text-link auth-link"
+              href={
+                isAuthenticated
+                  ? "/dashboard"
+                  : "/auth/login"
+              }
+            >
+              {isAuthenticated
+                ? "Dashboard"
+                : "Sign in"}
+            </a>
+
+            <a
+              className="button button-small"
+              href={primaryHref}
+            >
+              {primaryLabel}
             </a>
           </div>
         </div>
@@ -115,8 +163,11 @@ export default function Home() {
             </p>
 
             <div className="hero-actions">
-              <a className="button button-primary" href="/auth/sign-up">
-                Build your assistant
+              <a
+                className="button button-primary"
+                href={primaryHref}
+              >
+                {primaryLabel}
                 <ArrowIcon />
               </a>
 
@@ -159,7 +210,10 @@ export default function Home() {
               <div className="assistant-shell">
                 <aside className="assistant-sidebar">
                   <div className="sidebar-brand">
-                    <span className="mini-mark">A</span>
+                    <AnveraMark
+                      className="mini-mark-image"
+                      size={22}
+                    />
                     <strong>Anvera</strong>
                   </div>
 
@@ -193,7 +247,7 @@ export default function Home() {
                     </div>
 
                     <div className="message assistant-message">
-                      <div className="assistant-avatar">A</div>
+                      <div className="assistant-avatar">N</div>
                       <div>
                         <p>
                           Yes. Northstar Coffee offers free delivery on orders
@@ -215,7 +269,7 @@ export default function Home() {
                     </div>
 
                     <div className="typing-row">
-                      <div className="assistant-avatar">A</div>
+                      <div className="assistant-avatar">N</div>
                       <span />
                       <span />
                       <span />
@@ -549,7 +603,7 @@ export default function Home() {
                 <span>forever</span>
               </div>
 
-              <a className="button button-plan-secondary" href="/auth/sign-up">
+              <a className="button button-plan-secondary" href={primaryHref}>
                 Start with Free
               </a>
 
@@ -593,7 +647,7 @@ export default function Home() {
                 <span>/ month</span>
               </div>
 
-              <a className="button button-plan-primary" href="/auth/sign-up">
+              <a className="button button-plan-primary" href={primaryHref}>
                 Choose Pro
               </a>
 
@@ -692,8 +746,11 @@ export default function Home() {
               <span className="section-kicker light-kicker">GET STARTED</span>
               <h2>Give customers answers backed by your actual company knowledge</h2>
             </div>
-            <a className="button button-light" href="/auth/sign-up">
-              Build your assistant
+            <a
+              className="button button-light"
+              href={primaryHref}
+            >
+              {primaryLabel}
               <ArrowIcon />
             </a>
           </div>
@@ -702,14 +759,15 @@ export default function Home() {
 
       <footer>
         <div className="container footer-inner">
-          <a className="brand footer-brand" href="#">
-            <span className="brand-mark" aria-hidden="true">
-              <span />
-              <span />
-              <span />
-            </span>
-            Anvera
-          </a>
+          <Link
+            className="brand footer-brand"
+            href="/"
+            aria-label="Anvera home"
+          >
+            <AnveraLogo
+              width={108}
+            />
+          </Link>
 
           <p>AI support grounded in your company knowledge</p>
 

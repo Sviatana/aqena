@@ -521,7 +521,7 @@ export default async function InstallPage({
               </span>
 
               <h2>
-                Add Anvera to your website
+                Add your AI assistant to your website
               </h2>
 
               <p>

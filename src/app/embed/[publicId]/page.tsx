@@ -42,7 +42,7 @@ export default async function EmbedPage({
   } = await admin
     .from("assistants")
     .select(
-      "name,welcome_message,status,is_published,owner_id",
+      "name,welcome_message,brand_color,status,is_published,owner_id",
     )
     .eq(
       "public_id",
@@ -93,6 +93,9 @@ export default async function EmbedPage({
       <WidgetChat
         assistantName={
           assistant.name
+        }
+        brandColor={
+          assistant.brand_color
         }
         publicId={
           publicId

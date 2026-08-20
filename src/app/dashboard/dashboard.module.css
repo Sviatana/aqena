@@ -365,6 +365,109 @@
   box-shadow: 0 0 0 3px rgba(126, 145, 117, 0.12);
 }
 
+.brandColorControl {
+  display: grid;
+  gap: 9px;
+}
+
+.brandColorPickerWrap {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr) 104px;
+  align-items: center;
+  gap: 11px;
+  min-height: 58px;
+  padding: 8px 10px;
+  border: 1px solid #d5d3cb;
+  border-radius: 11px;
+  background: #fff;
+}
+
+.field .brandColorPicker {
+  width: 46px;
+  height: 40px;
+  padding: 3px;
+  border: 1px solid #d8d6ce;
+  border-radius: 9px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.field .brandColorPicker::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.field .brandColorPicker::-webkit-color-swatch {
+  border: 0;
+  border-radius: 6px;
+}
+
+.field .brandColorPicker::-moz-color-swatch {
+  border: 0;
+  border-radius: 6px;
+}
+
+.brandColorText {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.brandColorText strong {
+  color: #32332e;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.brandColorText span {
+  color: #8a887f;
+  font-size: 11px;
+}
+
+.field .brandColorHex {
+  width: 104px;
+  padding: 9px 10px;
+  border-radius: 8px;
+  color: #44453f;
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    monospace;
+  font-size: 12px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.brandColorPreview {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #88857d;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.brandColorSwatch {
+  width: 10px;
+  height: 10px;
+  flex: 0 0 auto;
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  border-radius: 50%;
+}
+
+@media (max-width: 620px) {
+  .brandColorPickerWrap {
+    grid-template-columns: 46px minmax(0, 1fr);
+  }
+
+  .field .brandColorHex {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+}
+
 .formActions {
   display: flex;
   align-items: center;

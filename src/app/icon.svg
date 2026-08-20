@@ -3,12 +3,32 @@
   viewBox="0 0 64 64"
 >
   <rect
-    width="64"
-    height="64"
-    rx="18"
-    fill="#181713"
+    x="2"
+    y="2"
+    width="60"
+    height="60"
+    rx="15"
+    fill="#171714"
   />
-  <circle cx="22" cy="32" r="3" fill="#ffffff"/>
-  <circle cx="32" cy="32" r="3" fill="#ffffff"/>
-  <circle cx="42" cy="32" r="3" fill="#ffffff"/>
+
+  <path
+    d="M16 46
+       L27.5 20.5
+       C29.6 15.9 34.4 15.9 36.5 20.5
+       L48 46"
+    fill="none"
+    stroke="#FBFAF7"
+    stroke-width="7"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <path
+    d="M20.5 45
+       C26 37.5 33 35.5 40.5 37
+       C34.5 43
+        28.5 46.5
+        20.5 45Z"
+    fill="#A8B8A2"
+  />
 </svg>

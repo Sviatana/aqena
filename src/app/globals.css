@@ -86,24 +86,6 @@ svg {
 
 }
 
-.brand-mark {
-  width: 29px;
-  height: 29px;
-  border-radius: 9px;
-  background: var(--ink);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-}
-
-.brand-mark span {
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
-  background: var(--paper);
-}
-
 .desktop-nav {
   display: flex;
   align-items: center;
@@ -346,7 +328,6 @@ svg {
 
 }
 
-.mini-mark,
 .assistant-avatar,
 .preview-avatar {
   flex: 0 0 auto;
@@ -358,10 +339,12 @@ svg {
 
 }
 
-.mini-mark {
+.mini-mark-image {
   width: 22px;
   height: 22px;
-
+  flex: 0 0 auto;
+  border-radius: 7px;
+  object-fit: cover;
 }
 
 .sidebar-label {
@@ -1647,7 +1630,7 @@ footer {
     display: none;
   }
 
-  .header-actions .text-link {
+  .header-actions .demo-link {
     display: none;
   }
 

@@ -1,3 +1,4 @@
+import BrandColorInput from "@/app/dashboard/brand-color-input";
 import Link from "next/link";
 import {
   notFound,
@@ -118,7 +119,7 @@ export default async function AssistantPage({
     supabase
       .from("assistants")
       .select(
-        "id,name,description,instructions,welcome_message,fallback_message,status,created_at",
+        "id,name,description,instructions,welcome_message,fallback_message,brand_color,status,created_at",
       )
       .eq("id", id)
       .eq("owner_id", userId)
@@ -440,6 +441,34 @@ export default async function AssistantPage({
                 }
               >
                 Used when the company knowledge does not support an answer
+              </span>
+            </div>
+
+            <div
+              className={
+                styles.field
+              }
+            >
+              <label
+                htmlFor="assistant-brand-color"
+              >
+                Brand color
+              </label>
+
+              <BrandColorInput
+                defaultValue={
+                  assistant.brand_color
+                }
+                id="assistant-brand-color"
+                name="brandColor"
+              />
+
+              <span
+                className={
+                  styles.fieldHint
+                }
+              >
+                Choose the color your business uses in the website chat
               </span>
             </div>
           </div>

@@ -1,3 +1,4 @@
+import BrandColorInput from "@/app/dashboard/brand-color-input";
 import Link from "next/link";
 
 import { createAssistant } from "@/app/dashboard/actions";
@@ -79,6 +80,23 @@ export default async function NewAssistantPage({
           </div>
 
           <div className={styles.field}>
+            <label htmlFor="welcome-message">
+              Welcome message
+            </label>
+
+            <textarea
+              id="welcome-message"
+              name="welcomeMessage"
+              placeholder="Hi — ask me anything about our company knowledge."
+              maxLength={500}
+            />
+
+            <span className={styles.fieldHint}>
+              The first message customers see when the chat opens
+            </span>
+          </div>
+
+          <div className={styles.field}>
             <label htmlFor="instructions">
               Instructions
             </label>
@@ -93,6 +111,22 @@ export default async function NewAssistantPage({
             <span className={styles.fieldHint}>
               If you leave this empty, Anvera will use the safe default:
               answer only from uploaded company knowledge.
+            </span>
+          </div>
+
+          <div className={styles.field}>
+            <label htmlFor="brand-color">
+              Brand color
+            </label>
+
+            <BrandColorInput
+              defaultValue="#1d1e1a"
+              id="brand-color"
+              name="brandColor"
+            />
+
+            <span className={styles.fieldHint}>
+              Choose the color your business uses in the website chat
             </span>
           </div>
 

@@ -1,3 +1,4 @@
+import { AnveraLogo } from "@/components/anvera-brand";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -41,10 +42,13 @@ export default async function UpdatePasswordPage({
     <main className={styles.page}>
       <section className={styles.brandPanel}>
         <Link
+          aria-label="Anvera home"
           className={styles.logo}
           href="/"
         >
-          Anvera
+          <AnveraLogo
+            width={108}
+          />
         </Link>
 
         <div className={styles.brandCopy}>

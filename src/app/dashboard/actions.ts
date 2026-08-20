@@ -9,6 +9,12 @@ import type { Database } from "@/types/database";
 type AssistantInsert =
   Database["public"]["Tables"]["assistants"]["Insert"];
 
+const DEFAULT_BRAND_COLOR =
+  "#1d1e1a";
+
+const BRAND_COLOR_PATTERN =
+  /^#[0-9a-f]{6}$/i;
+
 function textValue(
   formData: FormData,
   name: string,
@@ -60,6 +66,20 @@ export async function createAssistant(
     "instructions",
   );
 
+  const welcomeMessage = textValue(
+    formData,
+    "welcomeMessage",
+  );
+
+  const brandColor =
+    (
+      textValue(
+        formData,
+        "brandColor",
+      )
+      || DEFAULT_BRAND_COLOR
+    ).toLowerCase();
+
   if (!name) {
     errorRedirect(
       "Give your assistant a name.",
@@ -81,6 +101,18 @@ export async function createAssistant(
   if (instructions.length > 4000) {
     errorRedirect(
       "Instructions can be up to 4,000 characters.",
+    );
+  }
+
+  if (welcomeMessage.length > 500) {
+    errorRedirect(
+      "Welcome messages can be up to 500 characters.",
+    );
+  }
+
+  if (!BRAND_COLOR_PATTERN.test(brandColor)) {
+    errorRedirect(
+      "Choose a valid six-digit brand color.",
     );
   }
 
@@ -140,6 +172,10 @@ export async function createAssistant(
     owner_id: userId,
     name,
     description,
+    brand_color: brandColor,
+    welcome_message:
+      welcomeMessage
+      || DEFAULT_WELCOME_MESSAGE,
   };
 
   if (instructions) {
@@ -274,6 +310,15 @@ export async function updateAssistant(
       "fallbackMessage",
     );
 
+  const requestedBrandColor =
+    (
+      textValue(
+        formData,
+        "brandColor",
+      )
+      || DEFAULT_BRAND_COLOR
+    ).toLowerCase();
+
   if (!name) {
     assistantUpdateError(
       assistantId,
@@ -331,6 +376,17 @@ export async function updateAssistant(
     );
   }
 
+  if (
+    !BRAND_COLOR_PATTERN.test(
+      requestedBrandColor,
+    )
+  ) {
+    assistantUpdateError(
+      assistantId,
+      "Choose a valid six-digit brand color.",
+    );
+  }
+
   const instructions =
     requestedInstructions
     || SAFE_DEFAULT_INSTRUCTIONS;
@@ -358,6 +414,9 @@ export async function updateAssistant(
 
       fallback_message:
         fallbackMessage,
+
+      brand_color:
+        requestedBrandColor,
 
       updated_at:
         new Date().toISOString(),

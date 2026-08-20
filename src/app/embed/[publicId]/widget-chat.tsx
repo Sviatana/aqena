@@ -1,5 +1,9 @@
 "use client";
 
+import type {
+  CSSProperties,
+} from "react";
+
 import {
   FormEvent,
   KeyboardEvent,
@@ -12,6 +16,7 @@ import styles from "./widget.module.css";
 
 type WidgetChatProps = {
   assistantName: string;
+  brandColor: string;
   publicId: string;
   welcomeMessage: string;
 };
@@ -39,11 +44,84 @@ function messageId() {
   );
 }
 
+function readableTextColor(
+  brandColor: string,
+) {
+  const hex =
+    brandColor
+      .replace(
+        "#",
+        "",
+      );
+
+  if (
+    !/^[0-9a-f]{6}$/i.test(
+      hex,
+    )
+  ) {
+    return "#ffffff";
+  }
+
+  const red =
+    Number.parseInt(
+      hex.slice(
+        0,
+        2,
+      ),
+      16,
+    );
+
+  const green =
+    Number.parseInt(
+      hex.slice(
+        2,
+        4,
+      ),
+      16,
+    );
+
+  const blue =
+    Number.parseInt(
+      hex.slice(
+        4,
+        6,
+      ),
+      16,
+    );
+
+  const brightness =
+    (
+      red * 299
+      + green * 587
+      + blue * 114
+    )
+    / 1000;
+
+  return brightness
+    > 150
+    ? "#1d1e1a"
+    : "#ffffff";
+}
+
 export default function WidgetChat({
   assistantName,
+  brandColor,
   publicId,
   welcomeMessage,
 }: WidgetChatProps) {
+  const brandContrast =
+    readableTextColor(
+      brandColor,
+    );
+
+  const widgetStyle = {
+    "--brand-color":
+      brandColor,
+
+    "--brand-contrast":
+      brandContrast,
+  } as CSSProperties;
+
   const [
     question,
     setQuestion,
@@ -291,6 +369,9 @@ export default function WidgetChat({
     <section
       className={
         styles.widget
+      }
+      style={
+        widgetStyle
       }
       aria-label={
         `${assistantName} chat`
