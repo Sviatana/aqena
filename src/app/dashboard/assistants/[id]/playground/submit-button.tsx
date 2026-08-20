@@ -33,7 +33,7 @@ export function PlaygroundSubmitButton({
     >
       {pending
         ? "Thinking…"
-        : "Ask Anvera"}
+        : "Ask assistant"}
     </button>
   );
 }

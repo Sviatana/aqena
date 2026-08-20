@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Script from "next/script";
 
 import styles from "./demo.module.css";
@@ -84,14 +83,16 @@ export default function NorthstarCoffeeDemo() {
               the lower-right corner if you have a question.
             </p>
 
-            <Link
+            {/* Full reload removes the demo widget injected outside React. */}
+            {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+            <a
               className={
                 styles.backLink
               }
               href="/"
             >
               Back to Anvera
-            </Link>
+            </a>
           </section>
 
           <aside
