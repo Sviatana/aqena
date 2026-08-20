@@ -49,3 +49,7 @@ next-env.d.ts
 # Safe environment templates
 !.env.example
 !.dev.vars.example
+
+# Playwright
+playwright-report/
+test-results/
