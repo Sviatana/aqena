@@ -4557,6 +4557,32 @@ select {
 /* === ANVERA TYPOGRAPHY SYSTEM END === */
 
 .preview-demo-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: fit-content;
+  min-height: 44px;
   margin-top: 24px;
+  padding: 0 18px;
+  border: 1px solid #1d1e1a;
+  border-radius: 999px;
+  background: #1d1e1a;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1;
+  text-decoration: none;
+  transition:
+    transform 160ms ease,
+    background-color 160ms ease;
+}
+
+.preview-demo-button:hover {
+  background: #34352f;
+  transform: translateY(-1px);
+}
+
+.preview-demo-button:focus-visible {
+  outline: 2px solid #1d1e1a;
+  outline-offset: 3px;
 }
