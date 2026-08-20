@@ -26,6 +26,12 @@ import {
 import {
   PlaygroundSubmitButton,
 } from "./submit-button";
+import {
+  PlaygroundQuestionField,
+} from "./question-field";
+import {
+  PlaygroundPendingMessage,
+} from "./pending-message";
 
 
 type PageProps = {
@@ -513,7 +519,18 @@ export default async function PlaygroundPage({
             styles.playgroundConversation
           }
         >
-          {messages.length
+          <form
+            action={
+              sendPlaygroundMessage.bind(
+                null,
+                assistant.id,
+              )
+            }
+            className={
+              styles.playgroundForm
+            }
+          >
+            {messages.length
             === 0 ? (
               <div
                 className={
@@ -642,54 +659,38 @@ export default async function PlaygroundPage({
               </div>
             )}
 
-          <form
-            action={
-              sendPlaygroundMessage.bind(
-                null,
-                assistant.id,
-              )
-            }
-            className={
-              styles.playgroundComposer
-            }
-          >
-            <label
-              htmlFor="playground-question"
-            >
-              Ask a question
-            </label>
-
-            <textarea
-              disabled={
-                formDisabled
-              }
-              id="playground-question"
-              maxLength={
-                2000
-              }
-              name="question"
-              placeholder={
-                knowledgeReady
-                  ? "Ask about your company knowledge…"
-                  : "Process a knowledge source first"
-              }
-            />
+            <PlaygroundPendingMessage />
 
             <div
               className={
-                styles.playgroundComposerFooter
+                styles.playgroundComposer
               }
             >
-              <small>
-                Answers are limited to your
-                uploaded knowledge
-              </small>
-
-              <PlaygroundSubmitButton
+              <PlaygroundQuestionField
                 disabled={
                   formDisabled
                 }
+                knowledgeReady={
+                  knowledgeReady
+                }
               />
+
+              <div
+                className={
+                  styles.playgroundComposerFooter
+                }
+              >
+                <small>
+                  Answers are limited to your
+                  uploaded knowledge
+                </small>
+
+                <PlaygroundSubmitButton
+                  disabled={
+                    formDisabled
+                  }
+                />
+              </div>
             </div>
           </form>
         </section>

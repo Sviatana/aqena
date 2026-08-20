@@ -12,18 +12,39 @@ import styles from "./widget.module.css";
 const UUID_PATTERN =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
+const INSTALL_RETURN_PATTERN =
+  /^\/dashboard\/assistants\/[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}\/install$/i;
+
 type PageProps = {
   params: Promise<{
     publicId: string;
+  }>;
+
+  searchParams: Promise<{
+    returnTo?: string;
   }>;
 };
 
 export default async function EmbedPage({
   params,
+  searchParams,
 }: PageProps) {
   const {
     publicId,
   } = await params;
+
+  const {
+    returnTo,
+  } = await searchParams;
+
+  const standaloneReturnHref =
+    typeof returnTo
+      === "string"
+      && INSTALL_RETURN_PATTERN.test(
+        returnTo,
+      )
+      ? returnTo
+      : "/";
 
   if (
     !UUID_PATTERN.test(
@@ -99,6 +120,9 @@ export default async function EmbedPage({
         }
         publicId={
           publicId
+        }
+        standaloneReturnHref={
+          standaloneReturnHref
         }
         welcomeMessage={
           assistant.welcome_message

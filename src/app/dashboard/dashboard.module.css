@@ -1201,6 +1201,16 @@
   line-height: 1.55;
 }
 
+.playgroundForm {
+  display: contents;
+}
+
+.playgroundPendingMessage {
+  display: flex;
+  padding: 0 24px 20px;
+  flex-direction: column;
+}
+
 .playgroundMessages {
   display: flex;
   min-height: 350px;

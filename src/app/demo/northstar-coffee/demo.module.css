@@ -147,3 +147,32 @@
     min-height: 380px;
   }
 }
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 26px;
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  color: inherit;
+  font: inherit;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease;
+}
+
+.backLink:hover {
+  opacity: 0.72;
+  transform: translateY(-1px);
+}
+
+.backLink:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}

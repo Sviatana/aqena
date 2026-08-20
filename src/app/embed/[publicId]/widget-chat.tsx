@@ -1,5 +1,9 @@
 "use client";
 
+import {
+  useRouter,
+} from "next/navigation";
+
 import type {
   CSSProperties,
 } from "react";
@@ -18,6 +22,7 @@ type WidgetChatProps = {
   assistantName: string;
   brandColor: string;
   publicId: string;
+  standaloneReturnHref: string;
   welcomeMessage: string;
 };
 
@@ -107,8 +112,12 @@ export default function WidgetChat({
   assistantName,
   brandColor,
   publicId,
+  standaloneReturnHref,
   welcomeMessage,
 }: WidgetChatProps) {
+  const router =
+    useRouter();
+
   const brandContrast =
     readableTextColor(
       brandColor,
@@ -362,7 +371,13 @@ export default function WidgetChat({
         },
         "*",
       );
+
+      return;
     }
+
+    router.push(
+      standaloneReturnHref,
+    );
   }
 
   return (

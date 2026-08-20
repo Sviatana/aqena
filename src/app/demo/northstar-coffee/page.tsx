@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Script from "next/script";
 
 import styles from "./demo.module.css";
@@ -47,6 +48,7 @@ export default function NorthstarCoffeeDemo() {
             <span>
               Support
             </span>
+
           </nav>
         </header>
 
@@ -81,6 +83,15 @@ export default function NorthstarCoffeeDemo() {
               from people who care about the cup. Use the assistant in
               the lower-right corner if you have a question.
             </p>
+
+            <Link
+              className={
+                styles.backLink
+              }
+              href="/"
+            >
+              Back to Anvera
+            </Link>
           </section>
 
           <aside

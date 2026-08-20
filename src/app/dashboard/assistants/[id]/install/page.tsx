@@ -535,7 +535,11 @@ export default async function InstallPage({
                 styles.secondaryLink
               }
               href={
-                `/embed/${assistant.public_id}`
+                `/embed/${assistant.public_id}?returnTo=${
+                  encodeURIComponent(
+                    `/dashboard/assistants/${assistant.id}/install`,
+                  )
+                }`
               }
               rel="noreferrer"
               target="_blank"
