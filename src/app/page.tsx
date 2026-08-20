@@ -250,8 +250,8 @@ export default async function Home() {
                       <div className="assistant-avatar">N</div>
                       <div>
                         <p>
-                          Yes. Northstar Coffee offers free delivery on orders
-                          over $35 within the continental US.
+                          Yes. Northstar Coffee offers free standard shipping on
+                          orders of $50 or more within the contiguous United States.
                         </p>
 
                         <div className="source-card">

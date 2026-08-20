@@ -1,0 +1,810 @@
+NORTHSTAR COFFEE
+Customer Support Knowledge Base
+Test document for Anvera knowledge ingestion and retrieval
+
+Document purpose
+
+This document contains fictional but realistic operating information for Northstar Coffee. It is designed for testing document upload, text extraction, chunking, retrieval, source attribution, and grounded customer-support answers in Anvera.
+
+All names, addresses, policies, prices, and operational details in this document are test data.
+
+Company overview
+
+Northstar Coffee is an independent specialty coffee company based in Portland, Oregon. The company operates two neighborhood cafés, an online store, a coffee subscription program, local catering, and a small wholesale program for offices and hospitality businesses.
+
+Northstar Coffee focuses on traceable specialty coffee, seasonal menus, simple food, and practical customer service. The company roasts coffee in small batches three times per week.
+
+Customer support is available Monday through Friday from 8:00 AM to 5:00 PM Pacific Time, excluding major US holidays.
+
+General customer support email:
+support@northstarcoffee.example
+
+Online order support:
+orders@northstarcoffee.example
+
+Wholesale enquiries:
+wholesale@northstarcoffee.example
+
+
+CAFÉ LOCATIONS
+
+Northstar Coffee — Hawthorne
+
+Address:
+2218 SE Hawthorne Blvd, Portland, OR 97214
+
+Hours:
+Monday–Friday: 6:30 AM–6:00 PM
+Saturday–Sunday: 7:00 AM–6:00 PM
+
+This location offers:
+- Full espresso and brewed-coffee menu
+- Breakfast pastries
+- Toasts and sandwiches until 2:00 PM
+- Mobile pickup
+- Indoor seating
+- Limited sidewalk seating
+- Retail coffee beans
+- Gift cards
+
+The Hawthorne café does not accept reservations. Seating is first come, first served.
+
+
+Northstar Coffee — Alberta
+
+Address:
+4812 NE Alberta St, Portland, OR 97211
+
+Hours:
+Monday–Friday: 7:00 AM–5:00 PM
+Saturday–Sunday: 7:30 AM–5:00 PM
+
+This location offers:
+- Full espresso and brewed-coffee menu
+- Pastries
+- Mobile pickup
+- Indoor seating
+- Outdoor patio
+- Retail coffee beans
+- Gift cards
+
+The Alberta patio is weather dependent and may close during heavy rain or unsafe conditions.
+
+
+HOLIDAY HOURS
+
+Holiday hours can differ from normal café hours.
+
+Both cafés are closed on:
+- Thanksgiving Day
+- Christmas Day
+
+On New Year’s Day, both cafés open at 8:00 AM and close at 3:00 PM.
+
+On Christmas Eve, both cafés close at 2:00 PM.
+
+Customers should check the company website or contact the café if they are planning a visit on another public holiday.
+
+
+COFFEE MENU
+
+Espresso
+
+Single espresso — $3.25
+Double espresso — $4.00
+Americano — $4.25
+Cortado — $4.75
+Cappuccino — $5.25
+Latte — $5.75
+Mocha — $6.25
+
+Drip coffee
+
+Small drip coffee — $3.25
+Large drip coffee — $4.00
+
+Cold coffee
+
+Cold brew — $5.25
+Cold brew with vanilla cream — $6.25
+Iced latte — $5.75
+
+Alternative milk
+
+Oat milk is available for an additional $0.75.
+Almond milk is available for an additional $0.75.
+
+Whole milk is the standard dairy milk.
+Non-fat dairy milk is available on request.
+
+Northstar Coffee does not currently offer soy milk.
+
+
+ESPRESSO POLICY
+
+The standard espresso drink is prepared with a double shot unless otherwise requested.
+
+Decaf espresso is available at both cafés.
+
+Half-caf drinks can be prepared by combining one regular shot and one decaf shot.
+
+Extra espresso shots cost $1.25 each.
+
+Customers may request drinks up to 160°F. Staff will not serve drinks above 160°F because of quality and burn-safety concerns.
+
+
+SEASONAL DRINKS
+
+Seasonal drinks change throughout the year and may sell out.
+
+Current autumn test menu:
+
+Maple Cinnamon Latte — $6.50
+Espresso, milk, maple syrup, cinnamon
+
+Orange Cardamom Cold Brew — $6.75
+Cold brew, orange-cardamom syrup, light cream
+
+Spiced Apple Steamer — $5.75
+Steamed milk, apple syrup, cinnamon, no coffee
+
+Seasonal syrups may contain ingredients that differ by recipe. Customers with allergies should ask staff before ordering.
+
+
+FOOD AND PASTRIES
+
+Typical pastry selection includes:
+- Butter croissant
+- Chocolate croissant
+- Blueberry muffin
+- Banana bread
+- Seasonal scone
+
+Pastry availability changes daily.
+
+The cafés receive pastries each morning and do not guarantee that a specific pastry will remain available later in the day.
+
+Sandwiches and toast items are prepared in a shared kitchen environment.
+
+Northstar Coffee cannot guarantee that any food item is completely free from traces of milk, egg, wheat, soy, sesame, peanuts, or tree nuts.
+
+
+ALLERGEN INFORMATION
+
+Customers with serious allergies should speak directly with café staff before ordering.
+
+Oat milk used by Northstar Coffee is certified gluten-free by its manufacturer at the time of this test document.
+
+Almond milk contains tree nuts.
+
+The mocha sauce contains dairy.
+
+The standard vanilla syrup does not contain dairy.
+
+The maple syrup used in the Maple Cinnamon Latte does not contain dairy.
+
+Cross-contact is possible because steaming pitchers, counters, utensils, and equipment are used in a shared café environment.
+
+Northstar Coffee does not describe its cafés as allergen-free facilities.
+
+
+ONLINE STORE
+
+The Northstar Coffee online store sells:
+- Whole-bean coffee
+- Ground coffee
+- Coffee subscriptions
+- Brewing equipment
+- Mugs
+- Gift cards
+
+Customers can choose whole bean or one of the available grind settings for most coffee bags.
+
+Available grind settings:
+- Espresso
+- AeroPress
+- Pour-over
+- Drip
+- French press
+
+Coffee that has already been ground to a customer’s selected setting cannot be exchanged solely because the customer later prefers another grind size.
+
+
+COFFEE BAG SIZES
+
+Standard retail coffee bag:
+12 oz
+
+Selected blends are also available in:
+2 lb bags
+
+Wholesale coffee is sold in:
+5 lb bags
+
+Not every coffee is available in every size.
+
+
+CORE COFFEES
+
+Northstar House Blend
+
+Origin:
+Brazil and Colombia
+
+Roast profile:
+Medium
+
+Tasting notes:
+Milk chocolate, caramel, toasted almond
+
+Recommended for:
+Espresso, drip, French press
+
+
+Ethiopia Guji
+
+Origin:
+Guji, Ethiopia
+
+Roast profile:
+Light
+
+Tasting notes:
+Jasmine, peach, bergamot
+
+Recommended for:
+Pour-over and AeroPress
+
+
+Colombia Huila
+
+Origin:
+Huila, Colombia
+
+Roast profile:
+Light-medium
+
+Tasting notes:
+Red apple, brown sugar, cocoa
+
+Recommended for:
+Drip, pour-over, AeroPress
+
+
+Decaf Colombia
+
+Process:
+Sugarcane decaf process
+
+Roast profile:
+Medium
+
+Tasting notes:
+Cocoa, raisin, caramel
+
+Recommended for:
+Espresso and drip
+
+
+ONLINE ORDER PROCESSING
+
+Orders placed before 12:00 PM Pacific Time on a business day normally begin processing the same business day.
+
+Orders placed after 12:00 PM normally begin processing the next business day.
+
+Online orders are not processed on Saturdays, Sundays, Thanksgiving Day, or Christmas Day.
+
+Most coffee orders leave the roastery within 1–2 business days.
+
+During major promotions or the December holiday period, processing may take up to 3 business days.
+
+An order confirmation email does not mean that the order has already shipped.
+
+
+SHIPPING WITHIN THE UNITED STATES
+
+Standard shipping:
+Estimated 3–7 business days after dispatch
+
+Expedited shipping:
+Estimated 2–3 business days after dispatch
+
+Shipping estimates are not guarantees.
+
+Northstar Coffee currently ships online retail orders only to addresses within the United States.
+
+Northstar Coffee does not currently ship retail online orders internationally.
+
+Customers are responsible for entering a complete and accurate shipping address.
+
+
+FREE SHIPPING
+
+Orders of $50 or more qualify for free standard shipping within the contiguous United States.
+
+The $50 threshold is calculated after discounts and before tax.
+
+Gift cards do not count toward the free-shipping threshold.
+
+Expedited shipping is never free unless a specific promotion explicitly says otherwise.
+
+Shipping to Alaska or Hawaii does not qualify for the standard free-shipping promotion.
+
+
+ORDER CHANGES AND CANCELLATIONS
+
+Customers should contact orders@northstarcoffee.example as soon as possible if they need to change or cancel an online order.
+
+Northstar Coffee can usually change or cancel an order only before it enters packing.
+
+Once an order has been packed or handed to the carrier, it cannot be cancelled.
+
+Changing a shipping address is not guaranteed after an order has been submitted.
+
+If a package has already shipped to an incorrect address supplied by the customer, Northstar Coffee will help the customer review available carrier options but does not guarantee replacement or refund.
+
+
+RETURNS POLICY
+
+Customers can return unopened coffee products within 30 days of purchase with a receipt.
+
+This 30-day rule applies to unopened retail coffee purchased in a Northstar café or from the Northstar Coffee online store.
+
+Opened coffee is normally not returnable because coffee is a consumable food product.
+
+If coffee is defective, damaged, stale on arrival, or clearly incorrect because of a Northstar Coffee fulfilment error, the customer should contact support even if the package has been opened.
+
+Unused merchandise such as mugs or unopened brewing equipment may be returned within 30 days if it is in resalable condition and the customer has proof of purchase.
+
+Used brewing equipment is not eligible for a standard return unless it is defective.
+
+Original shipping charges are not refundable unless Northstar Coffee made an error or the product arrived damaged.
+
+
+DAMAGED OR INCORRECT ORDERS
+
+Customers should report damaged, missing, or incorrect items within 7 days of delivery.
+
+The customer should provide:
+- Order number
+- Short description of the problem
+- Photo of the shipping box if visibly damaged
+- Photo of the incorrect or damaged item when practical
+
+After review, Northstar Coffee may offer:
+- Replacement
+- Store credit
+- Refund to the original payment method
+
+Northstar Coffee does not require a customer to return a damaged bag of coffee unless support specifically requests it.
+
+
+REFUND TIMING
+
+Approved refunds are submitted to the original payment method.
+
+Northstar Coffee normally processes an approved refund within 2 business days.
+
+Banks and card issuers may take an additional 3–10 business days to display the refund.
+
+Northstar Coffee cannot speed up a bank’s internal posting time after a refund has been submitted.
+
+
+LOST OR DELAYED PACKAGES
+
+A carrier delay does not automatically mean a package is lost.
+
+Customers should wait until the carrier’s estimated delivery window has passed before requesting a lost-package review.
+
+If tracking has shown no movement for 5 consecutive business days, customers may contact orders@northstarcoffee.example.
+
+Northstar Coffee will review the shipment and, where appropriate, open a carrier enquiry.
+
+Replacement or refund decisions are made after reviewing tracking information and the delivery circumstances.
+
+
+LOCAL PICKUP
+
+Local pickup is available only at the Hawthorne café.
+
+Customers must select Hawthorne pickup during checkout.
+
+Pickup orders are normally ready within 2 business hours during café operating hours.
+
+Customers receive a “Ready for pickup” email when the order is available.
+
+Customers should not travel to the café based only on the initial order-confirmation email.
+
+Pickup orders are held for 7 calendar days.
+
+If an order is not collected within 7 days, support will contact the customer before deciding whether the order should be cancelled or restocked.
+
+
+COFFEE SUBSCRIPTIONS
+
+Northstar Coffee offers recurring coffee subscriptions.
+
+Available frequencies:
+- Every 2 weeks
+- Every 4 weeks
+
+Subscription bag options:
+- 1 x 12 oz bag per shipment
+- 2 x 12 oz bags per shipment
+
+Customers can choose:
+- Northstar House Blend
+- Roaster’s Choice
+
+Roaster’s Choice changes based on current coffee availability.
+
+Subscription orders receive a 10% discount from the normal retail coffee price.
+
+Subscription discounts do not combine with other coffee discount codes unless the promotion specifically allows stacking.
+
+
+SUBSCRIPTION BILLING
+
+A subscription renews automatically according to the selected schedule.
+
+The payment method on file is charged when the renewal order is created.
+
+Customers can skip an upcoming shipment, change frequency, update shipping details, or cancel through their subscription account.
+
+Changes should be made at least 48 hours before the next scheduled renewal.
+
+If a renewal order has already been generated and entered fulfilment, cancellation of the subscription will stop future renewals but may not cancel that already-created order.
+
+
+SUBSCRIPTION CANCELLATION
+
+There is no cancellation fee.
+
+Customers may cancel at any time.
+
+Cancelling a subscription does not retroactively refund coffee that has already shipped.
+
+If a customer believes a renewal was created in error, support should review the specific order status before promising a refund.
+
+
+GIFT CARDS
+
+Northstar Coffee offers digital gift cards in the following values:
+$10
+$25
+$50
+$75
+$100
+
+Digital gift cards are delivered by email.
+
+Gift cards can be used:
+- At both Northstar Coffee cafés
+- On the Northstar Coffee online store
+
+Gift cards cannot be:
+- Redeemed for cash except where required by law
+- Used to purchase another gift card
+- Applied after an online order has already been completed
+
+Northstar Coffee gift cards do not expire.
+
+
+LOYALTY PROGRAM
+
+The Northstar Rewards program is available for café purchases.
+
+Members earn:
+1 point per $1 spent before tax
+
+100 points can be redeemed for:
+$5 off an eligible café purchase
+
+Points are not earned on:
+- Gift card purchases
+- Taxes
+- Tips
+
+Points cannot be converted to cash.
+
+Points expire after 12 months without any qualifying account activity.
+
+Online coffee subscriptions do not currently earn Northstar Rewards points.
+
+
+MOBILE AND CAFÉ ORDERS
+
+Mobile pickup orders cannot be scheduled more than 24 hours in advance.
+
+Customers should select the correct café before paying.
+
+If a mobile order is sent to the wrong café, staff may try to help, but a remake at another location is not guaranteed.
+
+Drinks are prepared close to the expected pickup time.
+
+Prepared drinks are not normally remade because a customer arrives substantially late, unless there is a product-quality problem unrelated to the delay.
+
+
+PAYMENT METHODS
+
+Cafés accept:
+- Visa
+- Mastercard
+- American Express
+- Discover
+- Apple Pay
+- Google Pay
+- Northstar Coffee gift cards
+- Cash
+
+The online store accepts:
+- Visa
+- Mastercard
+- American Express
+- Discover
+- Apple Pay
+- Google Pay
+
+The online store does not accept cash, checks, cryptocurrency, or bank transfers.
+
+
+CATERING
+
+Northstar Coffee offers local coffee catering within approximately 10 miles of central Portland.
+
+Typical catering services include:
+- Insulated brewed-coffee boxes
+- Cups, lids, sugar, and milk
+- Pastry trays
+- On-site espresso service for selected events
+
+Simple coffee-box orders should be requested at least 48 hours in advance.
+
+On-site espresso service should normally be requested at least 14 days in advance.
+
+Catering availability is not guaranteed until Northstar Coffee confirms the booking.
+
+A catering enquiry is not itself a reservation.
+
+
+CATERING CANCELLATION
+
+For standard coffee-box catering:
+- Cancellation more than 24 hours before pickup or delivery: full refund
+- Cancellation within 24 hours: up to 50% may be retained to cover prepared products
+
+For staffed espresso events:
+- Event-specific cancellation terms are included in the written quote
+
+Support should never promise a catering refund without checking the confirmed booking terms.
+
+
+WHOLESALE PROGRAM
+
+Northstar Coffee supplies coffee to selected:
+- Offices
+- Restaurants
+- Hotels
+- Independent cafés
+
+The standard wholesale minimum is 10 lb of coffee per order.
+
+Wholesale pricing is not published in the consumer online store.
+
+Potential wholesale customers should contact:
+wholesale@northstarcoffee.example
+
+Wholesale accounts may qualify for:
+- 5 lb coffee bags
+- Brewing guidance
+- Staff training
+- Equipment recommendations
+
+Equipment leasing is not currently offered directly by Northstar Coffee.
+
+
+FRESHNESS AND STORAGE
+
+Whole-bean coffee is best used within approximately 4 weeks of the roast date for peak flavour.
+
+Coffee remains safe beyond that period when stored correctly, but aroma and flavour may gradually decline.
+
+Recommended storage:
+- Keep coffee sealed
+- Store at room temperature
+- Keep away from direct sunlight
+- Keep away from moisture
+- Avoid storing an opened bag in the refrigerator
+
+For longer storage, customers may freeze tightly sealed portions and allow each portion to return to room temperature before opening.
+
+
+ROAST DATES
+
+Retail coffee bags show a roast date rather than an expiration date.
+
+Online coffee is normally shipped within 7 days of roasting.
+
+Northstar Coffee does not guarantee that every bag shipped on the same day has the same roast date.
+
+Seasonal demand and production schedules can create small differences between batches.
+
+
+BREWING GUIDANCE
+
+Basic pour-over starting recipe:
+Coffee: 20 g
+Water: 320 g
+Water temperature: 200°F
+Total brew time: approximately 3 minutes
+
+Basic French press starting recipe:
+Coffee: 30 g
+Water: 500 g
+Water temperature: 200°F
+Steep time: 4 minutes
+
+Basic home drip starting ratio:
+Approximately 60 g of coffee per 1 litre of water
+
+These recipes are starting points, not strict guarantees. Grind size, water chemistry, brewer design, and personal preference may require adjustment.
+
+
+PRIVACY AND CUSTOMER DATA
+
+Northstar Coffee staff should not ask customers to send full payment-card numbers by email.
+
+Support may request:
+- Customer name
+- Email address
+- Order number
+- Shipping address for verification
+- Last four digits of the payment card when needed for order verification
+
+Support should never request:
+- Full card number
+- Card security code
+- Online banking password
+- Email password
+
+Sensitive payment information must not be entered into general support notes.
+
+
+CUSTOMER ACCOUNT SECURITY
+
+If a customer believes their account has been accessed without permission, support should advise the customer to:
+1. Change the account password
+2. Use a unique password not reused on another service
+3. Review recent orders and subscription changes
+4. Contact support if any unrecognized transaction or address change is visible
+
+Support should not disclose another customer’s order, address, phone number, or account information.
+
+
+COMPLAINT HANDLING
+
+Staff should acknowledge the customer’s issue without inventing facts or making promises that are outside policy.
+
+If the answer is not available in company knowledge, support should say that the information needs to be confirmed.
+
+Appropriate example:
+“I don’t have enough confirmed information to answer that accurately. Please contact Northstar Coffee support so the team can check it for you.”
+
+Inappropriate example:
+“I’m sure we can refund that immediately.”
+
+Refunds, replacements, catering exceptions, and shipping exceptions depend on the specific order and should not be promised without the required review.
+
+
+COMMON CUSTOMER QUESTIONS
+
+Question:
+Can I return an unopened bag of coffee?
+
+Answer:
+Yes. Unopened coffee products can be returned within 30 days of purchase with a receipt.
+
+
+Question:
+Can I return an opened bag because I do not like the flavour?
+
+Answer:
+Opened coffee is normally not eligible for a standard return. If the coffee arrived damaged, defective, stale, or incorrect because of a Northstar Coffee error, the customer should contact support for review.
+
+
+Question:
+Do you ship internationally?
+
+Answer:
+No. Northstar Coffee currently ships retail online orders only within the United States.
+
+
+Question:
+When do I get free shipping?
+
+Answer:
+Orders of $50 or more qualify for free standard shipping within the contiguous United States. The threshold is calculated after discounts and before tax. Gift cards do not count toward the threshold.
+
+
+Question:
+Can I cancel my subscription?
+
+Answer:
+Yes. There is no cancellation fee. Customers may cancel at any time, but cancelling does not automatically refund a renewal order that has already been created or shipped.
+
+
+Question:
+Do gift cards expire?
+
+Answer:
+No. Northstar Coffee gift cards do not expire.
+
+
+Question:
+Can I use a gift card at both cafés?
+
+Answer:
+Yes. Digital Northstar Coffee gift cards can be used at both cafés and in the online store.
+
+
+Question:
+Do you have soy milk?
+
+Answer:
+No. Northstar Coffee currently offers oat milk and almond milk as alternative milks, but does not offer soy milk.
+
+
+Question:
+Is your café nut-free?
+
+Answer:
+No. Almond milk is used in the cafés, and food and drink preparation takes place in shared work areas. Northstar Coffee cannot guarantee an allergen-free environment.
+
+
+Question:
+How long do you hold local pickup orders?
+
+Answer:
+Local pickup orders are held for 7 calendar days at the Hawthorne café.
+
+
+Question:
+Can I pick up an online order at the Alberta café?
+
+Answer:
+No. Local online-order pickup is currently available only at the Hawthorne café.
+
+
+Question:
+How much notice do I need for catering?
+
+Answer:
+Simple coffee-box orders should be requested at least 48 hours in advance. Staffed on-site espresso service should normally be requested at least 14 days in advance.
+
+
+Question:
+What is the wholesale minimum?
+
+Answer:
+The standard wholesale minimum is 10 lb of coffee per order.
+
+
+Question:
+How quickly are refunds processed?
+
+Answer:
+Northstar Coffee normally submits an approved refund within 2 business days. The bank or card issuer may take an additional 3–10 business days to display it.
+
+
+Question:
+My tracking has not moved for two days. Is the package lost?
+
+Answer:
+Not necessarily. Customers are asked to wait until the estimated delivery window has passed. If tracking has shown no movement for 5 consecutive business days, the customer may contact order support for review.
+
+
+Question:
+Can you make a drink hotter than 160°F?
+
+Answer:
+No. Staff will not serve drinks above 160°F because of quality and burn-safety concerns.
