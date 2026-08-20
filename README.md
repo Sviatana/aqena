@@ -1,55 +1,98 @@
 # Anvera
 
-Anvera is a SaaS MVP for creating grounded AI knowledge assistants for small businesses.
+Anvera is a SaaS MVP for building grounded AI knowledge assistants for small businesses.
 
-Businesses can create an assistant, add their own company knowledge, test answers in a private Playground and publish the assistant as a website chat widget.
+Businesses can create an assistant, add company knowledge, test answers in a private Playground, upgrade through a mock Pro checkout and publish the assistant as a website chat widget.
 
-Anvera uses retrieval-augmented generation. Company facts must be supported by retrieved knowledge. If the available sources do not support an answer, the assistant returns the configured fallback message instead of inventing information.
+Anvera uses retrieval-augmented generation (RAG). Company facts must be supported by retrieved knowledge. If the available sources do not support an answer, the assistant returns the configured fallback message instead of inventing information.
+
+## Live application
+
+Production: `https://paralect-chatbot-builder.ssidaren.workers.dev`
+
+Northstar Coffee demo: `https://paralect-chatbot-builder.ssidaren.workers.dev/demo/northstar-coffee`
+
+Repository: `Sviatana/paralect-chatbot-builder`
 
 ## Product flow
 
 1. Sign up with email and password
 2. Create an assistant
-3. Configure name, description, instructions, welcome message and fallback message
+3. Configure name, description, instructions, welcome message, fallback message and business color
 4. Add knowledge from PDF, TXT, Markdown or pasted text
 5. Process knowledge into searchable vector chunks
-6. Test grounded answers in Playground
+6. Test grounded answers in the Playground
 7. Review source references
-8. Upgrade through the mock Pro checkout
-9. Publish the assistant
-10. Copy the installation snippet
-11. Use the assistant through the website widget
-
-Permanent demo: `/demo/northstar-coffee`
+8. Reach the Free website-embed gate
+9. Upgrade through the mock Pro checkout
+10. Publish the assistant
+11. Copy the installation snippet
+12. Use the assistant through the website widget
 
 ## Stack
 
-- Next.js App Router, React and TypeScript
-- Supabase Auth, PostgreSQL, pgvector and private Storage
-- OpenRouter
-- OpenNext and Cloudflare Workers
+- Next.js 16 App Router
+- React 19
+- TypeScript
+- Supabase Auth
+- PostgreSQL
+- pgvector
+- private Supabase Storage
+- OpenRouter for chat completions and embeddings
+- OpenNext for Cloudflare
+- Cloudflare Workers
 - Vitest
+- Playwright
 - GitHub Actions
+
+Anvera is a single Next.js application. There is no separate backend microservice.
 
 ## Architecture
 
-Anvera is one Next.js application. Sensitive credentials remain server-side. There is no separate backend microservice.
+```text
+Browser
+  |
+  +-- Landing / Auth / Dashboard / Playground
+  |
+  +-- widget.js
+        |
+        +-- Shadow DOM launcher
+        |
+        +-- iframe /embed/[publicId]
+                 |
+                 +-- POST /api/public/assistants/[publicId]/messages
+                          |
+                          +-- server-side plan and publish checks
+                          +-- vector retrieval
+                          +-- grounded answer generation
+                          +-- atomic conversation and usage commit
+```
 
 Knowledge flow:
 
 ```text
-document
-  -> text extraction
-  -> chunking
+PDF / TXT / MD / manual text
+  -> server-side text extraction
+  -> normalization
+  -> 700-1000 token chunks
+  -> 120-token overlap target
   -> embeddings
   -> PostgreSQL + pgvector
-  -> similarity retrieval
+  -> top-K similarity retrieval
   -> grounded answer
+  -> citations or configured fallback
 ```
 
 ## Knowledge and RAG
 
-Supported sources are PDF, TXT, Markdown and manually pasted text. Uploaded files are limited to 5 MB. Text-based PDFs are extracted on the server; OCR is outside the MVP scope.
+Supported sources:
+
+- PDF
+- TXT
+- Markdown
+- manually pasted text
+
+Uploaded files are limited to 5 MB. Text-based PDFs are extracted on the server. OCR for scanned PDFs is outside the MVP scope.
 
 Chunking configuration:
 
@@ -69,13 +112,26 @@ RAG_MIN_SIMILARITY=0.40
 CHAT_HISTORY_MESSAGES=8
 ```
 
-Only knowledge sources with `Ready` status are eligible for retrieval. Conversation history is context only and is not treated as factual evidence.
+Only knowledge sources with `Ready` status are eligible for retrieval.
 
-Knowledge text is treated as untrusted reference data. The answer layer is instructed to ignore commands found inside uploaded knowledge, use retrieved company knowledge as factual evidence, avoid filling missing facts with outside knowledge, and return the configured fallback with no citations when evidence is insufficient.
+Conversation history is used as conversational context only. It is not treated as factual evidence.
 
-## Authentication and assistant configuration
+The answer layer treats uploaded knowledge as untrusted reference data. Instructions found inside source documents are ignored. A factual claim is allowed only when retrieved knowledge supports it. If evidence is insufficient, the configured fallback is returned with no citations.
 
-Authentication uses Supabase email and password. Implemented flows include sign up, sign in, password recovery, password update and protected dashboard routes.
+## Authentication
+
+Authentication uses Supabase email and password.
+
+Implemented flows:
+
+- sign up
+- email confirmation
+- sign in
+- password recovery
+- password update
+- protected dashboard routes
+
+## Assistant configuration
 
 Assistant owners can configure:
 
@@ -84,6 +140,9 @@ Assistant owners can configure:
 - instructions
 - welcome message
 - fallback message
+- business color for the customer-facing website chat
+
+The business color is applied to the website chat UI. It is not the Anvera platform brand color.
 
 ## Plans
 
@@ -108,13 +167,22 @@ Mock price: `$29 / month`
 - removal of Anvera branding
 - advanced customization
 
-Billing uses `BILLING_MODE=mock`. No real card information is collected.
+Billing uses `BILLING_MODE=mock`.
+
+The demo checkout activates Pro without collecting or storing real payment card information.
 
 ## Playground
 
-The private Playground supports grounded questions against ready knowledge, source references for supported answers, the latest 8 messages as conversation context, monthly usage counters and clearing conversation history without resetting usage.
+The private Playground supports:
 
-Playground and widget usage are tracked separately and also contribute to the total monthly limit.
+- grounded questions against ready knowledge
+- citations for supported answers
+- configured fallback for unsupported answers
+- latest 8 messages as conversation context
+- monthly usage counters
+- clearing conversation history without resetting usage
+
+Playground and website-widget messages both contribute to the monthly plan limit.
 
 ## Website widget
 
@@ -128,25 +196,85 @@ Published Pro assistants can be embedded with:
 ></script>
 ```
 
-The public assistant ID is an unpredictable UUID separate from the internal assistant database ID. The loader uses Shadow DOM and opens the chat inside an iframe. Public messages are handled through the server API. Supabase secret credentials and the OpenRouter API key are never exposed to the browser.
+The public assistant ID is an unpredictable UUID separate from the internal assistant database ID.
+
+`widget.js` validates the public ID, creates a Shadow DOM host and opens the customer chat in an iframe at `/embed/[publicId]`.
+
+Public questions are sent only to the server API:
+
+```text
+POST /api/public/assistants/[publicId]/messages
+```
+
+The browser never receives the Supabase server secret or the OpenRouter API key.
 
 ## Database and security
 
-Supabase Row Level Security protects user-owned application data. Knowledge files are stored privately. Public widget requests do not receive direct table access.
+Supabase Row Level Security protects user-owned application data.
 
-Security measures include:
+Knowledge documents are stored in a private Storage bucket and application access is performed server-side.
 
-- private knowledge storage
-- Row Level Security
+Security controls include:
+
+- Row Level Security on user-owned tables
+- private knowledge-document storage
 - server-only Supabase and OpenRouter credentials
 - unpredictable public assistant UUIDs
-- published-state and Pro-plan checks
-- server-side usage limits
-- prompt-injection defense
+- published-state checks
+- active-Pro checks for website embedding
+- server-side plan and usage limits
+- retrieval restricted to ready sources
+- prompt-injection defense in the grounded answer layer
 - fallback for unsupported answers
-- atomic message and usage updates
+- atomic Playground message and usage updates
+- atomic public-widget message and usage updates
 
 Supabase migrations are stored in `supabase/migrations/`.
+
+## Demo knowledge source
+
+The repository includes the canonical Northstar Coffee demo knowledge file:
+
+```text
+docs/demo/northstar-coffee-knowledge.txt
+```
+
+It contains business information covering locations, menu and online store information, shipping, returns, pickup, subscriptions, catering, wholesale, privacy and support policies.
+
+Useful demo questions:
+
+```text
+Do you offer free shipping on orders over $50?
+Does free shipping apply to Alaska?
+What is the wholesale minimum?
+What is the Wi-Fi password?
+```
+
+The first three are supported by the demo knowledge. The Wi-Fi password is intentionally absent and should return the configured fallback instead of a fabricated answer.
+
+## Environment variables
+
+Copy `.env.example` to `.env.local` for local development.
+
+Required variable names:
+
+```text
+NEXT_PUBLIC_APP_URL
+NEXT_PUBLIC_SITE_URL
+NEXT_PUBLIC_SUPABASE_URL
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+SUPABASE_SECRET_KEY
+OPENROUTER_API_KEY
+LLM_MODEL
+EMBEDDING_MODEL
+EMBEDDING_DIMENSIONS
+RAG_TOP_K
+RAG_MIN_SIMILARITY
+CHAT_HISTORY_MESSAGES
+BILLING_MODE
+```
+
+Never commit `.env.local` or real credentials.
 
 ## Local development
 
@@ -158,53 +286,144 @@ cp .env.example .env.local
 npm run dev
 ```
 
-Default local address: `http://localhost:3000`
+Default local address:
 
-The committed `.env.example` documents the required application, Supabase, OpenRouter, RAG and billing variables. Never commit `.env.local` or real credentials.
+```text
+http://localhost:3000
+```
 
 ## Scripts
 
 ```bash
 npm run dev
 npm test
+npm run test:e2e
 npm run check
 npm run build
 npm run build:cloudflare
 npm run preview
+npm run deploy
 ```
+
+`npm run check` runs ESLint and TypeScript type checking.
 
 ## Automated tests
 
-The focused Vitest suite currently contains 4 test files and 8 tests covering chunking, overlap constraints, plan limits, file validation, safe storage names, RAG configuration and grounding/fallback behavior.
+The automated suite has three layers.
 
-The unit tests do not call OpenRouter and do not write to Supabase.
+### Unit tests
+
+Four Vitest files contain 8 unit tests covering:
+
+- chunk sizing and overlap
+- knowledge-plan limits
+- file validation
+- safe storage names
+- RAG configuration
+- grounded answer and fallback behavior
+
+### Integration tests
+
+`tests/widget-route.integration.test.ts` contains 4 integration tests for the real public widget API route with external boundaries mocked.
+
+The integration suite verifies:
+
+- invalid public assistant IDs are rejected before Supabase access
+- empty questions are rejected before Supabase access
+- website access is hidden for assistants whose owner is not on active Pro
+- a published Pro assistant runs through retrieval, grounded answering and atomic commit orchestration
+
+These tests do not write to Supabase and do not call OpenRouter.
+
+### Browser E2E smoke
+
+`tests/e2e/public-smoke.spec.ts` contains 3 Playwright tests using Chromium.
+
+The browser smoke verifies:
+
+- guest landing navigation to Sign in and Sign up
+- Login and Sign-up form controls without submitting real credentials
+- the Northstar demo loads the real `widget.js`, renders the launcher and opens/closes the iframe
+
+The iframe network dependency is intercepted during the E2E test, so automated browser tests do not write to Supabase or call OpenRouter.
+
+Current automated count:
+
+```text
+Vitest: 5 files / 12 tests
+Playwright: 3 browser tests
+```
 
 ## Continuous integration
 
-GitHub Actions workflow: `.github/workflows/ci.yml`
+GitHub Actions workflow:
 
-For pushes to `main` and pull requests it runs:
+```text
+.github/workflows/ci.yml
+```
+
+For pushes to `main` and pull requests, CI runs:
 
 ```text
 npm ci
 npm test
 npm run check
 npm run build
+npx playwright install --with-deps chromium
+npm run test:e2e
 npm run build:cloudflare
 ```
 
-CI does not deploy and does not contain production credentials.
+CI uses placeholder service configuration for tests and builds. Production credentials are not stored in the workflow.
+
+CI validates the application but does not perform the production deployment itself.
 
 ## Cloudflare
 
-The application is packaged for Cloudflare through OpenNext. Relevant configuration files are `open-next.config.ts` and `wrangler.jsonc`.
+The application is packaged for Cloudflare Workers through OpenNext.
 
-Production application, Supabase and OpenRouter values must be configured in the Cloudflare environment before deployment.
+Relevant files:
+
+- `open-next.config.ts`
+- `wrangler.jsonc`
+
+The Worker requires these server-side secrets in the production environment:
+
+```text
+SUPABASE_SECRET_KEY
+OPENROUTER_API_KEY
+```
+
+`wrangler.jsonc` enables `nodejs_compat`, static asset binding and observability.
+
+Production application:
+
+`https://paralect-chatbot-builder.ssidaren.workers.dev`
+
+## Supabase migrations
+
+The repository contains migrations for:
+
+- base application schema
+- private knowledge storage policies
+- server-only knowledge storage access
+- pgvector RAG foundation
+- ready-source retrieval restriction
+- Playground usage tracking
+- atomic Playground exchange
+- public widget server foundation
+- atomic widget exchange
+- assistant business color customization
+
+Apply pending migrations to a linked Supabase project with the Supabase CLI before running the full application against a new database.
 
 ## MVP boundaries
 
-The MVP intentionally does not include real payment processing, OCR for scanned PDFs, multiple selectable LLM providers in the UI or a separate backend microservice.
+The MVP intentionally does not include:
 
-## Repository
+- real payment processing
+- OCR for scanned PDFs
+- multiple selectable LLM providers in the UI
+- a separate backend microservice
 
-`Sviatana/paralect-chatbot-builder`
+The production demo uses real Supabase persistence and real RAG. Automated CI keeps external service boundaries isolated so it can run without production credentials or production database writes.
