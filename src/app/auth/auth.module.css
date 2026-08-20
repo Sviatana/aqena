@@ -1,0 +1,337 @@
+.page {
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns:
+    minmax(340px, 0.9fr)
+    minmax(460px, 1.1fr);
+  background: #f6f5f0;
+  color: #171714;
+}
+
+.brandPanel {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100%;
+  padding: 44px 54px;
+  border-right: 1px solid #deddd6;
+}
+
+.brandPanel::after {
+  content: "";
+  position: absolute;
+  right: -150px;
+  bottom: -180px;
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  background: rgba(205, 218, 199, 0.38);
+  filter: blur(1px);
+  pointer-events: none;
+}
+
+.logo {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  color: #171714;
+  font-size: 19px;
+  font-weight: 680;
+  letter-spacing: -0.03em;
+  text-decoration: none;
+}
+
+.brandCopy {
+  position: relative;
+  z-index: 1;
+  max-width: 470px;
+  padding-bottom: 40px;
+}
+
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 22px;
+  color: #67665f;
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.kicker::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #7e9175;
+}
+
+.brandCopy h1 {
+  max-width: 520px;
+  margin: 0;
+  font-size: clamp(36px, 4vw, 52px);
+  font-weight: 580;
+  line-height: 1.04;
+  letter-spacing: -0.045em;
+}
+
+.brandCopy p {
+  max-width: 450px;
+  margin: 24px 0 0;
+  color: #66645e;
+  font-size: 16px;
+  line-height: 1.58;
+}
+
+.formSide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+  background: #fbfaf7;
+}
+
+.card {
+  width: min(100%, 440px);
+}
+
+.cardHeader {
+  margin-bottom: 30px;
+}
+
+.cardHeader h2 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 610;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+}
+
+.cardHeader p {
+  margin: 10px 0 0;
+  color: #6e6c65;
+  font-size: 15px;
+  line-height: 1.52;
+}
+
+.form {
+  display: grid;
+  gap: 18px;
+}
+
+.field {
+  display: grid;
+  gap: 7px;
+}
+
+.fieldLabelRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.forgotLink {
+  color: #687662;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.forgotLink:hover {
+  text-decoration: underline;
+}
+
+.field label {
+  color: #3f3e39;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.field input {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 14px;
+  border: 1px solid #d7d5cd;
+  border-radius: 11px;
+  outline: none;
+  background: #fff;
+  color: #171714;
+  font: inherit;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.field input:focus {
+  border-color: #8a9c82;
+  box-shadow: 0 0 0 3px rgba(126, 145, 117, 0.13);
+}
+
+.primaryButton {
+  min-height: 48px;
+  margin-top: 4px;
+  border: 0;
+  border-radius: 11px;
+  background: #171714;
+  color: #fff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 620;
+  cursor: pointer;
+}
+
+.notice {
+  padding: 11px 13px;
+  border: 1px solid #cad8c5;
+  border-radius: 10px;
+  background: #eff4ec;
+  color: #53634d;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.error {
+  padding: 11px 13px;
+  border: 1px solid #d9b8ae;
+  border-radius: 10px;
+  background: #fbf0ed;
+  color: #74453b;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.switch {
+  margin: 22px 0 0;
+  color: #716f68;
+  font-size: 14px;
+  text-align: center;
+}
+
+.switch a {
+  color: #171714;
+  font-weight: 600;
+}
+
+.emailCard {
+  width: min(100%, 470px);
+  text-align: center;
+}
+
+.emailIcon {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  margin: 0 auto 22px;
+  border: 1px solid #ccd6c8;
+  border-radius: 16px;
+  background: #eef2eb;
+  font-size: 22px;
+}
+
+.emailCard h1 {
+  margin: 0;
+  font-size: 31px;
+  font-weight: 610;
+  letter-spacing: -0.035em;
+}
+
+.emailCard p {
+  margin: 14px auto 0;
+  color: #6c6a63;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.emailAddress {
+  color: #24231f;
+  font-weight: 620;
+}
+
+.backLink {
+  display: inline-flex;
+  margin-top: 26px;
+  color: #24231f;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .page {
+    grid-template-columns: 1fr;
+  }
+
+  .brandPanel {
+    min-height: auto;
+    padding: 30px 28px 40px;
+    border-right: 0;
+    border-bottom: 1px solid #deddd6;
+  }
+
+  .brandCopy {
+    padding: 56px 0 0;
+  }
+
+  .brandCopy h1 {
+    font-size: clamp(34px, 8vw, 44px);
+  }
+
+  .formSide {
+    padding: 50px 24px 70px;
+  }
+}
+
+/* Password visibility control */
+
+.passwordWrap {
+  position: relative;
+}
+
+.passwordWrap input {
+  padding-right: 48px;
+}
+
+.passwordToggle {
+  position: absolute;
+  top: 50%;
+  right: 9px;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #77746c;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition:
+    background 150ms ease,
+    color 150ms ease;
+}
+
+.passwordToggle:hover {
+  background: #f0efe9;
+  color: #24231f;
+}
+
+.passwordToggle:focus-visible {
+  outline: 2px solid #8a9c82;
+  outline-offset: 1px;
+}
+
+.passwordToggle svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}

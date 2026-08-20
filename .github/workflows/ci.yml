@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Test and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    env:
+      NEXT_PUBLIC_APP_URL: http://localhost:3000
+      NEXT_PUBLIC_SITE_URL: http://localhost:3000
+
+      NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+      NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_ci_placeholder
+      SUPABASE_SECRET_KEY: ci_service_role_placeholder
+
+      OPENROUTER_API_KEY: ci_openrouter_placeholder
+      LLM_MODEL: qwen/qwen3-30b-a3b-instruct-2507
+      EMBEDDING_MODEL: qwen/qwen3-embedding-8b
+      EMBEDDING_DIMENSIONS: "1536"
+
+      RAG_TOP_K: "5"
+      RAG_MIN_SIMILARITY: "0.40"
+      CHAT_HISTORY_MESSAGES: "8"
+
+      BILLING_MODE: mock
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Use Node.js 24
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run unit tests
+        run: npm test
+
+      - name: Run lint and typecheck
+        run: npm run check
+
+      - name: Build Next.js application
+        run: npm run build
+
+      - name: Build Cloudflare worker
+        run: npm run build:cloudflare

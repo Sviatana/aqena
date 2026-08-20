@@ -321,7 +321,75 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      commit_playground_exchange: {
+        Args: {
+          p_assistant_content: string
+          p_assistant_id: string
+          p_citations: Json
+          p_conversation_id: string
+          p_input_tokens: number
+          p_output_tokens: number
+          p_user_content: string
+        }
+        Returns: {
+          allowed: boolean
+          assistant_message_id: string
+          message_limit: number
+          messages_used: number
+          plan_name: string
+          user_message_id: string
+        }[]
+      }
+      commit_widget_exchange: {
+        Args: {
+          p_assistant_content: string
+          p_citations: Json
+          p_conversation_id: string
+          p_input_tokens: number
+          p_output_tokens: number
+          p_public_id: string
+          p_user_content: string
+        }
+        Returns: {
+          allowed: boolean
+          assistant_message_id: string
+          message_limit: number
+          messages_used: number
+          user_message_id: string
+        }[]
+      }
+      match_knowledge_chunks: {
+        Args: {
+          p_assistant_id: string
+          p_match_count?: number
+          p_match_threshold?: number
+          p_query_embedding: string
+        }
+        Returns: {
+          chunk_id: string
+          content: string
+          metadata: Json
+          similarity: number
+          source_id: string
+          source_title: string
+        }[]
+      }
+      match_public_knowledge_chunks: {
+        Args: {
+          p_match_count?: number
+          p_match_threshold?: number
+          p_public_id: string
+          p_query_embedding: string
+        }
+        Returns: {
+          chunk_id: string
+          content: string
+          metadata: Json
+          similarity: number
+          source_id: string
+          source_title: string
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

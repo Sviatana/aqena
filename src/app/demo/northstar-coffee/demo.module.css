@@ -1,0 +1,149 @@
+.page {
+  min-height: 100dvh;
+  background: #f5f0e6;
+  color: #24231f;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 86px;
+  padding: 0 7vw;
+  border-bottom: 1px solid rgba(36, 35, 31, 0.13);
+}
+
+.brand {
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.nav {
+  display: flex;
+  gap: 28px;
+  font-size: 13px;
+}
+
+.main {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.1fr)
+    minmax(300px, 0.9fr);
+  align-items: center;
+  min-height: calc(100dvh - 87px);
+  gap: 60px;
+  padding: 64px 7vw 90px;
+}
+
+.copy {
+  min-width: 0;
+}
+
+.eyebrow {
+  margin: 0 0 20px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.copy h1 {
+  max-width: 720px;
+  margin: 0;
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+  font-size: clamp(
+    50px,
+    6vw,
+    86px
+  );
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+}
+
+.lead {
+  max-width: 620px;
+  margin: 30px 0 0;
+  color: #615e55;
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.feature {
+  display: flex;
+  min-height: 470px;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 34px;
+  overflow: hidden;
+  border-radius: 30px;
+  background: #4a3b2d;
+  color: #f7f1e7;
+  box-shadow:
+    0 24px 60px
+    rgba(55, 42, 31, 0.16);
+}
+
+.feature > span {
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.feature h2 {
+  max-width: 340px;
+  margin: 0;
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 1.05;
+}
+
+.feature p {
+  max-width: 350px;
+  margin: 18px 0 0;
+  color: #ddd1c3;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+@media (max-width: 760px) {
+  .header {
+    min-height: 74px;
+  }
+
+  .nav {
+    display: none;
+  }
+
+  .main {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding-block:
+      50px
+      120px;
+  }
+
+  .copy h1 {
+    font-size: clamp(
+      46px,
+      15vw,
+      68px
+    );
+  }
+
+  .feature {
+    min-height: 380px;
+  }
+}

@@ -93,7 +93,7 @@ export default function Home() {
             <a className="text-link" href="#product-preview">
               See demo
             </a>
-            <a className="button button-small" href="#pricing">
+            <a className="button button-small" href="/auth/sign-up">
               Build your assistant
             </a>
           </div>
@@ -115,7 +115,7 @@ export default function Home() {
             </p>
 
             <div className="hero-actions">
-              <a className="button button-primary" href="#pricing">
+              <a className="button button-primary" href="/auth/sign-up">
                 Build your assistant
                 <ArrowIcon />
               </a>
@@ -549,7 +549,7 @@ export default function Home() {
                 <span>forever</span>
               </div>
 
-              <a className="button button-plan-secondary" href="#how-it-works">
+              <a className="button button-plan-secondary" href="/auth/sign-up">
                 Start with Free
               </a>
 
@@ -593,7 +593,7 @@ export default function Home() {
                 <span>/ month</span>
               </div>
 
-              <a className="button button-plan-primary" href="#product-preview">
+              <a className="button button-plan-primary" href="/auth/sign-up">
                 Choose Pro
               </a>
 
@@ -651,9 +651,9 @@ export default function Home() {
             <details>
               <summary>What happens when the answer is not in my company knowledge?</summary>
               <p>
-                No. The assistant is designed to answer from retrieved company
-                knowledge and say when the available sources do not contain the
-                requested information
+                The assistant answers from retrieved company knowledge and says
+                when the available sources do not contain the requested
+                information
               </p>
             </details>
 
@@ -668,7 +668,9 @@ export default function Home() {
             <details>
               <summary>Can I add the assistant to my website?</summary>
               <p>
-                Add to your websiteding is included in Pro. Yes. Pro lets you add Anvera to your website as a simple customer chat experience
+                Yes. Website chat is included in Pro. Add Anvera to your website
+                with the provided embed code and let customers ask questions
+                directly from your company knowledge
               </p>
             </details>
 
@@ -690,7 +692,7 @@ export default function Home() {
               <span className="section-kicker light-kicker">GET STARTED</span>
               <h2>Give customers answers backed by your actual company knowledge</h2>
             </div>
-            <a className="button button-light" href="#pricing">
+            <a className="button button-light" href="/auth/sign-up">
               Build your assistant
               <ArrowIcon />
             </a>
