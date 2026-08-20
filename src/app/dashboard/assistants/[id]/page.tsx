@@ -1,4 +1,5 @@
 import BrandColorInput from "@/app/dashboard/brand-color-input";
+import FileUploadField from "@/app/dashboard/file-upload-field";
 import Link from "next/link";
 import {
   notFound,
@@ -583,27 +584,7 @@ export default async function AssistantPage({
             encType="multipart/form-data"
             method="post"
           >
-            <label
-              className={styles.fileField}
-              htmlFor="knowledge-file"
-            >
-              <span>
-                Choose a document
-              </span>
-
-              <input
-                accept=".pdf,.txt,.md,application/pdf,text/plain,text/markdown"
-                disabled={limitReached}
-                id="knowledge-file"
-                name="file"
-                required
-                type="file"
-              />
-
-              <small>
-                Documents stay private to your workspace
-              </small>
-            </label>
+            <FileUploadField disabled={limitReached} />
 
             <button
               className={styles.primaryButton}

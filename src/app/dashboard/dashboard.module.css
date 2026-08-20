@@ -710,23 +710,61 @@
 }
 
 .fileField {
+  position: relative;
   display: grid;
-  gap: 10px;
+  gap: 12px;
   padding: 20px;
   border: 1px dashed #c8c9c1;
   border-radius: 12px;
   background: #ffffff;
+  cursor: pointer;
 }
 
-.fileField > span {
-  font-size: 14px;
+.fileControlRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.fileChooseButton {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid #c8c9c1;
+  border-radius: 9px;
+  background: #f6f5f1;
+  color: #1d1e1a;
+  font-size: 13px;
   font-weight: 650;
 }
 
-.fileField input[type="file"] {
-  width: 100%;
-  font: inherit;
+.fileName {
+  min-width: 0;
+  overflow: hidden;
+  color: #6f7069;
   font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fileInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  border: 0;
+  white-space: nowrap;
+}
+
+.fileField:focus-within {
+  outline: 2px solid #1d1e1a;
+  outline-offset: 2px;
 }
 
 .fileField small {
@@ -734,12 +772,16 @@
   font-size: 12px;
 }
 
+.fileFieldDisabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
 .knowledgeTextarea {
   min-height: 170px;
 }
 
-.knowledgeForm button:disabled,
-.fileField input:disabled {
+.knowledgeForm button:disabled {
   cursor: not-allowed;
   opacity: 0.5;
 }
