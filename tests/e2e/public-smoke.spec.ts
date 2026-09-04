@@ -8,6 +8,33 @@ const NORTHSTAR_PUBLIC_ID =
   "8a0f0c12-9b73-4554-94f1-4d83d8d731a4";
 
 
+test.beforeEach(
+  async ({
+    context,
+    baseURL,
+  }) => {
+    if (!baseURL) {
+      throw new Error(
+        "Playwright baseURL is required for locale setup",
+      );
+    }
+
+    await context.addCookies([
+      {
+        name:
+          "anvera_locale",
+
+        value:
+          "en",
+
+        url:
+          baseURL,
+      },
+    ]);
+  },
+);
+
+
 test.describe(
   "Anvera public browser smoke",
   () => {
