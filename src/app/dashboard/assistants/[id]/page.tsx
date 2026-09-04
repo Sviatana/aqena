@@ -7,6 +7,7 @@ import {
 } from "next/navigation";
 
 import {
+  deleteAssistant,
   updateAssistant,
 } from "@/app/dashboard/actions";
 
@@ -15,6 +16,9 @@ import {
   deleteKnowledgeSource,
   processKnowledgeSource,
 } from "@/app/dashboard/knowledge-actions";
+import {
+  getServerDictionary,
+} from "@/i18n/server";
 import {
   knowledgeSourceLimit,
 } from "@/lib/knowledge";
@@ -68,17 +72,69 @@ function formatBytes(
 
 function statusLabel(
   value: string,
+  copy: {
+    statusPending: string;
+    statusProcessing: string;
+    statusReady: string;
+    statusFailed: string;
+  },
 ) {
   switch (value) {
     case "processing":
-      return "Processing";
+      return copy.statusProcessing;
+
     case "ready":
-      return "Ready";
+      return copy.statusReady;
+
     case "failed":
-      return "Failed";
+      return copy.statusFailed;
+
     default:
-      return "Pending";
+      return copy.statusPending;
   }
+}
+
+function sourceErrorLabel(
+  value: string | null,
+  copy: {
+    pdfUnreadable: string;
+    sourceTooLarge: string;
+    pdfTimeout: string;
+    processingFailed: string;
+  },
+) {
+  if (!value) {
+    return "";
+  }
+
+  if (
+    value === "pdf_unreadable"
+    || value.includes(
+      "does not contain readable text",
+    )
+  ) {
+    return copy.pdfUnreadable;
+  }
+
+  if (
+    value === "source_too_large"
+    || value.includes(
+      "can contain up to",
+    )
+  ) {
+    return copy.sourceTooLarge;
+  }
+
+  if (
+    value === "pdf_timeout"
+    || value.includes(
+      "processing took too long",
+    )
+  ) {
+    return copy.pdfTimeout;
+  }
+
+  return copy.processingFailed;
 }
 
 export default async function AssistantPage({
@@ -91,6 +147,21 @@ export default async function AssistantPage({
 
   const query =
     await searchParams;
+
+  const dictionary =
+    await getServerDictionary();
+
+  const copy =
+    dictionary.dashboard.detail;
+
+  const knowledgeCopy =
+    dictionary.dashboard.knowledge;
+
+  const detailCopy =
+    dictionary.dashboard.detail;
+
+  const selfServiceCopy =
+    dictionary.dashboard.selfService;
 
   const supabase =
     await createClient();
@@ -156,6 +227,10 @@ export default async function AssistantPage({
           count: "exact",
           head: true,
         },
+      )
+      .eq(
+        "assistant_id",
+        id,
       ),
   ]);
 
@@ -193,13 +268,13 @@ export default async function AssistantPage({
         className={styles.backLink}
         href="/dashboard"
       >
-        ← Back to assistants
+        {copy.backToAssistants}
       </Link>
 
       <div className={styles.detailHeading}>
         <div>
           <div className={styles.eyebrow}>
-            Assistant
+            {copy.eyebrow}
           </div>
 
           <h1 className={styles.pageTitle}>
@@ -208,13 +283,13 @@ export default async function AssistantPage({
 
           <p className={styles.pageLead}>
             {assistant.description
-              || "Add company knowledge for this assistant to use in its answers."}
+              || copy.descriptionFallback}
           </p>
         </div>
 
         <div className={styles.detailQuota}>
           <span>
-            Knowledge sources
+            {copy.knowledgeSources}
           </span>
 
           <strong>
@@ -223,8 +298,8 @@ export default async function AssistantPage({
 
           <small>
             {plan === "pro"
-              ? "Pro plan"
-              : "Free plan"}
+              ? copy.proPlan
+              : copy.freePlan}
           </small>
         </div>
       </div>
@@ -234,7 +309,7 @@ export default async function AssistantPage({
           className={styles.success}
           role="status"
         >
-          Assistant created. Add its company knowledge next.
+          {copy.createdNotice}
         </div>
       ) : null}
 
@@ -268,16 +343,16 @@ export default async function AssistantPage({
         >
           <div>
             <span>
-              Assistant settings
+              {copy.settingsTitle}
             </span>
 
             <strong>
-              Customize behavior and customer messages
+              {copy.settingsSubtitle}
             </strong>
           </div>
 
           <small>
-            Edit settings
+            {copy.editSettings}
           </small>
         </summary>
 
@@ -305,7 +380,7 @@ export default async function AssistantPage({
               <label
                 htmlFor="assistant-name"
               >
-                Assistant name
+                {copy.assistantName}
               </label>
 
               <input
@@ -324,7 +399,7 @@ export default async function AssistantPage({
                   styles.fieldHint
                 }
               >
-                Customers see this name in the website chat
+                {copy.assistantNameHint}
               </span>
             </div>
 
@@ -336,7 +411,7 @@ export default async function AssistantPage({
               <label
                 htmlFor="assistant-description"
               >
-                Description
+                {copy.description}
               </label>
 
               <textarea
@@ -353,7 +428,7 @@ export default async function AssistantPage({
                   styles.fieldHint
                 }
               >
-                A short workspace description of this assistant
+                {copy.descriptionHint}
               </span>
             </div>
 
@@ -365,7 +440,7 @@ export default async function AssistantPage({
               <label
                 htmlFor="assistant-instructions"
               >
-                Instructions
+                {copy.instructions}
               </label>
 
               <textarea
@@ -382,8 +457,7 @@ export default async function AssistantPage({
                   styles.fieldHint
                 }
               >
-                Define tone and answer boundaries. Leaving this empty restores
-                Anvera&apos;s safe knowledge-only instructions
+                {copy.instructionsHint}
               </span>
             </div>
 
@@ -395,7 +469,7 @@ export default async function AssistantPage({
               <label
                 htmlFor="assistant-welcome"
               >
-                Welcome message
+                {copy.welcomeMessage}
               </label>
 
               <textarea
@@ -412,7 +486,7 @@ export default async function AssistantPage({
                   styles.fieldHint
                 }
               >
-                The first message customers see when the chat opens
+                {copy.welcomeHint}
               </span>
             </div>
 
@@ -424,7 +498,7 @@ export default async function AssistantPage({
               <label
                 htmlFor="assistant-fallback"
               >
-                Fallback message
+                {copy.fallbackMessage}
               </label>
 
               <textarea
@@ -441,7 +515,7 @@ export default async function AssistantPage({
                   styles.fieldHint
                 }
               >
-                Used when the company knowledge does not support an answer
+                {copy.fallbackHint}
               </span>
             </div>
 
@@ -453,7 +527,7 @@ export default async function AssistantPage({
               <label
                 htmlFor="assistant-brand-color"
               >
-                Brand color
+                {copy.brandColor}
               </label>
 
               <BrandColorInput
@@ -469,7 +543,7 @@ export default async function AssistantPage({
                   styles.fieldHint
                 }
               >
-                Choose the color your business uses in the website chat
+                {copy.brandHint}
               </span>
             </div>
           </div>
@@ -480,8 +554,7 @@ export default async function AssistantPage({
             }
           >
             <p>
-              Changes apply to Playground and website chat without changing
-              your installation code
+              {copy.changesNote}
             </p>
 
             <button
@@ -490,44 +563,121 @@ export default async function AssistantPage({
               }
               type="submit"
             >
-              Save changes
+              {copy.saveChanges}
             </button>
           </div>
         </form>
       </details>
 
+      <section
+        className={styles.selfServiceDangerZone}
+        aria-labelledby="delete-assistant-title"
+      >
+        <div
+          className={
+            styles.selfServiceDangerHeader
+          }
+        >
+          <div>
+            <div className={styles.eyebrow}>
+              {selfServiceCopy.dangerZone}
+            </div>
+
+            <h2 id="delete-assistant-title">
+              {
+                selfServiceCopy
+                  .deleteAssistantTitle
+              }
+            </h2>
+
+            <p>
+              {
+                selfServiceCopy
+                  .deleteAssistantBody
+              }
+            </p>
+          </div>
+        </div>
+
+        <form
+          action={
+            deleteAssistant.bind(
+              null,
+              assistant.id,
+            )
+          }
+          className={
+            styles.selfServiceDangerForm
+          }
+        >
+          <label
+            className={
+              styles.selfServiceConfirmation
+            }
+          >
+            <input
+              name="confirmDelete"
+              required
+              type="checkbox"
+              value="1"
+            />
+
+            <span>
+              {
+                selfServiceCopy
+                  .deleteAssistantConfirm
+              }
+            </span>
+          </label>
+
+          <button
+            className={styles.dangerButton}
+            type="submit"
+          >
+            {
+              selfServiceCopy
+                .deleteAssistantButton
+            }
+          </button>
+        </form>
+      </section>
+
       <section className={styles.knowledgeIntro}>
         <div>
           <div className={styles.eyebrow}>
-            Knowledge
+            {knowledgeCopy.eyebrow}
           </div>
 
           <h2>
-            Add company knowledge
+            {knowledgeCopy.title}
           </h2>
 
           <p>
-            Upload company documents or paste text that
-            this assistant should use when answering.
+            {knowledgeCopy.intro}
           </p>
         </div>
 
         {limitReached ? (
           <div className={styles.limitNotice}>
             {plan === "free"
-              ? "You have used all 3 sources included in the Free plan."
-              : "You have reached the 100-source Pro limit."}
+              ? knowledgeCopy.freeLimitReached
+              : knowledgeCopy.proLimitReached}
           </div>
         ) : null}
       </section>
 
       <section className={styles.playgroundLaunch}>
         <div>
-          <span>Playground</span>
-          <h2>Test this assistant</h2>
+          <span>
+            {detailCopy.playgroundLauncherEyebrow}
+          </span>
+
+          <h2>
+            {detailCopy.playgroundLauncherTitle}
+          </h2>
+
           <p>
-            Ask real questions, inspect grounded answers
-            and review the sources Anvera used
+            {detailCopy.playgroundLauncherBody}
           </p>
         </div>
 
@@ -535,24 +685,24 @@ export default async function AssistantPage({
           className={styles.playgroundLaunchButton}
           href={`/dashboard/assistants/${assistant.id}/playground`}
         >
-          Open Playground
+          {detailCopy.playgroundLauncherOpen}
         </Link>
       </section>
 
       <section className={styles.playgroundLaunch}>
         <div>
           <span>
-            Install
+            {detailCopy.installLauncherEyebrow}
           </span>
 
           <h2>
-            Put this assistant on your website
+            {detailCopy.installLauncherTitle}
           </h2>
 
           <p>
             {plan === "pro"
-              ? "Website installation is unlocked. Continue setup and prepare this assistant for publishing"
-              : "Website embedding is available on Pro. Review the install flow and upgrade when you are ready"}
+              ? detailCopy.installLauncherProBody
+              : detailCopy.installLauncherFreeBody}
           </p>
         </div>
 
@@ -560,7 +710,7 @@ export default async function AssistantPage({
           className={styles.playgroundLaunchButton}
           href={`/dashboard/assistants/${assistant.id}/install`}
         >
-          Open Install
+          {detailCopy.installLauncherOpen}
         </Link>
       </section>
 
@@ -568,30 +718,30 @@ export default async function AssistantPage({
         <section className={styles.knowledgePanel}>
           <div className={styles.panelHeading}>
             <h2>
-              Upload document
+              {knowledgeCopy.uploadTitle}
             </h2>
 
             <p>
-              PDF, TXT or Markdown up to 5 MB
+              {knowledgeCopy.uploadHint}
             </p>
           </div>
 
           <form
-            action={
-              `/api/assistants/${assistant.id}/knowledge/upload`
-            }
+            action={`/api/assistants/${assistant.id}/knowledge/upload`}
             className={styles.knowledgeForm}
             encType="multipart/form-data"
             method="post"
           >
-            <FileUploadField disabled={limitReached} />
+            <FileUploadField
+              disabled={limitReached}
+            />
 
             <button
               className={styles.primaryButton}
               disabled={limitReached}
               type="submit"
             >
-              Upload document
+              {knowledgeCopy.uploadButton}
             </button>
           </form>
         </section>
@@ -599,12 +749,11 @@ export default async function AssistantPage({
         <section className={styles.knowledgePanel}>
           <div className={styles.panelHeading}>
             <h2>
-              Add text
+              {knowledgeCopy.addTextTitle}
             </h2>
 
             <p>
-              Paste policies, FAQs, product notes or other
-              company information
+              {knowledgeCopy.addTextDescription}
             </p>
           </div>
 
@@ -619,7 +768,7 @@ export default async function AssistantPage({
           >
             <div className={styles.field}>
               <label htmlFor="source-title">
-                Source title
+                {knowledgeCopy.sourceTitle}
               </label>
 
               <input
@@ -627,7 +776,9 @@ export default async function AssistantPage({
                 id="source-title"
                 maxLength={120}
                 name="title"
-                placeholder="Store policies"
+                placeholder={
+                  knowledgeCopy.sourceTitlePlaceholder
+                }
                 required
                 type="text"
               />
@@ -635,7 +786,7 @@ export default async function AssistantPage({
 
             <div className={styles.field}>
               <label htmlFor="source-content">
-                Company knowledge
+                {knowledgeCopy.companyKnowledge}
               </label>
 
               <textarea
@@ -644,7 +795,9 @@ export default async function AssistantPage({
                 id="source-content"
                 maxLength={100000}
                 name="content"
-                placeholder="Paste the information this assistant should know..."
+                placeholder={
+                  knowledgeCopy.contentPlaceholder
+                }
                 required
               />
             </div>
@@ -654,7 +807,7 @@ export default async function AssistantPage({
               disabled={limitReached}
               type="submit"
             >
-              Add text source
+              {knowledgeCopy.addTextButton}
             </button>
           </form>
         </section>
@@ -664,18 +817,19 @@ export default async function AssistantPage({
         <div className={styles.sectionHeader}>
           <div>
             <h2>
-              Knowledge sources
+              {knowledgeCopy.sourcesTitle}
             </h2>
 
             <p className={styles.sectionDescription}>
-              Sources will move through Pending,
-              Processing, Ready or Failed as Anvera
-              prepares them for answers.
+              {knowledgeCopy.sourcesDescription}
             </p>
           </div>
 
           <span className={styles.sourceCounter}>
-            {sources.length} for this assistant
+            {knowledgeCopy.sourceCounterTemplate.replace(
+              "{count}",
+              String(sources.length),
+            )}
           </span>
         </div>
 
@@ -689,12 +843,11 @@ export default async function AssistantPage({
             </div>
 
             <h3>
-              No knowledge sources yet
+              {knowledgeCopy.emptyTitle}
             </h3>
 
             <p>
-              Upload a document or add text above to
-              build this assistant&apos;s knowledge.
+              {knowledgeCopy.emptyBody}
             </p>
           </div>
         ) : (
@@ -723,6 +876,7 @@ export default async function AssistantPage({
                         >
                           {statusLabel(
                             source.status,
+                            knowledgeCopy,
                           )}
                         </span>
                       </div>
@@ -730,8 +884,8 @@ export default async function AssistantPage({
                       <div className={styles.sourceMeta}>
                         <span>
                           {source.source_type === "file"
-                            ? "Document"
-                            : "Text"}
+                            ? knowledgeCopy.typeDocument
+                            : knowledgeCopy.typeText}
                         </span>
 
                         {source.original_file_name ? (
@@ -750,7 +904,10 @@ export default async function AssistantPage({
                       {source.status === "failed"
                         && source.error_message ? (
                           <p className={styles.sourceError}>
-                            {source.error_message}
+                            {sourceErrorLabel(
+                              source.error_message,
+                              knowledgeCopy.errors,
+                            )}
                           </p>
                         ) : null}
                     </div>
@@ -772,8 +929,8 @@ export default async function AssistantPage({
                               type="submit"
                             >
                               {source.status === "failed"
-                                ? "Retry"
-                                : "Process"}
+                                ? knowledgeCopy.retry
+                                : knowledgeCopy.process}
                             </button>
                           </form>
                         ) : null}
@@ -791,7 +948,7 @@ export default async function AssistantPage({
                           className={styles.dangerButton}
                           type="submit"
                         >
-                          Remove
+                          {knowledgeCopy.remove}
                         </button>
                       </form>
                     </div>

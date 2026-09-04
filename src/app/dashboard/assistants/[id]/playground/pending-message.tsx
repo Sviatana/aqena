@@ -4,8 +4,11 @@ import {
   useFormStatus,
 } from "react-dom";
 
-import styles from "../../../dashboard.module.css";
+import {
+  useLocale,
+} from "@/i18n/client";
 
+import styles from "../../../dashboard.module.css";
 
 export function PlaygroundPendingMessage() {
   const {
@@ -13,6 +16,14 @@ export function PlaygroundPendingMessage() {
     pending,
   } =
     useFormStatus();
+
+  const {
+    dictionary,
+  } =
+    useLocale();
+
+  const copy =
+    dictionary.dashboard.playground;
 
   if (!pending) {
     return null;
@@ -51,7 +62,7 @@ export function PlaygroundPendingMessage() {
             styles.playgroundMessageLabel
           }
         >
-          You
+          {copy.you}
         </div>
 
         <div

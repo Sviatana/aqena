@@ -324,6 +324,16 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      consume_widget_rate_limit: {
+        Args: {
+          p_key_hash: string
+        }
+        Returns: {
+          allowed: boolean
+          requests_used: number
+          retry_after_seconds: number
+        }[]
+      }
       commit_playground_exchange: {
         Args: {
           p_assistant_content: string

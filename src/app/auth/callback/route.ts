@@ -3,21 +3,11 @@ import {
   type NextRequest,
 } from "next/server";
 
+import {
+  safeNextPath,
+} from "@/lib/safe-next-path";
+
 import { createClient } from "@/lib/supabase/server";
-
-function safeNextPath(
-  value: string | null,
-) {
-  if (
-    value
-    && value.startsWith("/")
-    && !value.startsWith("//")
-  ) {
-    return value;
-  }
-
-  return "/dashboard";
-}
 
 export async function GET(
   request: NextRequest,

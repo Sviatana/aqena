@@ -8,11 +8,11 @@ Anvera uses retrieval-augmented generation (RAG). Company facts must be supporte
 
 ## Live application
 
-Production: `https://paralect-chatbot-builder.ssidaren.workers.dev`
+Production: `https://anvera.ai24solutions.online`
 
-Northstar Coffee demo: `https://paralect-chatbot-builder.ssidaren.workers.dev/demo/northstar-coffee`
+Northstar Coffee demo: `https://anvera.ai24solutions.online/demo/northstar-coffee`
 
-Repository: `Sviatana/paralect-chatbot-builder`
+Repository: `Sviatana/anvera`
 
 ## Product flow
 
@@ -398,7 +398,7 @@ OPENROUTER_API_KEY
 
 Production application:
 
-`https://paralect-chatbot-builder.ssidaren.workers.dev`
+`https://anvera.ai24solutions.online`
 
 ## Supabase migrations
 

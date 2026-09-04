@@ -1,6 +1,10 @@
 import { AnveraLogo } from "@/components/anvera-brand";
 import Link from "next/link";
 
+import {
+  getServerDictionary,
+} from "@/i18n/server";
+
 import styles from "../auth.module.css";
 
 type PageProps = {
@@ -12,14 +16,22 @@ type PageProps = {
 export default async function CheckEmailPage({
   searchParams,
 }: PageProps) {
-  const params = await searchParams;
-  const email = params.email;
+  const copy =
+    (
+      await getServerDictionary()
+    ).auth;
+
+  const params =
+    await searchParams;
+
+  const email =
+    params.email;
 
   return (
     <main className={styles.page}>
       <section className={styles.brandPanel}>
         <Link
-          aria-label="Anvera home"
+          aria-label={copy.homeLabel}
           className={styles.logo}
           href="/"
         >
@@ -30,11 +42,11 @@ export default async function CheckEmailPage({
 
         <div className={styles.brandCopy}>
           <span className={styles.kicker}>
-            Almost ready
+            {copy.checkEmail.kicker}
           </span>
 
           <h1>
-            One quick step before your first assistant
+            {copy.checkEmail.heroTitle}
           </h1>
         </div>
       </section>
@@ -48,26 +60,30 @@ export default async function CheckEmailPage({
             ✉
           </div>
 
-          <h1>Check your inbox</h1>
+          <h1>
+            {copy.checkEmail.title}
+          </h1>
 
           <p>
-            We sent a confirmation link
+            {copy.checkEmail.sentPrefix}
             {email ? (
               <>
-                {" "}to{" "}
+                {" "}
+                {copy.checkEmail.to}{" "}
                 <span className={styles.emailAddress}>
                   {email}
                 </span>
               </>
             ) : null}
-            . Open the link to finish creating your account.
+            .{" "}
+            {copy.checkEmail.sentSuffix}
           </p>
 
           <Link
             className={styles.backLink}
             href="/auth/login"
           >
-            Back to sign in
+            {copy.checkEmail.back}
           </Link>
         </div>
       </section>

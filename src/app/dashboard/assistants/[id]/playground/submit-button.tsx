@@ -4,13 +4,15 @@ import {
   useFormStatus,
 } from "react-dom";
 
-import styles from "../../../dashboard.module.css";
+import {
+  useLocale,
+} from "@/i18n/client";
 
+import styles from "../../../dashboard.module.css";
 
 type PlaygroundSubmitButtonProps = {
   disabled: boolean;
 };
-
 
 export function PlaygroundSubmitButton({
   disabled,
@@ -19,6 +21,14 @@ export function PlaygroundSubmitButton({
     pending,
   } =
     useFormStatus();
+
+  const {
+    dictionary,
+  } =
+    useLocale();
+
+  const copy =
+    dictionary.dashboard.playground;
 
   return (
     <button
@@ -32,8 +42,8 @@ export function PlaygroundSubmitButton({
       type="submit"
     >
       {pending
-        ? "Thinking…"
-        : "Ask assistant"}
+        ? copy.thinking
+        : copy.askAssistant}
     </button>
   );
 }

@@ -1,6 +1,14 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
+import {
+  deleteAccount,
+} from "@/app/dashboard/actions";
+
+import {
+  getServerDictionary,
+  getServerLocale,
+} from "@/i18n/server";
 import { createClient } from "@/lib/supabase/server";
 
 import styles from "./dashboard.module.css";
@@ -8,17 +16,61 @@ import styles from "./dashboard.module.css";
 type PageProps = {
   searchParams: Promise<{
     created?: string;
+    deleted?: string;
+    accountError?: string;
   }>;
 };
+
+function assistantStatusLabel(
+  status: string,
+  copy: {
+    statusDraft: string;
+    statusReady: string;
+    statusArchived: string;
+  },
+) {
+  switch (status) {
+    case "ready":
+      return copy.statusReady;
+
+    case "archived":
+      return copy.statusArchived;
+
+    case "draft":
+    default:
+      return copy.statusDraft;
+  }
+}
 
 export default async function DashboardPage({
   searchParams,
 }: PageProps) {
-  const supabase = await createClient();
+  const [
+    dictionary,
+    locale,
+  ] = await Promise.all([
+    getServerDictionary(),
+    getServerLocale(),
+  ]);
+
+  const copy =
+    dictionary.dashboard.home;
+
+  const selfServiceCopy =
+    dictionary.dashboard.selfService;
+
+  const numberLocale =
+    locale === "ru"
+      ? "ru-RU"
+      : "en-US";
+
+  const supabase =
+    await createClient();
 
   const {
     data: claimsData,
-  } = await supabase.auth.getClaims();
+  } =
+    await supabase.auth.getClaims();
 
   const userId =
     claimsData?.claims?.sub;
@@ -79,7 +131,8 @@ export default async function DashboardPage({
     assistantsResult.data ?? [];
 
   const plan =
-    subscriptionResult.data?.plan === "pro"
+    subscriptionResult.data?.plan
+      === "pro"
       ? "pro"
       : "free";
 
@@ -94,28 +147,30 @@ export default async function DashboardPage({
       : 50;
 
   const messages =
-    usageResult.data?.message_count ?? 0;
+    usageResult.data?.message_count
+    ?? 0;
 
   const knowledgeSources =
-    knowledgeResult.count ?? 0;
+    knowledgeResult.count
+    ?? 0;
 
-  const params = await searchParams;
+  const params =
+    await searchParams;
 
   return (
     <div className={styles.content}>
       <div className={styles.headingRow}>
         <div>
           <div className={styles.eyebrow}>
-            Workspace
+            {copy.eyebrow}
           </div>
 
           <h1 className={styles.pageTitle}>
-            Your assistants
+            {copy.title}
           </h1>
 
           <p className={styles.pageLead}>
-            Build assistants from your company knowledge,
-            test their answers and prepare them for customers.
+            {copy.lead}
           </p>
         </div>
       </div>
@@ -125,17 +180,38 @@ export default async function DashboardPage({
           className={styles.success}
           role="status"
         >
-          Assistant created. Add knowledge next to start testing answers.
+          {copy.createdNotice}
+        </div>
+      ) : null}
+
+      {params.deleted ? (
+        <div
+          className={styles.success}
+          role="status"
+        >
+          {
+            selfServiceCopy
+              .assistantDeletedSuccess
+          }
+        </div>
+      ) : null}
+
+      {params.accountError ? (
+        <div
+          className={styles.error}
+          role="alert"
+        >
+          {params.accountError}
         </div>
       ) : null}
 
       <section
         className={styles.stats}
-        aria-label="Account usage"
+        aria-label={copy.accountUsageLabel}
       >
         <article className={styles.statCard}>
           <div className={styles.statLabel}>
-            Assistants
+            {copy.assistantsStat}
           </div>
 
           <div className={styles.statValue}>
@@ -144,44 +220,53 @@ export default async function DashboardPage({
 
           <div className={styles.statMeta}>
             {plan === "pro"
-              ? "Pro plan"
-              : "Free plan"}
+              ? copy.proPlan
+              : copy.freePlan}
           </div>
         </article>
 
         <article className={styles.statCard}>
           <div className={styles.statLabel}>
-            Messages this month
+            {copy.messagesThisMonth}
           </div>
 
           <div className={styles.statValue}>
-            {messages.toLocaleString()} /{" "}
-            {messageLimit.toLocaleString()}
+            {messages.toLocaleString(
+              numberLocale,
+            )}{" "}
+            /{" "}
+            {messageLimit.toLocaleString(
+              numberLocale,
+            )}
           </div>
 
           <div className={styles.statMeta}>
-            Playground and website chat
+            {copy.playgroundAndWebsite}
           </div>
         </article>
 
         <article className={styles.statCard}>
           <div className={styles.statLabel}>
-            Knowledge sources
+            {copy.knowledgeSources}
           </div>
 
           <div className={styles.statValue}>
-            {knowledgeSources}
+            {knowledgeSources.toLocaleString(
+              numberLocale,
+            )}
           </div>
 
           <div className={styles.statMeta}>
-            Add documents after creating an assistant
+            {copy.addDocuments}
           </div>
         </article>
       </section>
 
       <section className={styles.section}>
         <div className={styles.sectionHeader}>
-          <h2>Assistants</h2>
+          <h2>
+            {copy.assistantsSection}
+          </h2>
         </div>
 
         {assistants.length === 0 ? (
@@ -195,20 +280,18 @@ export default async function DashboardPage({
               </div>
 
               <h3>
-                Build your first assistant
+                {copy.emptyTitle}
               </h3>
 
               <p>
-                Give it a name and instructions.
-                Then we will add the company knowledge
-                it should use for every answer.
+                {copy.emptyBody}
               </p>
 
               <Link
                 className={styles.newButton}
                 href="/dashboard/assistants/new"
               >
-                Create assistant
+                {copy.createAssistant}
               </Link>
             </div>
           </div>
@@ -223,7 +306,9 @@ export default async function DashboardPage({
                 >
                   <div>
                     <h3
-                      className={styles.assistantName}
+                      className={
+                        styles.assistantName
+                      }
                     >
                       {assistant.name}
                     </h3>
@@ -234,17 +319,20 @@ export default async function DashboardPage({
                       }
                     >
                       {assistant.description
-                        || "No description yet"}
+                        || copy.noDescription}
                     </p>
                   </div>
 
                   <div className={styles.assistantCardSide}>
                     <span className={styles.badge}>
-                      {assistant.status}
+                      {assistantStatusLabel(
+                        assistant.status,
+                        copy,
+                      )}
                     </span>
 
                     <span className={styles.openAssistant}>
-                      Open →
+                      {copy.open}
                     </span>
                   </div>
                 </Link>
@@ -252,6 +340,74 @@ export default async function DashboardPage({
             )}
           </div>
         )}
+      </section>
+
+      <section
+        className={styles.selfServiceDangerZone}
+        aria-labelledby="delete-account-title"
+      >
+        <div
+          className={
+            styles.selfServiceDangerHeader
+          }
+        >
+          <div>
+            <div className={styles.eyebrow}>
+              {selfServiceCopy.dangerZone}
+            </div>
+
+            <h2 id="delete-account-title">
+              {
+                selfServiceCopy
+                  .deleteAccountTitle
+              }
+            </h2>
+
+            <p>
+              {
+                selfServiceCopy
+                  .deleteAccountBody
+              }
+            </p>
+          </div>
+        </div>
+
+        <form
+          action={deleteAccount}
+          className={
+            styles.selfServiceDangerForm
+          }
+        >
+          <label
+            className={
+              styles.selfServiceConfirmation
+            }
+          >
+            <input
+              name="confirmDelete"
+              required
+              type="checkbox"
+              value="1"
+            />
+
+            <span>
+              {
+                selfServiceCopy
+                  .deleteAccountConfirm
+              }
+            </span>
+          </label>
+
+          <button
+            className={styles.dangerButton}
+            type="submit"
+          >
+            {
+              selfServiceCopy
+                .deleteAccountButton
+            }
+          </button>
+        </form>
       </section>
     </div>
   );

@@ -15,6 +15,75 @@
       || ""
     ).trim();
 
+  const pageLanguage =
+    (
+      document.documentElement
+        .lang
+      || ""
+    )
+      .trim()
+      .toLowerCase();
+
+  const browserLanguage =
+    (
+      navigator.language
+      || ""
+    )
+      .trim()
+      .toLowerCase();
+
+  const locale =
+    pageLanguage
+      .startsWith(
+        "en",
+      )
+      ? "en"
+      : pageLanguage
+          .startsWith(
+            "ru",
+          )
+        ? "ru"
+        : browserLanguage
+            .startsWith(
+              "en",
+            )
+          ? "en"
+          : browserLanguage
+              .startsWith(
+                "ru",
+              )
+            ? "ru"
+            : "ru";
+
+  const copy =
+    locale === "en"
+      ? {
+          launcher:
+            "Ask us",
+
+          closeLauncher:
+            "Close",
+
+          launcherAria:
+            "Open customer support chat",
+
+          frameTitle:
+            "Customer support chat",
+        }
+      : {
+          launcher:
+            "Спросить",
+
+          closeLauncher:
+            "Закрыть",
+
+          launcherAria:
+            "Открыть чат с ассистентом",
+
+          frameTitle:
+            "Чат с ИИ-ассистентом",
+        };
+
   const uuidPattern =
     /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
@@ -212,10 +281,10 @@
   frame.src =
     `${anveraOrigin}/embed/${encodeURIComponent(
       assistantId,
-    )}`;
+    )}?locale=${locale}`;
 
   frame.title =
-    "Customer support chat";
+    copy.frameTitle;
 
   frame.loading =
     "lazy";
@@ -243,7 +312,7 @@
 
   launcher.setAttribute(
     "aria-label",
-    "Open customer support chat",
+    copy.launcherAria,
   );
 
   const dot =
@@ -265,7 +334,7 @@
     );
 
   label.textContent =
-    "Ask us";
+    copy.launcher;
 
   launcher.append(
     dot,
@@ -309,8 +378,8 @@
 
     label.textContent =
       isOpen
-        ? "Close"
-        : "Ask us";
+        ? copy.closeLauncher
+        : copy.launcher;
   }
 
   launcher.addEventListener(

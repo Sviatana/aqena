@@ -6,7 +6,11 @@ import {
 
 import {
   publishAssistant,
+  unpublishAssistant,
 } from "@/app/dashboard/publish-actions";
+import {
+  getServerDictionary,
+} from "@/i18n/server";
 import {
   createClient,
 } from "@/lib/supabase/server";
@@ -36,6 +40,15 @@ export default async function InstallPage({
 
   const query =
     await searchParams;
+
+  const dictionary =
+    await getServerDictionary();
+
+  const copy =
+    dictionary.dashboard.install;
+
+  const selfServiceCopy =
+    dictionary.dashboard.selfService;
 
   const supabase =
     await createClient();
@@ -101,7 +114,7 @@ export default async function InstallPage({
   ) {
     redirect(
       `/dashboard/assistants/${id}?error=${encodeURIComponent(
-        "We could not check your plan.",
+        copy.errors.planCheckFailed,
       )}`,
     );
   }
@@ -144,7 +157,7 @@ export default async function InstallPage({
           `/dashboard/assistants/${assistant.id}`
         }
       >
-        ← Back to assistant
+        {copy.backToAssistant}
       </Link>
 
       <div
@@ -158,7 +171,7 @@ export default async function InstallPage({
               dashboardStyles.eyebrow
             }
           >
-            Install
+            {copy.eyebrow}
           </div>
 
           <h1
@@ -166,7 +179,10 @@ export default async function InstallPage({
               dashboardStyles.pageTitle
             }
           >
-            Add {assistant.name} to your website
+            {copy.titleTemplate.replace(
+              "{name}",
+              assistant.name,
+            )}
           </h1>
 
           <p
@@ -174,8 +190,7 @@ export default async function InstallPage({
               dashboardStyles.pageLead
             }
           >
-            Publish your assistant, copy one embed snippet
-            and place it on the site where customers need help
+            {copy.intro}
           </p>
         </div>
 
@@ -187,8 +202,8 @@ export default async function InstallPage({
           }
         >
           {isPro
-            ? "Pro active"
-            : "Free plan"}
+            ? copy.proActive
+            : copy.freePlan}
         </span>
       </div>
 
@@ -199,7 +214,7 @@ export default async function InstallPage({
           }
           role="status"
         >
-          Pro is active. Website installation is now unlocked.
+          {copy.upgradedNotice}
         </div>
       ) : null}
 
@@ -253,19 +268,19 @@ export default async function InstallPage({
               styles.kicker
             }
           >
-            Website embed
+            {copy.websiteEmbed}
           </span>
 
           <h2>
             {isPro
-              ? "Website installation unlocked"
-              : "Website installation is a Pro feature"}
+              ? copy.unlockedTitle
+              : copy.lockedTitle}
           </h2>
 
           <p>
             {isPro
-              ? "Your plan now includes website embedding. The next setup step is to publish this assistant and generate its installation code."
-              : "Playground testing stays available on Free. Upgrade to Pro when you are ready to place the assistant on a live website."}
+              ? copy.unlockedBody
+              : copy.lockedBody}
           </p>
 
           <div
@@ -279,11 +294,11 @@ export default async function InstallPage({
               }
             >
               <span>
-                Playground
+                {copy.playground}
               </span>
 
               <strong>
-                Included
+                {copy.included}
               </strong>
             </div>
 
@@ -293,13 +308,13 @@ export default async function InstallPage({
               }
             >
               <span>
-                Website embed
+                {copy.websiteEmbedFeature}
               </span>
 
               <strong>
                 {isPro
-                  ? "Unlocked"
-                  : "Pro"}
+                  ? copy.unlocked
+                  : copy.pro}
               </strong>
             </div>
 
@@ -309,7 +324,7 @@ export default async function InstallPage({
               }
             >
               <span>
-                Monthly messages
+                {copy.monthlyMessages}
               </span>
 
               <strong>
@@ -325,7 +340,7 @@ export default async function InstallPage({
               }
             >
               <span>
-                Knowledge sources
+                {copy.knowledgeSources}
               </span>
 
               <strong>
@@ -343,8 +358,8 @@ export default async function InstallPage({
               }
             >
               {assistant.is_published
-                ? "This assistant is published and ready for embed setup."
-                : "This assistant is still a draft. Publishing will create the public installation endpoint used by the website widget."}
+                ? copy.publishedNotice
+                : copy.draftNotice}
             </div>
           ) : null}
 
@@ -375,10 +390,36 @@ export default async function InstallPage({
                       }
                       type="submit"
                     >
-                      Publish assistant
+                      {copy.publishAssistant}
                     </button>
                   </form>
-                ) : null}
+                ) : (
+                  <form
+                    action={
+                      unpublishAssistant
+                    }
+                  >
+                    <input
+                      name="assistantId"
+                      type="hidden"
+                      value={
+                        assistant.id
+                      }
+                    />
+
+                    <button
+                      className={
+                        dashboardStyles.secondaryButton
+                      }
+                      type="submit"
+                    >
+                      {
+                        selfServiceCopy
+                          .unpublishAssistant
+                      }
+                    </button>
+                  </form>
+                )}
 
                 <Link
                   className={
@@ -388,11 +429,39 @@ export default async function InstallPage({
                     `/dashboard/assistants/${assistant.id}`
                   }
                 >
-                  Back to assistant
+                  {copy.backToAssistantButton}
                 </Link>
               </>
             ) : (
               <>
+                {assistant.is_published ? (
+                  <form
+                    action={
+                      unpublishAssistant
+                    }
+                  >
+                    <input
+                      name="assistantId"
+                      type="hidden"
+                      value={
+                        assistant.id
+                      }
+                    />
+
+                    <button
+                      className={
+                        dashboardStyles.secondaryButton
+                      }
+                      type="submit"
+                    >
+                      {
+                        selfServiceCopy
+                          .unpublishAssistant
+                      }
+                    </button>
+                  </form>
+                ) : null}
+
                 <Link
                   className={
                     styles.primaryLink
@@ -401,7 +470,7 @@ export default async function InstallPage({
                     `/dashboard/billing/upgrade?assistant=${assistant.id}`
                   }
                 >
-                  Upgrade to Pro — $29/month
+                  {copy.upgradeCta}
                 </Link>
 
                 <Link
@@ -412,7 +481,7 @@ export default async function InstallPage({
                     `/dashboard/assistants/${assistant.id}/playground`
                   }
                 >
-                  Keep testing
+                  {copy.keepTesting}
                 </Link>
               </>
             )}
@@ -429,7 +498,7 @@ export default async function InstallPage({
               styles.kicker
             }
           >
-            Assistant
+            {copy.assistantLabel}
           </span>
 
           <h2>
@@ -437,8 +506,7 @@ export default async function InstallPage({
           </h2>
 
           <p>
-            Installation access follows the workspace plan,
-            while publishing is controlled per assistant
+            {copy.assistantDescription}
           </p>
 
           <div
@@ -452,13 +520,13 @@ export default async function InstallPage({
               }
             >
               <span>
-                Plan
+                {copy.planLabel}
               </span>
 
               <strong>
                 {isPro
-                  ? "Pro"
-                  : "Free"}
+                  ? copy.pro
+                  : copy.freePlan}
               </strong>
             </div>
 
@@ -468,15 +536,15 @@ export default async function InstallPage({
               }
             >
               <span>
-                Assistant status
+                {copy.assistantStatus}
               </span>
 
               <strong>
                 {assistant.status === "ready"
-                  ? "Ready"
+                  ? copy.statusReady
                   : assistant.status === "archived"
-                    ? "Archived"
-                    : "Draft"}
+                    ? copy.statusArchived
+                    : copy.statusDraft}
               </strong>
             </div>
 
@@ -486,13 +554,13 @@ export default async function InstallPage({
               }
             >
               <span>
-                Publishing
+                {copy.publishingLabel}
               </span>
 
               <strong>
                 {assistant.is_published
-                  ? "Published"
-                  : "Not published"}
+                  ? copy.published
+                  : copy.notPublished}
               </strong>
             </div>
           </div>
@@ -517,16 +585,15 @@ export default async function InstallPage({
                   styles.kicker
                 }
               >
-                Installation code
+                {copy.installationCode}
               </span>
 
               <h2>
-                Add your AI assistant to your website
+                {copy.snippetTitle}
               </h2>
 
               <p>
-                Paste this script before the closing body tag on the page
-                where you want the assistant to appear
+                {copy.snippetHelp}
               </p>
             </div>
 
@@ -544,7 +611,7 @@ export default async function InstallPage({
               rel="noreferrer"
               target="_blank"
             >
-              Open preview
+              {copy.openPreview}
             </Link>
           </div>
 
@@ -573,7 +640,7 @@ export default async function InstallPage({
             />
 
             <span>
-              Uses the public assistant ID only. No private keys are included.
+              {copy.publicIdNote}
             </span>
           </div>
         </section>

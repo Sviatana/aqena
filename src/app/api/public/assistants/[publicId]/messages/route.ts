@@ -3,6 +3,11 @@ import {
 } from "next/server";
 
 import {
+  normalizePublicWidgetLocale,
+  publicWidgetCopy,
+} from "@/i18n/public-widget";
+
+import {
   answerFromKnowledge,
 } from "@/lib/rag/answer";
 
@@ -21,6 +26,12 @@ import {
 const UUID_PATTERN =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
+const MAX_WIDGET_REQUEST_BYTES =
+  32_768;
+
+class WidgetRequestTooLargeError
+  extends Error {}
+
 type RouteContext = {
   params: Promise<{
     publicId: string;
@@ -32,9 +43,167 @@ type WidgetRequestBody = {
   conversationId?: unknown;
 };
 
+async function readWidgetRequestBody(
+  request: Request,
+): Promise<WidgetRequestBody> {
+  const contentLengthHeader =
+    request.headers
+      .get(
+        "content-length",
+      );
+
+  if (contentLengthHeader) {
+    const contentLength =
+      Number(
+        contentLengthHeader,
+      );
+
+    if (
+      Number.isFinite(
+        contentLength,
+      )
+      && contentLength
+        > MAX_WIDGET_REQUEST_BYTES
+    ) {
+      throw new WidgetRequestTooLargeError();
+    }
+  }
+
+  const bodyStream =
+    request.body;
+
+  if (!bodyStream) {
+    throw new SyntaxError(
+      "Request body is empty",
+    );
+  }
+
+  const reader =
+    bodyStream.getReader();
+
+  const chunks:
+    Uint8Array[] = [];
+
+  let totalBytes = 0;
+
+  try {
+    while (true) {
+      const {
+        done,
+        value,
+      } = await reader.read();
+
+      if (done) {
+        break;
+      }
+
+      if (!value) {
+        continue;
+      }
+
+      totalBytes +=
+        value.byteLength;
+
+      if (
+        totalBytes
+        > MAX_WIDGET_REQUEST_BYTES
+      ) {
+        await reader.cancel();
+
+        throw new WidgetRequestTooLargeError();
+      }
+
+      chunks.push(
+        value,
+      );
+    }
+  } finally {
+    reader.releaseLock();
+  }
+
+  const bytes =
+    new Uint8Array(
+      totalBytes,
+    );
+
+  let offset = 0;
+
+  for (
+    const chunk
+    of chunks
+  ) {
+    bytes.set(
+      chunk,
+      offset,
+    );
+
+    offset +=
+      chunk.byteLength;
+  }
+
+  const text =
+    new TextDecoder()
+      .decode(
+        bytes,
+      );
+
+  return JSON.parse(
+    text,
+  ) as WidgetRequestBody;
+}
+
+function clientAddress(
+  request: Request,
+) {
+  const cloudflareIp =
+    request.headers
+      .get(
+        "cf-connecting-ip",
+      )
+      ?.trim();
+
+  return cloudflareIp
+    || "unknown";
+}
+
+async function widgetRateLimitKey(
+  publicId: string,
+  request: Request,
+) {
+  const value =
+    `${publicId}:${clientAddress(request)}`;
+
+  const digest =
+    await crypto.subtle.digest(
+      "SHA-256",
+      new TextEncoder()
+        .encode(
+          value,
+        ),
+    );
+
+  return Array.from(
+    new Uint8Array(
+      digest,
+    ),
+    (byte) =>
+      byte
+        .toString(16)
+        .padStart(
+          2,
+          "0",
+        ),
+  ).join("");
+}
+
 function jsonError(
   message: string,
   status: number,
+  extraHeaders:
+    Record<
+      string,
+      string
+    > = {},
 ) {
   return NextResponse.json(
     {
@@ -46,6 +215,8 @@ function jsonError(
       headers: {
         "Cache-Control":
           "no-store",
+
+        ...extraHeaders,
       },
     },
   );
@@ -59,13 +230,30 @@ export async function POST(
     publicId,
   } = await context.params;
 
+  const locale =
+    normalizePublicWidgetLocale(
+      new URL(
+        request.url,
+      )
+        .searchParams
+        .get(
+          "locale",
+        ),
+      "en",
+    );
+
+  const copy =
+    publicWidgetCopy[
+      locale
+    ];
+
   if (
     !UUID_PATTERN.test(
       publicId,
     )
   ) {
     return jsonError(
-      "Assistant not found.",
+      copy.assistantNotFound,
       404,
     );
   }
@@ -75,10 +263,22 @@ export async function POST(
 
   try {
     body =
-      await request.json() as WidgetRequestBody;
-  } catch {
+      await readWidgetRequestBody(
+        request,
+      );
+  } catch (error) {
+    if (
+      error
+      instanceof WidgetRequestTooLargeError
+    ) {
+      return jsonError(
+        copy.requestTooLarge,
+        413,
+      );
+    }
+
     return jsonError(
-      "Invalid request.",
+      copy.invalidRequest,
       400,
     );
   }
@@ -91,7 +291,7 @@ export async function POST(
 
   if (!question) {
     return jsonError(
-      "Ask a question first.",
+      copy.questionRequired,
       400,
     );
   }
@@ -101,7 +301,7 @@ export async function POST(
     > 2_000
   ) {
     return jsonError(
-      "Questions can be up to 2,000 characters.",
+      copy.questionTooLong,
       400,
     );
   }
@@ -119,7 +319,7 @@ export async function POST(
     )
   ) {
     return jsonError(
-      "Invalid conversation.",
+      copy.invalidConversation,
       400,
     );
   }
@@ -149,7 +349,7 @@ export async function POST(
       !== "ready"
   ) {
     return jsonError(
-      "Assistant not found.",
+      copy.assistantNotFound,
       404,
     );
   }
@@ -176,8 +376,68 @@ export async function POST(
       !== "active"
   ) {
     return jsonError(
-      "Assistant not found.",
+      copy.assistantNotFound,
       404,
+    );
+  }
+
+  const rateLimitKey =
+    await widgetRateLimitKey(
+      publicId,
+      request,
+    );
+
+  const {
+    data: rateLimitRows,
+    error: rateLimitError,
+  } = await admin.rpc(
+    "consume_widget_rate_limit",
+    {
+      p_key_hash:
+        rateLimitKey,
+    },
+  );
+
+  if (rateLimitError) {
+    console.error(
+      "WIDGET_RATE_LIMIT_FAILED",
+      {
+        publicId,
+        message:
+          rateLimitError.message,
+      },
+    );
+
+    return jsonError(
+      copy.temporarilyUnavailable,
+      503,
+    );
+  }
+
+  const rateLimit =
+    rateLimitRows?.[0];
+
+  if (!rateLimit) {
+    return jsonError(
+      copy.temporarilyUnavailable,
+      503,
+    );
+  }
+
+  if (!rateLimit.allowed) {
+    return jsonError(
+      copy.rateLimited,
+      429,
+      {
+        "Retry-After":
+          String(
+            Math.max(
+              1,
+              rateLimit
+                .retry_after_seconds,
+            ),
+          ),
+      },
     );
   }
 
@@ -221,7 +481,7 @@ export async function POST(
     );
 
     return jsonError(
-      "The assistant is temporarily unavailable.",
+      copy.temporarilyUnavailable,
       503,
     );
   }
@@ -231,13 +491,23 @@ export async function POST(
     >= 2_000
   ) {
     return jsonError(
-      "This assistant has reached its monthly message limit.",
+      copy.monthlyLimit,
       429,
     );
   }
 
   let conversationId =
     suppliedConversationId;
+
+  const config =
+    ragConfig();
+
+  let history: Array<{
+    role:
+      | "user"
+      | "assistant";
+    content: string;
+  }> = [];
 
   if (conversationId) {
     const {
@@ -271,11 +541,123 @@ export async function POST(
       || !existingConversation
     ) {
       return jsonError(
-        "Conversation not found.",
+        copy.conversationNotFound,
         404,
       );
     }
-  } else {
+
+    const {
+      data: historyRows,
+      error: historyError,
+    } = await admin
+      .from("messages")
+      .select(
+        "role,content,created_at",
+      )
+      .eq(
+        "conversation_id",
+        conversationId,
+      )
+      .in(
+        "role",
+        [
+          "user",
+          "assistant",
+        ],
+      )
+      .order(
+        "created_at",
+        {
+          ascending: false,
+        },
+      )
+      .limit(
+        config.historyMessages,
+      );
+
+    if (historyError) {
+      console.error(
+        "WIDGET_HISTORY_FAILED",
+        {
+          publicId,
+          conversationId,
+          message:
+            historyError.message,
+        },
+      );
+
+      return jsonError(
+        copy.temporarilyUnavailable,
+        503,
+      );
+    }
+
+    history =
+      (historyRows ?? [])
+        .slice()
+        .reverse()
+        .map(
+          (message) => ({
+            role:
+              message.role
+              === "assistant"
+                ? "assistant" as const
+                : "user" as const,
+
+            content:
+              message.content,
+          }),
+        );
+  }
+
+  let result:
+    Awaited<
+      ReturnType<
+        typeof answerFromKnowledge
+      >
+    >;
+
+  try {
+    const chunks =
+      await retrievePublicKnowledge(
+        admin,
+        publicId,
+        question,
+      );
+
+    result =
+      await answerFromKnowledge({
+        question,
+        chunks,
+        history,
+
+        assistantInstructions:
+          assistant.instructions,
+
+        fallbackMessage:
+          assistant.fallback_message
+          || copy.defaultFallback,
+      });
+  } catch (error) {
+    console.error(
+      "WIDGET_RAG_FAILED",
+      {
+        publicId,
+
+        message:
+          error instanceof Error
+            ? error.message
+            : "Unknown RAG error",
+      },
+    );
+
+    return jsonError(
+      copy.ragFailed,
+      503,
+    );
+  }
+
+  if (!conversationId) {
     const {
       data: createdConversation,
       error: conversationCreateError,
@@ -312,126 +694,13 @@ export async function POST(
       );
 
       return jsonError(
-        "The assistant is temporarily unavailable.",
+        copy.temporarilyUnavailable,
         503,
       );
     }
 
     conversationId =
       createdConversation.id;
-  }
-
-  const config =
-    ragConfig();
-
-  const {
-    data: historyRows,
-    error: historyError,
-  } = await admin
-    .from("messages")
-    .select(
-      "role,content,created_at",
-    )
-    .eq(
-      "conversation_id",
-      conversationId,
-    )
-    .in(
-      "role",
-      [
-        "user",
-        "assistant",
-      ],
-    )
-    .order(
-      "created_at",
-      {
-        ascending: false,
-      },
-    )
-    .limit(
-      config.historyMessages,
-    );
-
-  if (historyError) {
-    console.error(
-      "WIDGET_HISTORY_FAILED",
-      {
-        publicId,
-        conversationId,
-        message:
-          historyError.message,
-      },
-    );
-
-    return jsonError(
-      "The assistant is temporarily unavailable.",
-      503,
-    );
-  }
-
-  const history =
-    (historyRows ?? [])
-      .slice()
-      .reverse()
-      .map(
-        (message) => ({
-          role:
-            message.role
-            === "assistant"
-              ? "assistant" as const
-              : "user" as const,
-
-          content:
-            message.content,
-        }),
-      );
-
-  let result:
-    Awaited<
-      ReturnType<
-        typeof answerFromKnowledge
-      >
-    >;
-
-  try {
-    const chunks =
-      await retrievePublicKnowledge(
-        admin,
-        publicId,
-        question,
-      );
-
-    result =
-      await answerFromKnowledge({
-        question,
-        chunks,
-        history,
-
-        assistantInstructions:
-          assistant.instructions,
-
-        fallbackMessage:
-          assistant.fallback_message
-          || "I could not find that in the available company knowledge.",
-      });
-  } catch (error) {
-    console.error(
-      "WIDGET_RAG_FAILED",
-      {
-        publicId,
-
-        message:
-          error instanceof Error
-            ? error.message
-            : "Unknown RAG error",
-      },
-    );
-
-    return jsonError(
-      "The assistant could not answer that question. Please try again.",
-      503,
-    );
   }
 
   const citations =
@@ -494,7 +763,7 @@ export async function POST(
     );
 
     return jsonError(
-      "The answer was generated but could not be saved. Please try again.",
+      copy.answerSaveFailed,
       503,
     );
   }
@@ -504,14 +773,14 @@ export async function POST(
 
   if (!commit) {
     return jsonError(
-      "The answer could not be saved.",
+      copy.answerCouldNotBeSaved,
       503,
     );
   }
 
   if (!commit.allowed) {
     return jsonError(
-      "This assistant has reached its monthly message limit.",
+      copy.monthlyLimit,
       429,
     );
   }

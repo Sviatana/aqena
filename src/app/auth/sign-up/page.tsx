@@ -4,6 +4,9 @@ import { redirect } from "next/navigation";
 
 import { signUp } from "@/app/auth/actions";
 import { PasswordInput } from "@/app/auth/password-input";
+import {
+  getServerDictionary,
+} from "@/i18n/server";
 import { createClient } from "@/lib/supabase/server";
 
 import styles from "../auth.module.css";
@@ -17,24 +20,31 @@ type PageProps = {
 export default async function SignUpPage({
   searchParams,
 }: PageProps) {
-  const supabase = await createClient();
+  const copy =
+    (
+      await getServerDictionary()
+    ).auth;
+
+  const supabase =
+    await createClient();
 
   const {
     data,
-  } = await supabase.auth.getClaims();
+  } =
+    await supabase.auth.getClaims();
 
   if (data?.claims?.sub) {
     redirect("/dashboard");
   }
 
-  const params = await searchParams;
-  const error = params.error;
+  const params =
+    await searchParams;
 
   return (
     <main className={styles.page}>
       <section className={styles.brandPanel}>
         <Link
-          aria-label="Anvera home"
+          aria-label={copy.homeLabel}
           className={styles.logo}
           href="/"
         >
@@ -45,16 +55,15 @@ export default async function SignUpPage({
 
         <div className={styles.brandCopy}>
           <span className={styles.kicker}>
-            Start with your knowledge
+            {copy.signUp.kicker}
           </span>
 
           <h1>
-            Build an assistant your customers can trust
+            {copy.signUp.heroTitle}
           </h1>
 
           <p>
-            Your first assistant is free to build and test.
-            No credit card required.
+            {copy.signUp.heroBody}
           </p>
         </div>
       </section>
@@ -62,9 +71,12 @@ export default async function SignUpPage({
       <section className={styles.formSide}>
         <div className={styles.card}>
           <header className={styles.cardHeader}>
-            <h2>Create your account</h2>
+            <h2>
+              {copy.signUp.title}
+            </h2>
+
             <p>
-              Set up Anvera and build your first assistant
+              {copy.signUp.subtitle}
             </p>
           </header>
 
@@ -72,18 +84,18 @@ export default async function SignUpPage({
             action={signUp}
             className={styles.form}
           >
-            {error ? (
+            {params.error ? (
               <div
                 className={styles.error}
                 role="alert"
               >
-                {error}
+                {params.error}
               </div>
             ) : null}
 
             <div className={styles.field}>
               <label htmlFor="displayName">
-                Name
+                {copy.common.name}
               </label>
 
               <input
@@ -97,7 +109,7 @@ export default async function SignUpPage({
 
             <div className={styles.field}>
               <label htmlFor="email">
-                Email
+                {copy.common.email}
               </label>
 
               <input
@@ -111,7 +123,7 @@ export default async function SignUpPage({
 
             <div className={styles.field}>
               <label htmlFor="password">
-                Password
+                {copy.common.password}
               </label>
 
               <PasswordInput
@@ -127,14 +139,14 @@ export default async function SignUpPage({
               className={styles.primaryButton}
               type="submit"
             >
-              Create account
+              {copy.signUp.submit}
             </button>
           </form>
 
           <p className={styles.switch}>
-            Already have an account?{" "}
+            {copy.signUp.alreadyHaveAccount}{" "}
             <Link href="/auth/login">
-              Sign in
+              {copy.signUp.signIn}
             </Link>
           </p>
         </div>

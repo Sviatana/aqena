@@ -4,6 +4,9 @@ import { redirect } from "next/navigation";
 
 import { signIn } from "@/app/auth/actions";
 import { PasswordInput } from "@/app/auth/password-input";
+import {
+  getServerDictionary,
+} from "@/i18n/server";
 import { createClient } from "@/lib/supabase/server";
 
 import styles from "../auth.module.css";
@@ -18,25 +21,45 @@ type PageProps = {
 export default async function LoginPage({
   searchParams,
 }: PageProps) {
-  const supabase = await createClient();
+  const copy =
+    (
+      await getServerDictionary()
+    ).auth;
+
+  const supabase =
+    await createClient();
 
   const {
     data,
-  } = await supabase.auth.getClaims();
+  } =
+    await supabase.auth.getClaims();
 
   if (data?.claims?.sub) {
     redirect("/dashboard");
   }
 
-  const params = await searchParams;
-  const error = params.error;
-  const message = params.message;
+  const params =
+    await searchParams;
+
+  const error =
+    params.error
+      === "This authentication link is invalid or has expired."
+    || params.error
+      === "This confirmation link is invalid or has expired."
+      ? copy.errors.invalidAuthLink
+      : params.error;
+
+  const message =
+    params.message
+      === "Password updated. Sign in with your new password."
+      ? copy.errors.passwordUpdated
+      : params.message;
 
   return (
     <main className={styles.page}>
       <section className={styles.brandPanel}>
         <Link
-          aria-label="Anvera home"
+          aria-label={copy.homeLabel}
           className={styles.logo}
           href="/"
         >
@@ -47,16 +70,15 @@ export default async function LoginPage({
 
         <div className={styles.brandCopy}>
           <span className={styles.kicker}>
-            Your company knowledge
+            {copy.login.kicker}
           </span>
 
           <h1>
-            Reliable answers start with what your business knows
+            {copy.login.heroTitle}
           </h1>
 
           <p>
-            Add your documents, test real questions and give customers
-            answers backed by your own knowledge.
+            {copy.login.heroBody}
           </p>
         </div>
       </section>
@@ -64,9 +86,12 @@ export default async function LoginPage({
       <section className={styles.formSide}>
         <div className={styles.card}>
           <header className={styles.cardHeader}>
-            <h2>Welcome back</h2>
+            <h2>
+              {copy.login.title}
+            </h2>
+
             <p>
-              Sign in to manage your assistants and company knowledge
+              {copy.login.subtitle}
             </p>
           </header>
 
@@ -94,7 +119,7 @@ export default async function LoginPage({
 
             <div className={styles.field}>
               <label htmlFor="email">
-                Email
+                {copy.common.email}
               </label>
 
               <input
@@ -109,14 +134,14 @@ export default async function LoginPage({
             <div className={styles.field}>
               <div className={styles.fieldLabelRow}>
                 <label htmlFor="password">
-                  Password
+                  {copy.common.password}
                 </label>
 
                 <Link
                   className={styles.forgotLink}
                   href="/auth/forgot-password"
                 >
-                  Forgot password?
+                  {copy.login.forgotPassword}
                 </Link>
               </div>
 
@@ -132,14 +157,14 @@ export default async function LoginPage({
               className={styles.primaryButton}
               type="submit"
             >
-              Sign in
+              {copy.login.submit}
             </button>
           </form>
 
           <p className={styles.switch}>
-            New to Anvera?{" "}
+            {copy.login.newToAnvera}{" "}
             <Link href="/auth/sign-up">
-              Create an account
+              {copy.login.createAccount}
             </Link>
           </p>
         </div>

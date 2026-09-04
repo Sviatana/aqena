@@ -95,7 +95,13 @@ export default defineConfig({
         "e2e_openrouter_placeholder",
 
       LLM_MODEL:
-        "qwen/qwen3-30b-a3b-instruct-2507",
+        "openrouter/free",
+      LLM_PAID_FALLBACK_ENABLED:
+        "false",
+      LLM_FALLBACK_MODEL:
+        "openrouter/auto",
+      OPENROUTER_AUTO_COST_TIER:
+        "low",
 
       EMBEDDING_MODEL:
         "qwen/qwen3-embedding-8b",
@@ -114,6 +120,9 @@ export default defineConfig({
 
       BILLING_MODE:
         "mock",
+
+      ALLOW_MOCK_BILLING:
+        "true",
     },
   },
 });

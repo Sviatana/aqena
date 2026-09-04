@@ -6,6 +6,9 @@ import {
 } from "next/server";
 
 import {
+  getServerDictionary,
+} from "@/i18n/server";
+import {
   KNOWLEDGE_BUCKET,
   isUuid,
   knowledgeSourceLimit,
@@ -68,6 +71,11 @@ export async function POST(
     );
   }
 
+  const copy =
+    (
+      await getServerDictionary()
+    ).dashboard.knowledge;
+
   const supabase =
     await createClient();
 
@@ -100,7 +108,7 @@ export async function POST(
       request,
       assistantId,
       "error",
-      "We could not read this upload. Please try again.",
+      copy.errors.uploadReadFailed,
     );
   }
 
@@ -114,13 +122,21 @@ export async function POST(
       request,
       assistantId,
       "error",
-      "Choose a document to upload.",
+      copy.errors.chooseUpload,
     );
   }
 
   const validationError =
     validateKnowledgeFile(
       candidate,
+      {
+        empty:
+          copy.errors.fileEmpty,
+        tooLarge:
+          copy.errors.fileTooLarge,
+        unsupported:
+          copy.errors.unsupportedFile,
+      },
     );
 
   if (validationError) {
@@ -179,7 +195,7 @@ export async function POST(
       request,
       assistantId,
       "error",
-      "We could not check your account limits. Please try again.",
+      copy.errors.accountLimitCheckFailed,
     );
   }
 
@@ -201,8 +217,8 @@ export async function POST(
       assistantId,
       "error",
       plan === "free"
-        ? "The Free plan includes three knowledge sources. Upgrade to Pro to add more."
-        : "Your Pro plan includes up to 100 knowledge sources.",
+        ? copy.errors.freeLimit
+        : copy.errors.proLimit,
     );
   }
 
@@ -253,7 +269,7 @@ export async function POST(
       request,
       assistantId,
       "error",
-      "We could not store this document. Please try again.",
+      copy.errors.storeFailed,
     );
   }
 
@@ -265,7 +281,7 @@ export async function POST(
       )
       .trim()
       .slice(0, 120)
-      || "Document";
+      || copy.defaultDocumentTitle;
 
   const {
     error: insertError,
@@ -307,7 +323,7 @@ export async function POST(
       request,
       assistantId,
       "error",
-      "We could not register this document. Please try again.",
+      copy.errors.registerFailed,
     );
   }
 
@@ -320,6 +336,6 @@ export async function POST(
     request,
     assistantId,
     "success",
-    "Document uploaded.",
+    copy.errors.documentUploaded,
   );
 }

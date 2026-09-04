@@ -3,9 +3,9 @@
 ## Release snapshot
 
 - Product: Anvera
-- Repository: `Sviatana/paralect-chatbot-builder`
-- Production: `https://paralect-chatbot-builder.ssidaren.workers.dev`
-- Northstar Coffee demo: `https://paralect-chatbot-builder.ssidaren.workers.dev/demo/northstar-coffee`
+- Repository: `Sviatana/anvera`
+- Production: `https://anvera.ai24solutions.online`
+- Northstar Coffee demo: `https://anvera.ai24solutions.online/demo/northstar-coffee`
 - Release commit: `207f873ba13e50714bedef012ab665c981a09b8d`
 - Latest successful CI run: `32365964793`
 - CI result: `success`

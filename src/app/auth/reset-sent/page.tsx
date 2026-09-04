@@ -1,6 +1,10 @@
 import { AnveraLogo } from "@/components/anvera-brand";
 import Link from "next/link";
 
+import {
+  getServerDictionary,
+} from "@/i18n/server";
+
 import styles from "../auth.module.css";
 
 type PageProps = {
@@ -12,14 +16,22 @@ type PageProps = {
 export default async function ResetSentPage({
   searchParams,
 }: PageProps) {
-  const params = await searchParams;
-  const email = params.email;
+  const copy =
+    (
+      await getServerDictionary()
+    ).auth;
+
+  const params =
+    await searchParams;
+
+  const email =
+    params.email;
 
   return (
     <main className={styles.page}>
       <section className={styles.brandPanel}>
         <Link
-          aria-label="Anvera home"
+          aria-label={copy.homeLabel}
           className={styles.logo}
           href="/"
         >
@@ -30,11 +42,11 @@ export default async function ResetSentPage({
 
         <div className={styles.brandCopy}>
           <span className={styles.kicker}>
-            Password recovery
+            {copy.resetSent.kicker}
           </span>
 
           <h1>
-            Check your inbox for the reset link
+            {copy.resetSent.heroTitle}
           </h1>
         </div>
       </section>
@@ -48,10 +60,12 @@ export default async function ResetSentPage({
             ✉
           </div>
 
-          <h1>Reset link sent</h1>
+          <h1>
+            {copy.resetSent.title}
+          </h1>
 
           <p>
-            If an Anvera account exists for
+            {copy.resetSent.accountPrefix}
             {email ? (
               <>
                 {" "}
@@ -60,14 +74,15 @@ export default async function ResetSentPage({
                 </span>
               </>
             ) : null}
-            , you will receive an email with a secure password reset link.
+            ,{" "}
+            {copy.resetSent.accountSuffix}
           </p>
 
           <Link
             className={styles.backLink}
             href="/auth/login"
           >
-            Back to sign in
+            {copy.resetSent.back}
           </Link>
         </div>
       </section>

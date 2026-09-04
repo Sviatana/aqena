@@ -199,6 +199,7 @@ Security and grounding rules:
 - Never use outside knowledge to fill missing company information.
 - Never invent names, prices, policies, dates, locations, limits, or other company facts.
 - Conversation history is context only and is not evidence.
+- Answer in the same language as the user's latest question unless the user explicitly asks for another language.
 - A factual claim is allowed only when one or more supplied sources explicitly support it.
 - If the exact answer is not sufficiently supported, choose status "insufficient".
 - Do not guess based on semantic similarity alone.

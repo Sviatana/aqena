@@ -1,7 +1,12 @@
 import { AnveraLogo } from "@/components/anvera-brand";
 import Link from "next/link";
 
-import { requestPasswordReset } from "@/app/auth/actions";
+import {
+  requestPasswordReset,
+} from "@/app/auth/actions";
+import {
+  getServerDictionary,
+} from "@/i18n/server";
 
 import styles from "../auth.module.css";
 
@@ -14,13 +19,25 @@ type PageProps = {
 export default async function ForgotPasswordPage({
   searchParams,
 }: PageProps) {
-  const params = await searchParams;
+  const copy =
+    (
+      await getServerDictionary()
+    ).auth;
+
+  const params =
+    await searchParams;
+
+  const error =
+    params.error
+      === "Request a new password reset link to continue."
+      ? copy.errors.requestNewResetLink
+      : params.error;
 
   return (
     <main className={styles.page}>
       <section className={styles.brandPanel}>
         <Link
-          aria-label="Anvera home"
+          aria-label={copy.homeLabel}
           className={styles.logo}
           href="/"
         >
@@ -31,16 +48,15 @@ export default async function ForgotPasswordPage({
 
         <div className={styles.brandCopy}>
           <span className={styles.kicker}>
-            Account recovery
+            {copy.forgotPassword.kicker}
           </span>
 
           <h1>
-            Get back to your assistants and company knowledge
+            {copy.forgotPassword.heroTitle}
           </h1>
 
           <p>
-            Enter the email you use for Anvera.
-            We will send you a secure link to choose a new password.
+            {copy.forgotPassword.heroBody}
           </p>
         </div>
       </section>
@@ -48,10 +64,12 @@ export default async function ForgotPasswordPage({
       <section className={styles.formSide}>
         <div className={styles.card}>
           <header className={styles.cardHeader}>
-            <h2>Reset your password</h2>
+            <h2>
+              {copy.forgotPassword.title}
+            </h2>
 
             <p>
-              Enter your account email and we will send you a reset link
+              {copy.forgotPassword.subtitle}
             </p>
           </header>
 
@@ -59,18 +77,18 @@ export default async function ForgotPasswordPage({
             action={requestPasswordReset}
             className={styles.form}
           >
-            {params.error ? (
+            {error ? (
               <div
                 className={styles.error}
                 role="alert"
               >
-                {params.error}
+                {error}
               </div>
             ) : null}
 
             <div className={styles.field}>
               <label htmlFor="email">
-                Email
+                {copy.common.email}
               </label>
 
               <input
@@ -86,14 +104,14 @@ export default async function ForgotPasswordPage({
               className={styles.primaryButton}
               type="submit"
             >
-              Send reset link
+              {copy.forgotPassword.submit}
             </button>
           </form>
 
           <p className={styles.switch}>
-            Remembered your password?{" "}
+            {copy.forgotPassword.remembered}{" "}
             <Link href="/auth/login">
-              Back to sign in
+              {copy.forgotPassword.back}
             </Link>
           </p>
         </div>

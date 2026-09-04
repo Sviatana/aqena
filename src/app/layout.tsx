@@ -1,38 +1,88 @@
-import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import type {
+  Metadata,
+} from "next";
+import {
+  Geist,
+} from "next/font/google";
+
 import "./globals.css";
-import { SectionReveal } from "@/components/section-reveal";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-  preload: false,
-});
+import {
+  LanguageSwitch,
+} from "@/components/language-switch";
+import {
+  SectionReveal,
+} from "@/components/section-reveal";
+import {
+  LocaleProvider,
+} from "@/i18n/client";
+import {
+  getServerDictionary,
+  getServerLocale,
+} from "@/i18n/server";
 
-export const metadata: Metadata = {
-  title: {
-    default: "Anvera — Customer support built from your company knowledge",
-    template: "%s | Anvera",
-  },
-  description:
-    "Turn your company knowledge into reliable customer answers and add your assistant to your website.",
-  applicationName: "Anvera",
-  keywords: [
-    "AI knowledge assistant",
-    "customer support AI",
-    "knowledge base",
-    "website chatbot",
-  ],
-};
+const geistSans =
+  Geist({
+    variable:
+      "--font-geist-sans",
+    subsets: [
+      "latin",
+    ],
+    preload:
+      false,
+  });
 
-export default function RootLayout({
+export async function generateMetadata():
+Promise<Metadata> {
+  const dictionary =
+    await getServerDictionary();
+
+  return {
+    title: {
+      default:
+        dictionary.metadata.title,
+      template:
+        "%s | Anvera",
+    },
+    description:
+      dictionary
+        .metadata
+        .description,
+    applicationName:
+      "Anvera",
+    creator:
+      "AI24Solutions",
+    publisher:
+      "AI24Solutions",
+    keywords:
+      dictionary
+        .metadata
+        .keywords,
+  };
+}
+
+export default async function RootLayout({
   children,
 }: Readonly<LayoutProps<"/">>) {
+  const locale =
+    await getServerLocale();
+
   return (
-    <html lang="en">
-      <body className={geistSans.variable}>
-        <SectionReveal />
-        {children}
+    <html lang={locale}>
+      <body
+        className={
+          geistSans.variable
+        }
+      >
+        <LocaleProvider
+          initialLocale={
+            locale
+          }
+        >
+          <LanguageSwitch />
+          <SectionReveal />
+          {children}
+        </LocaleProvider>
       </body>
     </html>
   );

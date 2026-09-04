@@ -2,9 +2,18 @@ import { AnveraLogo } from "@/components/anvera-brand";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-import { updatePassword } from "@/app/auth/actions";
-import { PasswordInput } from "@/app/auth/password-input";
-import { createClient } from "@/lib/supabase/server";
+import {
+  updatePassword,
+} from "@/app/auth/actions";
+import {
+  PasswordInput,
+} from "@/app/auth/password-input";
+import {
+  getServerDictionary,
+} from "@/i18n/server";
+import {
+  createClient,
+} from "@/lib/supabase/server";
 
 import styles from "../auth.module.css";
 
@@ -17,12 +26,19 @@ type PageProps = {
 export default async function UpdatePasswordPage({
   searchParams,
 }: PageProps) {
-  const supabase = await createClient();
+  const copy =
+    (
+      await getServerDictionary()
+    ).auth;
+
+  const supabase =
+    await createClient();
 
   const {
     data,
     error: claimsError,
-  } = await supabase.auth.getClaims();
+  } =
+    await supabase.auth.getClaims();
 
   if (
     claimsError
@@ -31,18 +47,19 @@ export default async function UpdatePasswordPage({
     redirect(
       "/auth/forgot-password?error="
         + encodeURIComponent(
-          "Request a new password reset link to continue.",
+          copy.errors.requestNewResetLink,
         ),
     );
   }
 
-  const params = await searchParams;
+  const params =
+    await searchParams;
 
   return (
     <main className={styles.page}>
       <section className={styles.brandPanel}>
         <Link
-          aria-label="Anvera home"
+          aria-label={copy.homeLabel}
           className={styles.logo}
           href="/"
         >
@@ -53,15 +70,15 @@ export default async function UpdatePasswordPage({
 
         <div className={styles.brandCopy}>
           <span className={styles.kicker}>
-            Secure your account
+            {copy.updatePassword.kicker}
           </span>
 
           <h1>
-            Choose a new password for Anvera
+            {copy.updatePassword.heroTitle}
           </h1>
 
           <p>
-            Use a password you do not use for other services.
+            {copy.updatePassword.heroBody}
           </p>
         </div>
       </section>
@@ -69,10 +86,12 @@ export default async function UpdatePasswordPage({
       <section className={styles.formSide}>
         <div className={styles.card}>
           <header className={styles.cardHeader}>
-            <h2>Set new password</h2>
+            <h2>
+              {copy.updatePassword.title}
+            </h2>
 
             <p>
-              Your new password must contain at least 8 characters
+              {copy.updatePassword.subtitle}
             </p>
           </header>
 
@@ -91,7 +110,7 @@ export default async function UpdatePasswordPage({
 
             <div className={styles.field}>
               <label htmlFor="password">
-                New password
+                {copy.common.newPassword}
               </label>
 
               <PasswordInput
@@ -105,7 +124,7 @@ export default async function UpdatePasswordPage({
 
             <div className={styles.field}>
               <label htmlFor="confirmPassword">
-                Confirm new password
+                {copy.common.confirmNewPassword}
               </label>
 
               <PasswordInput
@@ -121,7 +140,7 @@ export default async function UpdatePasswordPage({
               className={styles.primaryButton}
               type="submit"
             >
-              Update password
+              {copy.updatePassword.submit}
             </button>
           </form>
         </div>

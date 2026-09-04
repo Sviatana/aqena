@@ -1,7 +1,12 @@
 import BrandColorInput from "@/app/dashboard/brand-color-input";
 import Link from "next/link";
 
-import { createAssistant } from "@/app/dashboard/actions";
+import {
+  createAssistant,
+} from "@/app/dashboard/actions";
+import {
+  getServerDictionary,
+} from "@/i18n/server";
 
 import styles from "../../dashboard.module.css";
 
@@ -14,22 +19,27 @@ type PageProps = {
 export default async function NewAssistantPage({
   searchParams,
 }: PageProps) {
-  const params = await searchParams;
+  const copy =
+    (
+      await getServerDictionary()
+    ).dashboard.newAssistant;
+
+  const params =
+    await searchParams;
 
   return (
     <div className={styles.content}>
       <div>
         <div className={styles.eyebrow}>
-          New assistant
+          {copy.eyebrow}
         </div>
 
         <h1 className={styles.pageTitle}>
-          Set up your assistant
+          {copy.title}
         </h1>
 
         <p className={styles.pageLead}>
-          Start with its role and boundaries.
-          You will add company knowledge on the next step.
+          {copy.lead}
         </p>
       </div>
 
@@ -49,74 +59,81 @@ export default async function NewAssistantPage({
         >
           <div className={styles.field}>
             <label htmlFor="name">
-              Assistant name
+              {copy.assistantName}
             </label>
 
             <input
               id="name"
               name="name"
               type="text"
-              placeholder="Customer Support"
+              placeholder={
+                copy.namePlaceholder
+              }
               maxLength={80}
               required
             />
 
             <span className={styles.fieldHint}>
-              Customers may see this name later in the website chat.
+              {copy.nameHint}
             </span>
           </div>
 
           <div className={styles.field}>
             <label htmlFor="description">
-              Description
+              {copy.description}
             </label>
 
             <textarea
               id="description"
               name="description"
-              placeholder="Answers customer questions about delivery, returns and products"
+              placeholder={
+                copy.descriptionPlaceholder
+              }
               maxLength={500}
             />
           </div>
 
           <div className={styles.field}>
             <label htmlFor="welcome-message">
-              Welcome message
+              {copy.welcomeMessage}
             </label>
 
             <textarea
               id="welcome-message"
               name="welcomeMessage"
-              placeholder="Hi — ask me anything about our company knowledge."
+              placeholder={
+                copy.welcomePlaceholder
+              }
               maxLength={500}
             />
 
             <span className={styles.fieldHint}>
-              The first message customers see when the chat opens
+              {copy.welcomeHint}
             </span>
           </div>
 
           <div className={styles.field}>
             <label htmlFor="instructions">
-              Instructions
+              {copy.instructions}
             </label>
 
             <textarea
               id="instructions"
               name="instructions"
-              placeholder="Answer only from the company knowledge. Keep answers concise and say when the information is not available."
+              placeholder={
+                copy.instructionsPlaceholder
+              }
               maxLength={4000}
             />
 
             <span className={styles.fieldHint}>
-              If you leave this empty, Anvera will use the safe default:
-              answer only from uploaded company knowledge.
+              {copy.instructionsHint}
             </span>
           </div>
 
           <div className={styles.field}>
             <label htmlFor="brand-color">
-              Brand color
+              {copy.brandColor}
             </label>
 
             <BrandColorInput
@@ -126,7 +143,7 @@ export default async function NewAssistantPage({
             />
 
             <span className={styles.fieldHint}>
-              Choose the color your business uses in the website chat
+              {copy.brandHint}
             </span>
           </div>
 
@@ -135,14 +152,14 @@ export default async function NewAssistantPage({
               className={styles.secondaryButton}
               href="/dashboard"
             >
-              Cancel
+              {copy.cancel}
             </Link>
 
             <button
               className={styles.primaryButton}
               type="submit"
             >
-              Create assistant
+              {copy.submit}
             </button>
           </div>
         </form>

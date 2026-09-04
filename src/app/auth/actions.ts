@@ -1,7 +1,13 @@
 "use server";
 
-import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+
+import {
+  getServerDictionary,
+} from "@/i18n/server";
+import {
+  canonicalSiteUrl,
+} from "@/lib/site-url";
 
 import { createClient } from "@/lib/supabase/server";
 
@@ -23,20 +29,14 @@ function withError(
   return `${path}?error=${encodeURIComponent(message)}`;
 }
 
-async function requestOrigin() {
-  const requestHeaders = await headers();
-
-  const origin =
-    requestHeaders.get("origin")
-    ?? process.env.NEXT_PUBLIC_SITE_URL
-    ?? "http://localhost:3000";
-
-  return origin.replace(/\/$/, "");
-}
-
 export async function signUp(
   formData: FormData,
 ) {
+  const copy =
+    (
+      await getServerDictionary()
+    ).auth.errors;
+
   const displayName = formText(
     formData,
     "displayName",
@@ -56,7 +56,7 @@ export async function signUp(
     redirect(
       withError(
         "/auth/sign-up",
-        "Enter your email address.",
+        copy.enterEmail,
       ),
     );
   }
@@ -65,13 +65,14 @@ export async function signUp(
     redirect(
       withError(
         "/auth/sign-up",
-        "Use at least 8 characters for your password.",
+        copy.passwordMin8,
       ),
     );
   }
 
   const supabase = await createClient();
-  const origin = await requestOrigin();
+  const siteUrl =
+    canonicalSiteUrl();
 
   const {
     data,
@@ -91,7 +92,7 @@ export async function signUp(
        * server can exchange the authorization code for a session.
        */
       emailRedirectTo:
-        `${origin}/auth/callback?next=/dashboard`,
+        `${siteUrl}/auth/callback?next=/dashboard`,
     },
   });
 
@@ -99,7 +100,7 @@ export async function signUp(
     redirect(
       withError(
         "/auth/sign-up",
-        error.message,
+        copy.signUpFailed,
       ),
     );
   }
@@ -116,6 +117,11 @@ export async function signUp(
 export async function signIn(
   formData: FormData,
 ) {
+  const copy =
+    (
+      await getServerDictionary()
+    ).auth.errors;
+
   const email = formText(
     formData,
     "email",
@@ -130,7 +136,7 @@ export async function signIn(
     redirect(
       withError(
         "/auth/login",
-        "Enter your email and password.",
+        copy.enterEmailAndPassword,
       ),
     );
   }
@@ -148,7 +154,7 @@ export async function signIn(
     redirect(
       withError(
         "/auth/login",
-        "We could not sign you in. Check your email and password.",
+        copy.signInFailed,
       ),
     );
   }
@@ -159,6 +165,11 @@ export async function signIn(
 export async function requestPasswordReset(
   formData: FormData,
 ) {
+  const copy =
+    (
+      await getServerDictionary()
+    ).auth.errors;
+
   const email = formText(
     formData,
     "email",
@@ -168,20 +179,22 @@ export async function requestPasswordReset(
     redirect(
       withError(
         "/auth/forgot-password",
-        "Enter your email address.",
+        copy.enterEmail,
       ),
     );
   }
 
   const supabase = await createClient();
-  const origin = await requestOrigin();
+  const siteUrl =
+    canonicalSiteUrl();
 
   const {
     error,
   } = await supabase.auth.resetPasswordForEmail(
     email,
     {
-      redirectTo: origin,
+      redirectTo:
+        `${siteUrl}/auth/callback?next=/auth/update-password`,
     },
   );
 
@@ -189,7 +202,7 @@ export async function requestPasswordReset(
     redirect(
       withError(
         "/auth/forgot-password",
-        "We could not send the reset email. Please try again.",
+        copy.resetEmailFailed,
       ),
     );
   }
@@ -202,6 +215,11 @@ export async function requestPasswordReset(
 export async function updatePassword(
   formData: FormData,
 ) {
+  const copy =
+    (
+      await getServerDictionary()
+    ).auth.errors;
+
   const password = formText(
     formData,
     "password",
@@ -216,7 +234,7 @@ export async function updatePassword(
     redirect(
       withError(
         "/auth/update-password",
-        "Use at least 8 characters for your new password.",
+        copy.newPasswordMin8,
       ),
     );
   }
@@ -225,7 +243,7 @@ export async function updatePassword(
     redirect(
       withError(
         "/auth/update-password",
-        "The passwords do not match.",
+        copy.passwordsDoNotMatch,
       ),
     );
   }
@@ -244,7 +262,7 @@ export async function updatePassword(
     redirect(
       withError(
         "/auth/login",
-        "Your password reset link has expired. Request a new one.",
+        copy.resetLinkExpired,
       ),
     );
   }
@@ -259,7 +277,7 @@ export async function updatePassword(
     redirect(
       withError(
         "/auth/update-password",
-        "We could not update your password. Please try again.",
+        copy.updatePasswordFailed,
       ),
     );
   }
@@ -269,7 +287,7 @@ export async function updatePassword(
   redirect(
     "/auth/login?message="
       + encodeURIComponent(
-        "Password updated. Sign in with your new password.",
+        copy.passwordUpdated,
       ),
   );
 }

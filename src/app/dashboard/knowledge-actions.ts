@@ -8,6 +8,9 @@ import {
 } from "next/navigation";
 
 import {
+  getServerDictionary,
+} from "@/i18n/server";
+import {
   KNOWLEDGE_BUCKET,
   isUuid,
   knowledgeSourceLimit,
@@ -63,6 +66,11 @@ export async function createTextKnowledgeSource(
     redirect("/dashboard");
   }
 
+  const copy =
+    (
+      await getServerDictionary()
+    ).dashboard.knowledge;
+
   const supabase =
     await createClient();
 
@@ -97,28 +105,28 @@ export async function createTextKnowledgeSource(
   if (!title) {
     knowledgeError(
       assistantId,
-      "Give this text source a title.",
+      copy.errors.titleRequired,
     );
   }
 
   if (title.length > 120) {
     knowledgeError(
       assistantId,
-      "Source titles can be up to 120 characters.",
+      copy.errors.titleTooLong,
     );
   }
 
   if (!content) {
     knowledgeError(
       assistantId,
-      "Paste some company knowledge first.",
+      copy.errors.contentRequired,
     );
   }
 
   if (content.length > 100_000) {
     knowledgeError(
       assistantId,
-      "Text sources can contain up to 100,000 characters.",
+      copy.errors.contentTooLong,
     );
   }
 
@@ -161,14 +169,14 @@ export async function createTextKnowledgeSource(
   if (subscriptionResult.error) {
     knowledgeError(
       assistantId,
-      "We could not check your plan. Please try again.",
+      copy.errors.planCheckFailed,
     );
   }
 
   if (countResult.error) {
     knowledgeError(
       assistantId,
-      "We could not check your knowledge source limit.",
+      copy.errors.sourceLimitCheckFailed,
     );
   }
 
@@ -188,8 +196,8 @@ export async function createTextKnowledgeSource(
     knowledgeError(
       assistantId,
       plan === "free"
-        ? "The Free plan includes three knowledge sources. Upgrade to Pro to add more."
-        : "Your Pro plan includes up to 100 knowledge sources.",
+        ? copy.errors.freeLimit
+        : copy.errors.proLimit,
     );
   }
 
@@ -215,7 +223,7 @@ export async function createTextKnowledgeSource(
   if (insertError) {
     knowledgeError(
       assistantId,
-      "We could not add this knowledge source. Please try again.",
+      copy.errors.addFailed,
     );
   }
 
@@ -228,7 +236,7 @@ export async function createTextKnowledgeSource(
     knowledgeUrl(
       assistantId,
       "success",
-      "Text source added.",
+      copy.errors.textAdded,
     ),
   );
 }
@@ -243,6 +251,11 @@ export async function deleteKnowledgeSource(
   ) {
     redirect("/dashboard");
   }
+
+  const copy =
+    (
+      await getServerDictionary()
+    ).dashboard.knowledge;
 
   const supabase =
     await createClient();
@@ -281,7 +294,7 @@ export async function deleteKnowledgeSource(
   ) {
     knowledgeError(
       assistantId,
-      "This knowledge source is no longer available.",
+      copy.errors.unavailable,
     );
   }
 
@@ -301,7 +314,7 @@ export async function deleteKnowledgeSource(
     if (storageError) {
       knowledgeError(
         assistantId,
-        "We could not remove the stored document. Please try again.",
+        copy.errors.removeStoredFailed,
       );
     }
   }
@@ -320,7 +333,7 @@ export async function deleteKnowledgeSource(
   if (deleteError) {
     knowledgeError(
       assistantId,
-      "We could not remove this knowledge source.",
+      copy.errors.removeFailed,
     );
   }
 
@@ -333,7 +346,7 @@ export async function deleteKnowledgeSource(
     knowledgeUrl(
       assistantId,
       "success",
-      "Knowledge source removed.",
+      copy.errors.removed,
     ),
   );
 }
@@ -348,6 +361,11 @@ export async function processKnowledgeSource(
   ) {
     redirect("/dashboard");
   }
+
+  const copy =
+    (
+      await getServerDictionary()
+    ).dashboard.knowledge;
 
   const supabase =
     await createClient();
@@ -409,7 +427,7 @@ export async function processKnowledgeSource(
   ) {
     knowledgeError(
       assistantId,
-      "This knowledge source is no longer available.",
+      copy.errors.unavailable,
     );
   }
 
@@ -418,7 +436,7 @@ export async function processKnowledgeSource(
   ) {
     knowledgeError(
       assistantId,
-      "This knowledge source is already being processed.",
+      copy.errors.alreadyProcessing,
     );
   }
 
@@ -682,16 +700,16 @@ export async function processKnowledgeSource(
           message.includes(
             "does not contain readable text",
           )
-            ? "This PDF does not contain readable text. Use a text-based PDF, TXT or Markdown document."
+            ? "pdf_unreadable"
             : message.includes(
                 "can contain up to",
               )
-              ? message
+              ? "source_too_large"
               : message.includes(
                   "processing took too long",
                 )
-                ? "PDF processing took too long. Try a smaller document."
-                : "We could not process this source. Retry in a moment.",
+                ? "pdf_timeout"
+                : "processing_failed",
       })
       .eq("id", sourceId);
 
@@ -701,7 +719,7 @@ export async function processKnowledgeSource(
 
     return knowledgeError(
       assistantId,
-      "We could not process this knowledge source.",
+      copy.errors.processFailed,
     );
   }
 
@@ -709,7 +727,10 @@ export async function processKnowledgeSource(
     knowledgeUrl(
       assistantId,
       "success",
-      `Knowledge source processed into ${processedChunkCount} chunks.`,
+      copy.errors.processedTemplate.replace(
+        "{count}",
+        String(processedChunkCount),
+      ),
     ),
   );
 }

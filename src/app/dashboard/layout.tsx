@@ -3,6 +3,9 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { signOut } from "@/app/auth/actions";
+import {
+  getServerDictionary,
+} from "@/i18n/server";
 import { createClient } from "@/lib/supabase/server";
 
 import styles from "./dashboard.module.css";
@@ -12,17 +15,30 @@ export default async function DashboardLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const supabase = await createClient();
+  const copy =
+    (
+      await getServerDictionary()
+    ).dashboard.shell;
+
+  const supabase =
+    await createClient();
 
   const {
     data: claimsData,
     error: claimsError,
-  } = await supabase.auth.getClaims();
+  } =
+    await supabase.auth.getClaims();
 
-  const claims = claimsData?.claims;
-  const userId = claims?.sub;
+  const claims =
+    claimsData?.claims;
 
-  if (claimsError || !userId) {
+  const userId =
+    claims?.sub;
+
+  if (
+    claimsError
+    || !userId
+  ) {
     redirect("/auth/login");
   }
 
@@ -44,25 +60,27 @@ export default async function DashboardLayout({
   ]);
 
   const email =
-    typeof claims.email === "string"
+    typeof claims.email
+      === "string"
       ? claims.email
       : "";
 
   const displayName =
     profileResult.data?.display_name
     || email
-    || "Account";
+    || copy.accountFallback;
 
   const plan =
-    subscriptionResult.data?.plan === "pro"
-      ? "Pro"
-      : "Free";
+    subscriptionResult.data?.plan
+      === "pro"
+      ? copy.proPlan
+      : copy.freePlan;
 
   return (
     <div className={styles.shell}>
       <aside className={styles.sidebar}>
         <Link
-          aria-label="Anvera home"
+          aria-label={copy.homeLabel}
           className={styles.brand}
           href="/"
         >
@@ -73,14 +91,14 @@ export default async function DashboardLayout({
 
         <nav
           className={styles.nav}
-          aria-label="Dashboard navigation"
+          aria-label={copy.navigationLabel}
         >
           <Link
             className={`${styles.navLink} ${styles.navLinkActive}`}
             href="/dashboard"
           >
             <span className={styles.navDot} />
-            Assistants
+            {copy.assistants}
           </Link>
 
           <Link
@@ -88,7 +106,7 @@ export default async function DashboardLayout({
             href="/dashboard/assistants/new"
           >
             <span>+</span>
-            New assistant
+            {copy.newAssistant}
           </Link>
         </nav>
 
@@ -98,7 +116,7 @@ export default async function DashboardLayout({
           </div>
 
           <div className={styles.accountPlan}>
-            {plan} plan
+            {plan}
           </div>
 
           <form action={signOut}>
@@ -106,7 +124,7 @@ export default async function DashboardLayout({
               className={styles.signOut}
               type="submit"
             >
-              Sign out
+              {copy.signOut}
             </button>
           </form>
         </div>
@@ -115,14 +133,14 @@ export default async function DashboardLayout({
       <main className={styles.main}>
         <header className={styles.topbar}>
           <span className={styles.topbarTitle}>
-            Workspace
+            {copy.workspace}
           </span>
 
           <Link
             className={styles.newButton}
             href="/dashboard/assistants/new"
           >
-            New assistant
+            {copy.newAssistant}
           </Link>
         </header>
 

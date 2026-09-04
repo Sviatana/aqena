@@ -1646,3 +1646,78 @@
     justify-content: flex-end;
   }
 }
+
+/* Self-service destructive actions */
+
+.selfServiceDangerZone {
+  display: grid;
+  gap: 20px;
+  padding: 24px;
+  border: 1px solid #e2d3cf;
+  border-radius: 16px;
+  margin-top: 28px;
+  background: #fbf6f4;
+}
+
+.selfServiceDangerHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.selfServiceDangerHeader h2 {
+  margin: 6px 0 8px;
+  color: #342c29;
+  font-size: 18px;
+}
+
+.selfServiceDangerHeader p {
+  max-width: 720px;
+  margin: 0;
+  color: #756762;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.selfServiceDangerForm {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.selfServiceConfirmation {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  max-width: 680px;
+  color: #5f5551;
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.selfServiceConfirmation input {
+  width: 16px;
+  height: 16px;
+  margin: 2px 0 0;
+  flex: 0 0 auto;
+}
+
+.selfServiceDangerForm .dangerButton {
+  flex: 0 0 auto;
+}
+
+@media (max-width: 720px) {
+  .selfServiceDangerZone {
+    padding: 19px;
+  }
+
+  .selfServiceDangerForm {
+    flex-direction: column;
+  }
+
+  .selfServiceDangerForm .dangerButton {
+    width: 100%;
+  }
+}

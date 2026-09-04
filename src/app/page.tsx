@@ -1,8 +1,21 @@
 import Link from "next/link";
-import { AnveraLogo, AnveraMark } from "@/components/anvera-brand";
-import { createClient } from "@/lib/supabase/server";
+
+import {
+  AnveraLogo,
+  AnveraMark,
+} from "@/components/anvera-brand";
+import {
+  getServerDictionary,
+} from "@/i18n/server";
+import {
+  createClient,
+} from "@/lib/supabase/server";
+
 const CheckIcon = () => (
-  <svg viewBox="0 0 20 20" aria-hidden="true">
+  <svg
+    viewBox="0 0 20 20"
+    aria-hidden="true"
+  >
     <path
       d="m5 10.3 3.1 3.1L15 6.6"
       fill="none"
@@ -15,7 +28,10 @@ const CheckIcon = () => (
 );
 
 const ArrowIcon = () => (
-  <svg viewBox="0 0 20 20" aria-hidden="true">
+  <svg
+    viewBox="0 0 20 20"
+    aria-hidden="true"
+  >
     <path
       d="M4 10h11m-4-4 4 4-4 4"
       fill="none"
@@ -28,7 +44,10 @@ const ArrowIcon = () => (
 );
 
 const FileIcon = () => (
-  <svg viewBox="0 0 24 24" aria-hidden="true">
+  <svg
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+  >
     <path
       d="M7 3.75h6.8L18 8v12.25H7V3.75Z"
       fill="none"
@@ -47,7 +66,10 @@ const FileIcon = () => (
 );
 
 const ChatIcon = () => (
-  <svg viewBox="0 0 24 24" aria-hidden="true">
+  <svg
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+  >
     <path
       d="M5 5.5h14v10H10l-5 4v-14Z"
       fill="none"
@@ -59,7 +81,10 @@ const ChatIcon = () => (
 );
 
 const CodeIcon = () => (
-  <svg viewBox="0 0 24 24" aria-hidden="true">
+  <svg
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+  >
     <path
       d="m9 7-5 5 5 5M15 7l5 5-5 5"
       fill="none"
@@ -72,6 +97,12 @@ const CodeIcon = () => (
 );
 
 export default async function Home() {
+  const dictionary =
+    await getServerDictionary();
+
+  const copy =
+    dictionary.landing;
+
   const supabase =
     await createClient();
 
@@ -92,8 +123,8 @@ export default async function Home() {
 
   const primaryLabel =
     isAuthenticated
-      ? "Open dashboard"
-      : "Build your assistant";
+      ? copy.navigation.openDashboard
+      : copy.navigation.buildAssistant;
 
   return (
     <main>
@@ -102,7 +133,7 @@ export default async function Home() {
           <Link
             className="brand"
             href="/"
-            aria-label="Anvera home"
+            aria-label={copy.homeLabel}
           >
             <AnveraLogo
               priority
@@ -110,11 +141,22 @@ export default async function Home() {
             />
           </Link>
 
-          <nav className="desktop-nav" aria-label="Main navigation">
-            <a href="#how-it-works">How it works</a>
-            <a href="#features">Features</a>
-            <a href="#pricing">Pricing</a>
-            <a href="#faq">FAQ</a>
+          <nav
+            className="desktop-nav"
+            aria-label={copy.navigation.howItWorks}
+          >
+            <a href="#how-it-works">
+              {copy.navigation.howItWorks}
+            </a>
+            <a href="#features">
+              {copy.navigation.features}
+            </a>
+            <a href="#pricing">
+              {copy.navigation.pricing}
+            </a>
+            <a href="#faq">
+              {copy.navigation.faq}
+            </a>
           </nav>
 
           <div className="header-actions">
@@ -122,7 +164,7 @@ export default async function Home() {
               className="text-link demo-link"
               href="/demo/northstar-coffee"
             >
-              See demo
+              {copy.navigation.demo}
             </a>
 
             <a
@@ -134,8 +176,8 @@ export default async function Home() {
               }
             >
               {isAuthenticated
-                ? "Dashboard"
-                : "Sign in"}
+                ? copy.navigation.dashboard
+                : copy.navigation.signIn}
             </a>
 
             <a
@@ -153,13 +195,15 @@ export default async function Home() {
           <div className="hero-copy">
             <div className="eyebrow">
               <span className="eyebrow-dot" />
-              Built on your business knowledge
+              {copy.hero.eyebrow}
             </div>
 
-            <h1 className="anvera-hero-title-final">Turn company knowledge into reliable customer answers</h1>
+            <h1 className="anvera-hero-title-final">
+              {copy.hero.title}
+            </h1>
 
             <p className="hero-lead">
-              Add your company docs, test real questions and put a helpful assistant on your website in minutes
+              {copy.hero.lead}
             </p>
 
             <div className="hero-actions">
@@ -171,39 +215,56 @@ export default async function Home() {
                 <ArrowIcon />
               </a>
 
-              <a className="button button-secondary" href="#how-it-works">
-                See how it works
+              <a
+                className="button button-secondary"
+                href="#how-it-works"
+              >
+                {copy.hero.secondaryCta}
               </a>
             </div>
 
             <div className="trust-row">
               <span>
                 <CheckIcon />
-                Answers from your business knowledge
+                {copy.hero.trustAnswers}
               </span>
+
               <span>
                 <CheckIcon />
-                Sources shown with every answer
+                {copy.hero.trustSources}
               </span>
+
               <span>
                 <CheckIcon />
-                No credit card to start
+                {copy.hero.trustNoCard}
               </span>
             </div>
           </div>
 
-          <div className="hero-product" aria-label="Anvera product preview">
+          <div
+            className="hero-product"
+            aria-label={
+              copy.hero.productPreviewLabel
+            }
+          >
             <div className="product-window">
               <div className="window-topbar">
-                <div className="window-dots" aria-hidden="true">
+                <div
+                  className="window-dots"
+                  aria-hidden="true"
+                >
                   <span />
                   <span />
                   <span />
                 </div>
-                <span className="window-title">Northstar Coffee Assistant</span>
+
+                <span className="window-title">
+                  {copy.hero.assistantTitle}
+                </span>
+
                 <span className="status-pill">
                   <span />
-                  Ready
+                  {copy.hero.ready}
                 </span>
               </div>
 
@@ -217,59 +278,81 @@ export default async function Home() {
                     <strong>Anvera</strong>
                   </div>
 
-                  <div className="sidebar-label">Workspace</div>
+                  <div className="sidebar-label">
+                    {copy.hero.workspace}
+                  </div>
+
                   <div className="sidebar-item active">
                     <ChatIcon />
-                    Playground
+                    {copy.hero.playground}
                   </div>
+
                   <div className="sidebar-item">
                     <FileIcon />
-                    Knowledge
+                    {copy.hero.knowledge}
                   </div>
+
                   <div className="sidebar-item">
                     <CodeIcon />
-                    Install
+                    {copy.hero.install}
                   </div>
                 </aside>
 
                 <div className="chat-preview">
                   <div className="chat-heading">
                     <div>
-                      <span className="chat-label">PLAYGROUND</span>
-                      <h2>Test your assistant</h2>
+                      <span className="chat-label">
+                        {copy.hero.playground.toUpperCase()}
+                      </span>
+
+                      <h2>
+                        {copy.hero.testAssistant}
+                      </h2>
                     </div>
-                    <span className="model-status">3 sources ready</span>
+
+                    <span className="model-status">
+                      {copy.hero.sourcesReady}
+                    </span>
                   </div>
 
                   <div className="chat-messages">
                     <div className="message user-message">
-                      Do you offer free delivery?
+                      {copy.hero.questionDelivery}
                     </div>
 
                     <div className="message assistant-message">
-                      <div className="assistant-avatar">N</div>
+                      <div className="assistant-avatar">
+                        N
+                      </div>
+
                       <div>
                         <p>
-                          Yes. Northstar Coffee offers free standard shipping on
-                          orders of $50 or more within the contiguous United States.
+                          {copy.hero.answerDelivery}
                         </p>
 
                         <div className="source-card">
                           <FileIcon />
+
                           <div>
-                            <strong>Delivery Policy.pdf</strong>
-                            <span>Page 2</span>
+                            <strong>
+                              {copy.hero.deliveryDocument}
+                            </strong>
+                            <span>
+                              {copy.hero.pageTwo}
+                            </span>
                           </div>
                         </div>
                       </div>
                     </div>
 
                     <div className="message user-message short">
-                      Can I return opened coffee?
+                      {copy.hero.questionReturn}
                     </div>
 
                     <div className="typing-row">
-                      <div className="assistant-avatar">N</div>
+                      <div className="assistant-avatar">
+                        N
+                      </div>
                       <span />
                       <span />
                       <span />
@@ -277,8 +360,14 @@ export default async function Home() {
                   </div>
 
                   <div className="chat-input">
-                    <span>Ask a question about your company</span>
-                    <button type="button" aria-label="Send message">
+                    <span>
+                      {copy.hero.input}
+                    </span>
+
+                    <button
+                      type="button"
+                      aria-label={copy.preview.input}
+                    >
                       <ArrowIcon />
                     </button>
                   </div>
@@ -290,20 +379,33 @@ export default async function Home() {
               <span className="floating-icon">
                 <FileIcon />
               </span>
+
               <div>
-                <strong>3 sources ready</strong>
-                <span>Knowledge is ready</span>
+                <strong>
+                  {copy.hero.sourcesReady}
+                </strong>
+                <span>
+                  {copy.hero.knowledgeReady}
+                </span>
               </div>
-              <span className="success-dot">✓</span>
+
+              <span className="success-dot">
+                ✓
+              </span>
             </div>
 
             <div className="floating-card widget-floating-card">
               <span className="floating-icon dark">
                 <CodeIcon />
               </span>
+
               <div>
-                <strong>Website chat</strong>
-                <span>Quick website setup</span>
+                <strong>
+                  {copy.hero.websiteChat}
+                </strong>
+                <span>
+                  {copy.hero.quickSetup}
+                </span>
               </div>
             </div>
           </div>
@@ -313,229 +415,318 @@ export default async function Home() {
       <section className="problem-section">
         <div className="container narrow-container">
           <div className="section-heading centered">
-            <span className="section-kicker">THE PROBLEM</span>
-            <h2>Company knowledge gets harder to use as you grow</h2>
+            <span className="section-kicker">
+              {copy.problem.kicker}
+            </span>
+
+            <h2>
+              {copy.problem.title}
+            </h2>
+
             <p>
-              Important answers end up across documents, folders and old conversations while customers keep asking the same questions
+              {copy.problem.body}
             </p>
           </div>
 
           <div className="problem-grid">
             <article>
-              <span className="problem-number">01</span>
-              <h3>Finding the right answer takes time</h3>
+              <span className="problem-number">
+                01
+              </span>
+              <h3>
+                {copy.problem.firstTitle}
+              </h3>
               <p>
-                Your team searches through files and conversations before it can answer with confidence
+                {copy.problem.firstBody}
               </p>
             </article>
 
             <article>
-              <span className="problem-number">02</span>
-              <h3>Answers become inconsistent</h3>
+              <span className="problem-number">
+                02
+              </span>
+              <h3>
+                {copy.problem.secondTitle}
+              </h3>
               <p>
-                Different people give different answers when the right company information is difficult to find
+                {copy.problem.secondBody}
               </p>
             </article>
 
             <article>
-              <span className="problem-number">03</span>
-              <h3>An assistant should know when to stop</h3>
+              <span className="problem-number">
+                03
+              </span>
+              <h3>
+                {copy.problem.thirdTitle}
+              </h3>
               <p>
-                If your company knowledge does not contain the answer, Anvera should say so instead of guessing
+                {copy.problem.thirdBody}
               </p>
             </article>
           </div>
         </div>
       </section>
 
-      <section className="how-section" id="how-it-works">
+      <section
+        className="how-section"
+        id="how-it-works"
+      >
         <div className="container">
           <div className="section-heading">
-            <span className="section-kicker">HOW IT WORKS</span>
-            <h2>Build a reliable assistant in three simple steps</h2>
+            <span className="section-kicker">
+              {copy.how.kicker}
+            </span>
+            <h2>
+              {copy.how.title}
+            </h2>
           </div>
 
           <div className="steps-grid">
             <article className="step-card">
               <div className="step-top">
-                <span className="step-number">01</span>
+                <span className="step-number">
+                  01
+                </span>
                 <span className="feature-icon">
                   <FileIcon />
                 </span>
               </div>
-              <h3>Add your knowledge</h3>
+
+              <h3>
+                {copy.how.firstTitle}
+              </h3>
+
               <p>
-                Upload the guides, policies and FAQs your team already relies on
+                {copy.how.firstBody}
               </p>
+
               <div className="mini-ui files-mini-ui">
                 <span>
                   <FileIcon />
-                  Delivery Policy.pdf
-                  <b>Ready</b>
+                  {copy.how.firstFile}
+                  <b>
+                    {copy.how.ready}
+                  </b>
                 </span>
+
                 <span>
                   <FileIcon />
-                  Product FAQ
-                  <b>Ready</b>
+                  {copy.how.secondFile}
+                  <b>
+                    {copy.how.ready}
+                  </b>
                 </span>
               </div>
             </article>
 
             <article className="step-card">
               <div className="step-top">
-                <span className="step-number">02</span>
+                <span className="step-number">
+                  02
+                </span>
                 <span className="feature-icon">
                   <ChatIcon />
                 </span>
               </div>
-              <h3>Test real questions</h3>
+
+              <h3>
+                {copy.how.secondTitle}
+              </h3>
+
               <p>
-                Ask the questions customers actually send you and review every answer
+                {copy.how.secondBody}
               </p>
+
               <div className="mini-ui question-mini-ui">
-                <span>What is your return window?</span>
+                <span>
+                  {copy.how.sampleQuestion}
+                </span>
+
                 <div>
                   <i>A</i>
-                  <p>Returns are accepted within 30 days</p>
+                  <p>
+                    {copy.how.sampleAnswer}
+                  </p>
                 </div>
               </div>
             </article>
 
             <article className="step-card">
               <div className="step-top">
-                <span className="step-number">03</span>
+                <span className="step-number">
+                  03
+                </span>
                 <span className="feature-icon">
                   <CodeIcon />
                 </span>
               </div>
-              <h3>Add it to your website</h3>
+
+              <h3>
+                {copy.how.thirdTitle}
+              </h3>
+
               <p>
-                When you are ready, add the assistant to your site with a simple website chat
+                {copy.how.thirdBody}
               </p>
+
               <div className="mini-ui code-mini-ui">
-                <strong className="install-ready">Website assistant ready</strong>
-                <span>Copy code</span>
+                <strong className="install-ready">
+                  {copy.how.installReady}
+                </strong>
+                <span>
+                  {copy.how.copyCode}
+                </span>
               </div>
             </article>
           </div>
         </div>
       </section>
 
-      <section className="features-section" id="features">
+      <section
+        className="features-section"
+        id="features"
+      >
         <div className="container trust-layout">
           <div className="trust-heading">
             <div className="trust-heading-main">
-              <p className="section-kicker">BUILT FOR TRUST</p>
+              <p className="section-kicker">
+                {copy.trust.kicker}
+              </p>
 
               <h2>
-                Answers you can verify before customers rely on them
+                {copy.trust.title}
               </h2>
             </div>
 
             <p className="trust-heading-copy">
-              Anvera starts with your company knowledge and keeps the source
-              behind every answer easy to check.
+              {copy.trust.body}
             </p>
           </div>
 
           <div className="trust-board">
             <article className="trust-item">
-              <span className="trust-number">01</span>
+              <span className="trust-number">
+                01
+              </span>
 
               <div>
-                <h3>Company knowledge first</h3>
-
+                <h3>
+                  {copy.trust.firstTitle}
+                </h3>
                 <p>
-                  Answers come from the guides, policies and FAQs you provide.
-                  If the information is missing, Anvera says so.
+                  {copy.trust.firstBody}
                 </p>
               </div>
 
               <span className="trust-proof">
-                <span aria-hidden="true">✓</span>
-                Your knowledge
+                <span aria-hidden="true">
+                  ✓
+                </span>
+                {copy.trust.firstProof}
               </span>
             </article>
 
             <article className="trust-item">
-              <span className="trust-number">02</span>
+              <span className="trust-number">
+                02
+              </span>
 
               <div>
-                <h3>Every source stays visible</h3>
-
+                <h3>
+                  {copy.trust.secondTitle}
+                </h3>
                 <p>
-                  See which company document supported an answer and check the
-                  information whenever you need to.
+                  {copy.trust.secondBody}
                 </p>
               </div>
 
               <span className="trust-proof">
-                <span aria-hidden="true">✓</span>
-                Source included
+                <span aria-hidden="true">
+                  ✓
+                </span>
+                {copy.trust.secondProof}
               </span>
             </article>
 
             <article className="trust-item">
-              <span className="trust-number">03</span>
+              <span className="trust-number">
+                03
+              </span>
 
               <div>
-                <h3>Test before customers use it</h3>
-
+                <h3>
+                  {copy.trust.thirdTitle}
+                </h3>
                 <p>
-                  Ask real questions first, review the answers and catch gaps
-                  in your company knowledge before launch.
+                  {copy.trust.thirdBody}
                 </p>
               </div>
 
               <span className="trust-proof">
-                <span aria-hidden="true">✓</span>
-                Review first
+                <span aria-hidden="true">
+                  ✓
+                </span>
+                {copy.trust.thirdProof}
               </span>
             </article>
 
             <article className="trust-item trust-item-accent">
-              <span className="trust-number">04</span>
+              <span className="trust-number">
+                04
+              </span>
 
               <div>
-                <h3>Move to your website when ready</h3>
-
+                <h3>
+                  {copy.trust.fourthTitle}
+                </h3>
                 <p>
-                  Once the answers look right, give customers the same helpful
-                  experience directly on your website.
+                  {copy.trust.fourthBody}
                 </p>
               </div>
 
               <span className="trust-proof">
-                <span aria-hidden="true">✓</span>
-                Website chat
+                <span aria-hidden="true">
+                  ✓
+                </span>
+                {copy.trust.fourthProof}
               </span>
             </article>
           </div>
         </div>
       </section>
 
-      <section className="preview-section" id="product-preview">
+      <section
+        className="preview-section"
+        id="product-preview"
+      >
         <div className="container">
           <div className="preview-panel">
             <div className="preview-copy">
-              <span className="section-kicker light-kicker">PLAYGROUND</span>
-              <h2>Review answers before customers see them</h2>
+              <span className="section-kicker light-kicker">
+                {copy.preview.kicker}
+              </span>
+
+              <h2>
+                {copy.preview.title}
+              </h2>
+
               <p>
-                Test customer questions, check the sources and spot missing information before customers see the assistant
+                {copy.preview.body}
               </p>
 
               <ul className="preview-list">
                 <li>
                   <CheckIcon />
-                  Clear feedback while answers are prepared
+                  {copy.preview.firstPoint}
                 </li>
                 <li>
                   <CheckIcon />
-                  Sources shown with every answer
+                  {copy.preview.secondPoint}
                 </li>
                 <li>
                   <CheckIcon />
-                  Clear response when information is missing
+                  {copy.preview.thirdPoint}
                 </li>
               </ul>
 
@@ -543,42 +734,55 @@ export default async function Home() {
                 className="button-secondary preview-demo-button"
                 href="/demo/northstar-coffee"
               >
-                View live demo
+                {copy.preview.liveDemo}
               </a>
             </div>
 
             <div className="preview-chat">
               <div className="preview-chat-top">
                 <div>
-                  <span className="preview-avatar">N</span>
+                  <span className="preview-avatar">
+                    N
+                  </span>
+
                   <div>
-                    <strong>Northstar Coffee</strong>
-                    <small>AI support assistant</small>
+                    <strong>
+                      Northstar Coffee
+                    </strong>
+                    <small>
+                      {copy.preview.assistantLabel}
+                    </small>
                   </div>
                 </div>
-                <span className="online-status">Online</span>
+
+                <span className="online-status">
+                  {copy.preview.online}
+                </span>
               </div>
 
               <div className="preview-chat-body">
                 <div className="preview-bubble assistant-bubble">
-                  Hi — ask me anything about Northstar Coffee products,
-                  delivery or returns
+                  {copy.preview.welcome}
                 </div>
+
                 <div className="preview-bubble customer-bubble">
-                  How quickly do you ship orders?
+                  {copy.preview.question}
                 </div>
+
                 <div className="preview-bubble assistant-bubble">
-                  Orders placed before 2 PM ET usually ship the same business
-                  day
+                  {copy.preview.answer}
+
                   <div className="inline-source">
                     <FileIcon />
-                    Shipping FAQ
+                    {copy.preview.source}
                   </div>
                 </div>
               </div>
 
               <div className="preview-chat-input">
-                <span>Ask a question</span>
+                <span>
+                  {copy.preview.input}
+                </span>
                 <i>
                   <ArrowIcon />
                 </i>
@@ -588,158 +792,207 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="pricing-section" id="pricing">
+      <section
+        className="pricing-section"
+        id="pricing"
+      >
         <div className="container pricing-container">
           <div className="section-heading centered">
-            <span className="section-kicker">PRICING</span>
-            <h2>Start free, add it to your website when you are ready</h2>
+            <span className="section-kicker">
+              {copy.pricing.kicker}
+            </span>
+
+            <h2>
+              {copy.pricing.title}
+            </h2>
+
             <p>
-              Build and test your first assistant for free. Upgrade when you want website chat and higher limits
+              {copy.pricing.body}
             </p>
           </div>
 
           <div className="pricing-grid">
             <article className="pricing-card">
               <div className="plan-heading">
-                <h3>Free</h3>
-                <p>For building and testing your first assistant</p>
+                <h3>
+                  {copy.pricing.freeName}
+                </h3>
+                <p>
+                  {copy.pricing.freeDescription}
+                </p>
               </div>
 
               <div className="price">
                 <strong>$0</strong>
-                <span>forever</span>
+                <span>
+                  {copy.pricing.forever}
+                </span>
               </div>
 
-              <a className="button button-plan-secondary" href={primaryHref}>
-                Start with Free
+              <a
+                className="button button-plan-secondary"
+                href={primaryHref}
+              >
+                {copy.pricing.startFree}
               </a>
 
               <ul>
                 <li>
-                  <CheckIcon />1 assistant
-                </li>
-                <li>
-                  <CheckIcon />3 knowledge sources
-                </li>
-                <li>
-                  <CheckIcon />50 messages / month
+                  <CheckIcon />
+                  {copy.pricing.freeAssistant}
                 </li>
                 <li>
                   <CheckIcon />
-                  Playground
+                  {copy.pricing.freeSources}
                 </li>
                 <li>
                   <CheckIcon />
-                  Basic customization
+                  {copy.pricing.freeMessages}
                 </li>
                 <li>
                   <CheckIcon />
-                  Anvera branding
+                  {copy.pricing.playground}
+                </li>
+                <li>
+                  <CheckIcon />
+                  {copy.pricing.basicCustomization}
+                </li>
+                <li>
+                  <CheckIcon />
+                  {copy.pricing.anveraBranding}
                 </li>
               </ul>
 
-              <div className="plan-limit">Website chat not included</div>
+              <div className="plan-limit">
+                {copy.pricing.freeLimit}
+              </div>
             </article>
 
             <article className="pricing-card pricing-card-pro">
-              <div className="popular-badge">Best for websites</div>
+              <div className="popular-badge">
+                {copy.pricing.bestForWebsites}
+              </div>
 
               <div className="plan-heading">
-                <h3>Pro</h3>
-                <p>For assistants ready to support real customers</p>
+                <h3>
+                  {copy.pricing.proName}
+                </h3>
+                <p>
+                  {copy.pricing.proDescription}
+                </p>
               </div>
 
               <div className="price">
                 <strong>$29</strong>
-                <span>/ month</span>
+                <span>
+                  {copy.pricing.perMonth}
+                </span>
               </div>
 
-              <a className="button button-plan-primary" href={primaryHref}>
-                Choose Pro
+              <a
+                className="button button-plan-primary"
+                href={primaryHref}
+              >
+                {copy.pricing.choosePro}
               </a>
 
               <ul>
                 <li>
                   <CheckIcon />
-                  Up to 5 assistants
+                  {copy.pricing.proAssistants}
                 </li>
                 <li>
                   <CheckIcon />
-                  100 knowledge sources
+                  {copy.pricing.proSources}
                 </li>
                 <li>
                   <CheckIcon />
-                  2,000 messages / month
+                  {copy.pricing.proMessages}
                 </li>
                 <li>
                   <CheckIcon />
-                  Add to your website
+                  {copy.pricing.addWebsite}
                 </li>
                 <li>
                   <CheckIcon />
-                  Remove Anvera branding
+                  {copy.pricing.removeBranding}
                 </li>
                 <li>
                   <CheckIcon />
-                  Advanced customization
+                  {copy.pricing.advancedCustomization}
                 </li>
               </ul>
 
-              <div className="plan-note">Website chat included</div>
+              <div className="plan-note">
+                {copy.pricing.proNote}
+              </div>
             </article>
           </div>
         </div>
       </section>
 
-      <section className="faq-section" id="faq">
+      <section
+        className="faq-section"
+        id="faq"
+      >
         <div className="container faq-grid">
           <div className="faq-heading">
-            <span className="section-kicker">FAQ</span>
-            <h2>Questions before you build</h2>
+            <span className="section-kicker">
+              {copy.faq.kicker}
+            </span>
+
+            <h2>
+              {copy.faq.title}
+            </h2>
+
             <p>
-              Start with your company knowledge, test the answers and add the assistant to your website when you are ready
+              {copy.faq.body}
             </p>
           </div>
 
           <div className="faq-list">
             <details open>
-              <summary>What can I add as knowledge?</summary>
+              <summary>
+                {copy.faq.firstQuestion}
+              </summary>
               <p>
-                Add PDF, TXT and Markdown files, or paste text directly for quick knowledge entries
+                {copy.faq.firstAnswer}
               </p>
             </details>
 
             <details>
-              <summary>What happens when the answer is not in my company knowledge?</summary>
+              <summary>
+                {copy.faq.secondQuestion}
+              </summary>
               <p>
-                The assistant answers from retrieved company knowledge and says
-                when the available sources do not contain the requested
-                information
+                {copy.faq.secondAnswer}
               </p>
             </details>
 
             <details>
-              <summary>Can I check where an answer came from?</summary>
+              <summary>
+                {copy.faq.thirdQuestion}
+              </summary>
               <p>
-                Yes. Answers from your knowledge show source references such as the file
-                name and page where available
+                {copy.faq.thirdAnswer}
               </p>
             </details>
 
             <details>
-              <summary>Can I add the assistant to my website?</summary>
+              <summary>
+                {copy.faq.fourthQuestion}
+              </summary>
               <p>
-                Yes. Website chat is included in Pro. Add Anvera to your website
-                with the provided embed code and let customers ask questions
-                directly from your company knowledge
+                {copy.faq.fourthAnswer}
               </p>
             </details>
 
             <details>
-              <summary>Will I be charged during the product demo?</summary>
+              <summary>
+                {copy.faq.fifthQuestion}
+              </summary>
               <p>
-                No. The MVP uses a clearly labelled mock checkout and does not
-                collect real card details
+                {copy.faq.fifthAnswer}
               </p>
             </details>
           </div>
@@ -750,9 +1003,14 @@ export default async function Home() {
         <div className="container">
           <div className="cta-panel">
             <div>
-              <span className="section-kicker light-kicker">GET STARTED</span>
-              <h2>Give customers answers backed by your actual company knowledge</h2>
+              <span className="section-kicker light-kicker">
+                {copy.cta.kicker}
+              </span>
+              <h2>
+                {copy.cta.title}
+              </h2>
             </div>
+
             <a
               className="button button-light"
               href={primaryHref}
@@ -769,19 +1027,27 @@ export default async function Home() {
           <Link
             className="brand footer-brand"
             href="/"
-            aria-label="Anvera home"
+            aria-label={copy.homeLabel}
           >
             <AnveraLogo
               width={108}
             />
           </Link>
 
-          <p>AI support grounded in your company knowledge</p>
+          <p>
+            {copy.footer.tagline}
+          </p>
 
           <div className="footer-links">
-            <a href="#how-it-works">How it works</a>
-            <a href="#pricing">Pricing</a>
-            <a href="#faq">FAQ</a>
+            <a href="#how-it-works">
+              {copy.navigation.howItWorks}
+            </a>
+            <a href="#pricing">
+              {copy.navigation.pricing}
+            </a>
+            <a href="#faq">
+              {copy.navigation.faq}
+            </a>
           </div>
         </div>
       </footer>

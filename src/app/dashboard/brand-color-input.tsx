@@ -4,6 +4,10 @@ import {
   useState,
 } from "react";
 
+import {
+  useLocale,
+} from "@/i18n/client";
+
 import styles from "./dashboard.module.css";
 
 type BrandColorInputProps = {
@@ -32,6 +36,13 @@ export default function BrandColorInput({
   id,
   name,
 }: BrandColorInputProps) {
+  const {
+    dictionary,
+  } = useLocale();
+
+  const copy =
+    dictionary.dashboard.newAssistant;
+
   const initialColor =
     validColor(
       defaultValue,
@@ -121,7 +132,7 @@ export default function BrandColorInput({
         }
       >
         <input
-          aria-label="Choose business brand color"
+          aria-label={copy.brandColorPickerLabel}
           className={
             styles.brandColorPicker
           }
@@ -142,16 +153,16 @@ export default function BrandColorInput({
           }
         >
           <strong>
-            Business color
+            {copy.brandColor}
           </strong>
 
           <span>
-            Website chat
+            {copy.brandColorContext}
           </span>
         </div>
 
         <input
-          aria-label="Brand color hexadecimal value"
+          aria-label={copy.brandColorHexLabel}
           className={
             styles.brandColorHex
           }
@@ -188,7 +199,7 @@ export default function BrandColorInput({
         />
 
         <span>
-          This color is used in the customer-facing website chat
+          {copy.brandColorPreview}
         </span>
       </div>
     </div>

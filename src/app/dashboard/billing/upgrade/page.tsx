@@ -8,6 +8,14 @@ import {
   completeMockUpgrade,
 } from "@/app/dashboard/billing-actions";
 import {
+  getServerDictionary,
+} from "@/i18n/server";
+
+import {
+  isMockBillingEnabled,
+} from "@/lib/billing-mode";
+
+import {
   createClient,
 } from "@/lib/supabase/server";
 
@@ -26,6 +34,11 @@ export default async function UpgradePage({
 }: PageProps) {
   const query =
     await searchParams;
+
+  const copy =
+    (
+      await getServerDictionary()
+    ).dashboard.billing;
 
   const assistantId =
     query.assistant?.trim()
@@ -100,7 +113,7 @@ export default async function UpgradePage({
     subscriptionResult.error
   ) {
     throw new Error(
-      "Unable to load subscription",
+      copy.errors.subscriptionLoadFailed,
     );
   }
 
@@ -123,10 +136,7 @@ export default async function UpgradePage({
   }
 
   const mockEnabled =
-    process.env.BILLING_MODE
-      ?.trim()
-      .toLowerCase()
-    === "mock";
+    isMockBillingEnabled();
 
   return (
     <div
@@ -142,7 +152,7 @@ export default async function UpgradePage({
           `/dashboard/assistants/${assistant.id}/install`
         }
       >
-        ← Back to installation
+        {copy.backToInstallation}
       </Link>
 
       <div
@@ -155,7 +165,7 @@ export default async function UpgradePage({
             dashboardStyles.eyebrow
           }
         >
-          Upgrade
+          {copy.eyebrow}
         </div>
 
         <h1
@@ -163,7 +173,7 @@ export default async function UpgradePage({
             dashboardStyles.pageTitle
           }
         >
-          Upgrade to Pro
+          {copy.title}
         </h1>
 
         <p
@@ -171,7 +181,7 @@ export default async function UpgradePage({
             dashboardStyles.pageLead
           }
         >
-          Unlock website embedding and higher limits for your workspace
+          {copy.lead}
         </p>
       </div>
 
@@ -201,17 +211,15 @@ export default async function UpgradePage({
               styles.mockBadge
             }
           >
-            Mock checkout
+            {copy.mockCheckout}
           </span>
 
           <h2>
-            Anvera Pro
+            {copy.productName}
           </h2>
 
           <p>
-            No real payment will be processed. This demo checkout
-            activates Pro without collecting or storing payment
-            card information
+            {copy.demoExplanation}
           </p>
 
           <div
@@ -220,11 +228,11 @@ export default async function UpgradePage({
             }
           >
             <strong>
-              $29
+              {copy.price}
             </strong>
 
             <span>
-              / month
+              {copy.perMonth}
             </span>
           </div>
 
@@ -234,12 +242,12 @@ export default async function UpgradePage({
             }
           >
             {[
-              "Up to 5 assistants",
-              "Up to 100 knowledge sources",
-              "2,000 messages per month",
-              "Website embed",
-              "Remove Anvera branding",
-              "Advanced customization",
+              copy.featureAssistants,
+              copy.featureKnowledge,
+              copy.featureMessages,
+              copy.featureEmbed,
+              copy.featureBranding,
+              copy.featureCustomization,
             ].map(
               (feature) => (
                 <div
@@ -288,7 +296,7 @@ export default async function UpgradePage({
                 }
                 type="submit"
               >
-                Complete mock upgrade
+                {copy.completeMockUpgrade}
               </button>
             </form>
           ) : (
@@ -297,7 +305,7 @@ export default async function UpgradePage({
                 styles.error
               }
             >
-              Mock billing is not enabled in this environment.
+              {copy.mockDisabledPage}
             </div>
           )}
 
@@ -306,8 +314,7 @@ export default async function UpgradePage({
               styles.disclaimer
             }
           >
-            No card details are requested. This flow exists only
-            to demonstrate subscription gating in the MVP.
+            {copy.disclaimer}
           </p>
         </section>
 
@@ -317,12 +324,14 @@ export default async function UpgradePage({
           }
         >
           <h2>
-            Upgrade summary
+            {copy.summaryTitle}
           </h2>
 
           <p>
-            Pro applies to the whole workspace,
-            including {assistant.name}
+            {copy.summaryLeadTemplate.replace(
+              "{name}",
+              assistant.name,
+            )}
           </p>
 
           <div
@@ -336,11 +345,11 @@ export default async function UpgradePage({
               }
             >
               <span>
-                Current plan
+                {copy.currentPlan}
               </span>
 
               <strong>
-                Free
+                {copy.freePlan}
               </strong>
             </div>
 
@@ -350,11 +359,11 @@ export default async function UpgradePage({
               }
             >
               <span>
-                New plan
+                {copy.newPlan}
               </span>
 
               <strong>
-                Pro
+                {copy.proPlan}
               </strong>
             </div>
 
@@ -364,11 +373,11 @@ export default async function UpgradePage({
               }
             >
               <span>
-                Billing
+                {copy.billingLabel}
               </span>
 
               <strong>
-                Mock
+                {copy.mock}
               </strong>
             </div>
 
@@ -378,11 +387,11 @@ export default async function UpgradePage({
               }
             >
               <span>
-                Website embed
+                {copy.websiteEmbed}
               </span>
 
               <strong>
-                Included
+                {copy.included}
               </strong>
             </div>
           </div>

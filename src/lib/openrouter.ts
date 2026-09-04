@@ -1,5 +1,10 @@
 import "server-only";
 
+import {
+  resolveOpenRouterChatRouting,
+  type OpenRouterAutoCostTier,
+} from "@/lib/openrouter-routing";
+
 type EmbeddingApiItem = {
   embedding?: number[];
   index?: number;
@@ -300,16 +305,73 @@ export function toVectorLiteral(
   return `[${vector.join(",")}]`;
 }
 
-export async function completeChat(
-  messages: OpenRouterChatMessage[],
-): Promise<OpenRouterChatResult> {
-  const model =
-    requiredEnv(
-      "LLM_MODEL",
-    );
+class OpenRouterChatRequestError
+  extends Error {
+  transient: boolean;
 
+  constructor(
+    message: string,
+    transient: boolean,
+  ) {
+    super(message);
+
+    this.name =
+      "OpenRouterChatRequestError";
+
+    this.transient =
+      transient;
+  }
+}
+
+function chatRequestBody(
+  model: string,
+  messages:
+    OpenRouterChatMessage[],
+  autoCostTier:
+    OpenRouterAutoCostTier,
+) {
+  const body:
+    Record<
+      string,
+      unknown
+    > = {
+      model,
+      messages,
+      temperature: 0,
+      max_tokens: 600,
+    };
+
+  if (
+    model
+    === "openrouter/auto"
+  ) {
+    body.plugins = [
+      {
+        id:
+          "auto-router",
+        cost_tier:
+          autoCostTier,
+      },
+    ];
+  }
+
+  return body;
+}
+
+async function requestChatModel(
+  model: string,
+  messages:
+    OpenRouterChatMessage[],
+  autoCostTier:
+    OpenRouterAutoCostTier,
+): Promise<
+  OpenRouterChatResult
+> {
   let lastError =
     "OpenRouter chat request failed";
+
+  let lastTransient =
+    false;
 
   for (
     let attempt = 1;
@@ -323,17 +385,21 @@ export async function completeChat(
           method: "POST",
           headers:
             commonHeaders(),
-          body: JSON.stringify({
-            model,
-            messages,
-            temperature: 0,
-            max_tokens: 600,
-          }),
+          body:
+            JSON.stringify(
+              chatRequestBody(
+                model,
+                messages,
+                autoCostTier,
+              ),
+            ),
         },
       );
 
     const payload =
-      (await response.json()) as ChatApiResponse;
+      (
+        await response.json()
+      ) as ChatApiResponse;
 
     if (response.ok) {
       const content =
@@ -347,29 +413,52 @@ export async function completeChat(
         );
       }
 
-      return {
-        content,
-        model:
-          payload.model ?? null,
-        inputTokens:
-          payload.usage
-            ?.prompt_tokens
-          ?? null,
-        outputTokens:
-          payload.usage
-            ?.completion_tokens
-          ?? null,
-      };
+      const result:
+        OpenRouterChatResult = {
+          content,
+          model:
+            payload.model
+            ?? null,
+          inputTokens:
+            payload.usage
+              ?.prompt_tokens
+            ?? null,
+          outputTokens:
+            payload.usage
+              ?.completion_tokens
+            ?? null,
+        };
+
+      console.info(
+        "OPENROUTER_CHAT_COMPLETE",
+        {
+          requestedModel:
+            model,
+          selectedModel:
+            result.model,
+          inputTokens:
+            result.inputTokens,
+          outputTokens:
+            result.outputTokens,
+        },
+      );
+
+      return result;
     }
 
     lastError =
       payload.error?.message
-      || `OpenRouter HTTP ${response.status}`;
+      || (
+        `OpenRouter HTTP ${response.status}`
+      );
+
+    lastTransient =
+      isTransientStatus(
+        response.status,
+      );
 
     if (
-      !isTransientStatus(
-        response.status,
-      )
+      !lastTransient
       || attempt === 2
     ) {
       break;
@@ -378,7 +467,59 @@ export async function completeChat(
     await wait(700);
   }
 
-  throw new Error(
+  throw new OpenRouterChatRequestError(
     lastError,
+    lastTransient,
   );
+}
+
+export async function completeChat(
+  messages:
+    OpenRouterChatMessage[],
+): Promise<
+  OpenRouterChatResult
+> {
+  const routing =
+    resolveOpenRouterChatRouting();
+
+  try {
+    return await requestChatModel(
+      routing.primaryModel,
+      messages,
+      routing.autoCostTier,
+    );
+  } catch (error) {
+    const canUseFallback =
+      routing.paidFallbackEnabled
+      && routing.fallbackModel
+        !== routing.primaryModel
+      && error
+        instanceof
+          OpenRouterChatRequestError
+      && error.transient;
+
+    if (!canUseFallback) {
+      throw error;
+    }
+
+    console.warn(
+      "OPENROUTER_PAID_FALLBACK_TRIGGERED",
+      {
+        primaryModel:
+          routing.primaryModel,
+        fallbackModel:
+          routing.fallbackModel,
+        costTier:
+          routing.autoCostTier,
+        reason:
+          error.message,
+      },
+    );
+
+    return requestChatModel(
+      routing.fallbackModel,
+      messages,
+      routing.autoCostTier,
+    );
+  }
 }

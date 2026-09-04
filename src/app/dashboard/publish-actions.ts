@@ -8,6 +8,10 @@ import {
 } from "next/navigation";
 
 import {
+  getServerDictionary,
+} from "@/i18n/server";
+
+import {
   createClient,
 } from "@/lib/supabase/server";
 
@@ -77,6 +81,11 @@ export async function publishAssistant(
       "/dashboard",
     );
   }
+
+  const copy =
+    (
+      await getServerDictionary()
+    ).dashboard.install;
 
   const supabase =
     await createClient();
@@ -163,7 +172,7 @@ export async function publishAssistant(
   ) {
     publishError(
       assistantId,
-      "We could not check your plan.",
+      copy.errors.planCheckFailed,
     );
   }
 
@@ -176,7 +185,7 @@ export async function publishAssistant(
   if (!isPro) {
     publishError(
       assistantId,
-      "Website publishing requires an active Pro plan.",
+      copy.errors.proRequired,
     );
   }
 
@@ -185,7 +194,7 @@ export async function publishAssistant(
   ) {
     publishError(
       assistantId,
-      "We could not check this assistant's knowledge.",
+      copy.errors.knowledgeCheckFailed,
     );
   }
 
@@ -195,7 +204,7 @@ export async function publishAssistant(
   ) {
     publishError(
       assistantId,
-      "Process at least one knowledge source before publishing.",
+      copy.errors.knowledgeRequired,
     );
   }
 
@@ -208,7 +217,7 @@ export async function publishAssistant(
       installUrl(
         assistantId,
         "success",
-        "This assistant is already published.",
+        copy.errors.alreadyPublished,
       ),
     );
   }
@@ -259,7 +268,7 @@ export async function publishAssistant(
 
     publishError(
       assistantId,
-      "We could not publish this assistant. Please try again.",
+      copy.errors.publishFailed,
     );
   }
 
@@ -279,7 +288,161 @@ export async function publishAssistant(
     installUrl(
       assistantId,
       "success",
-      "Assistant published. It is ready for website setup.",
+      copy.errors.publishedSuccess,
+    ),
+  );
+}
+
+export async function unpublishAssistant(
+  formData: FormData,
+) {
+  const assistantId =
+    formText(
+      formData,
+      "assistantId",
+    );
+
+  if (
+    !assistantId
+    || !UUID_PATTERN.test(
+      assistantId,
+    )
+  ) {
+    redirect("/dashboard");
+  }
+
+  const copy =
+    (
+      await getServerDictionary()
+    ).dashboard.selfService;
+
+  const supabase =
+    await createClient();
+
+  const {
+    data: claimsData,
+    error: claimsError,
+  } =
+    await supabase.auth.getClaims();
+
+  const userId =
+    claimsData?.claims?.sub;
+
+  if (
+    claimsError
+    || !userId
+  ) {
+    redirect(
+      "/auth/login",
+    );
+  }
+
+  const {
+    data: assistant,
+    error: assistantError,
+  } = await supabase
+    .from("assistants")
+    .select(
+      "id,is_published",
+    )
+    .eq(
+      "id",
+      assistantId,
+    )
+    .eq(
+      "owner_id",
+      userId,
+    )
+    .maybeSingle();
+
+  if (
+    assistantError
+    || !assistant
+  ) {
+    redirect(
+      "/dashboard",
+    );
+  }
+
+  if (
+    !assistant.is_published
+  ) {
+    redirect(
+      installUrl(
+        assistantId,
+        "success",
+        copy.alreadyUnpublished,
+      ),
+    );
+  }
+
+  const {
+    data: updated,
+    error: updateError,
+  } = await supabase
+    .from("assistants")
+    .update({
+      is_published: false,
+      updated_at:
+        new Date().toISOString(),
+    })
+    .eq(
+      "id",
+      assistantId,
+    )
+    .eq(
+      "owner_id",
+      userId,
+    )
+    .select(
+      "id,is_published",
+    )
+    .maybeSingle();
+
+  if (
+    updateError
+    || !updated
+    || updated.is_published
+  ) {
+    console.error(
+      "ASSISTANT_UNPUBLISH_FAILED",
+      {
+        assistantId,
+        code:
+          updateError?.code
+          ?? null,
+        message:
+          updateError?.message
+          ?? "Unexpected unpublish result",
+      },
+    );
+
+    redirect(
+      installUrl(
+        assistantId,
+        "error",
+        copy.unpublishFailed,
+      ),
+    );
+  }
+
+  revalidatePath(
+    "/dashboard",
+  );
+
+  revalidatePath(
+    `/dashboard/assistants/${assistantId}`,
+  );
+
+  revalidatePath(
+    `/dashboard/assistants/${assistantId}/install`,
+  );
+
+  redirect(
+    installUrl(
+      assistantId,
+      "success",
+      copy.unpublishedSuccess,
     ),
   );
 }

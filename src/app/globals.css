@@ -4586,3 +4586,59 @@ select {
   outline: 2px solid #1d1e1a;
   outline-offset: 3px;
 }
+
+/* ANVERA_LANGUAGE_SWITCH_V1 */
+.anvera-language-switch {
+  position: fixed;
+  z-index: 1000;
+  top: 14px;
+  right: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid rgba(29, 30, 26, 0.14);
+  border-radius: 999px;
+  background: rgba(251, 250, 247, 0.94);
+  box-shadow: 0 4px 18px rgba(29, 30, 26, 0.08);
+  backdrop-filter: blur(10px);
+}
+
+.anvera-language-switch button {
+  min-width: 38px;
+  min-height: 30px;
+  padding: 4px 9px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #5f625a;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+
+.anvera-language-switch button[aria-pressed="true"] {
+  background: #1d1e1a;
+  color: #fbfaf7;
+}
+
+.anvera-language-switch button:focus-visible {
+  outline: 2px solid #1d1e1a;
+  outline-offset: 2px;
+}
+
+@media (max-width: 720px) {
+  .anvera-language-switch {
+    top: 10px;
+    right: 10px;
+  }
+
+  .anvera-language-switch button {
+    min-width: 34px;
+    min-height: 28px;
+    padding-inline: 7px;
+  }
+}

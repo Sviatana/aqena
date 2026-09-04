@@ -1,11 +1,20 @@
 import Script from "next/script";
 
+import {
+  getServerDictionary,
+} from "@/i18n/server";
+
 import styles from "./demo.module.css";
 
 const NORTHSTAR_PUBLIC_ID =
   "8a0f0c12-9b73-4554-94f1-4d83d8d731a4";
 
-export default function NorthstarCoffeeDemo() {
+export default async function NorthstarCoffeeDemo() {
+  const copy =
+    (
+      await getServerDictionary()
+    ).demo.northstar;
+
   return (
     <>
       <div
@@ -23,29 +32,31 @@ export default function NorthstarCoffeeDemo() {
               styles.brand
             }
           >
-            Northstar Coffee
+            {copy.brand}
           </strong>
 
           <nav
-            aria-label="Demo navigation"
+            aria-label={
+              copy.navigationAria
+            }
             className={
               styles.nav
             }
           >
             <span>
-              Coffee
+              {copy.navCoffee}
             </span>
 
             <span>
-              Wholesale
+              {copy.navWholesale}
             </span>
 
             <span>
-              Visit
+              {copy.navVisit}
             </span>
 
             <span>
-              Support
+              {copy.navSupport}
             </span>
 
           </nav>
@@ -66,11 +77,11 @@ export default function NorthstarCoffeeDemo() {
                 styles.eyebrow
               }
             >
-              Thoughtfully roasted coffee
+              {copy.eyebrow}
             </p>
 
             <h1>
-              Good coffee for everyday rituals
+              {copy.title}
             </h1>
 
             <p
@@ -78,9 +89,7 @@ export default function NorthstarCoffeeDemo() {
                 styles.lead
               }
             >
-              Small-batch coffee, straightforward shipping and support
-              from people who care about the cup. Use the assistant in
-              the lower-right corner if you have a question.
+              {copy.lead}
             </p>
 
             {/* Full reload removes the demo widget injected outside React. */}
@@ -91,7 +100,7 @@ export default function NorthstarCoffeeDemo() {
               }
               href="/"
             >
-              Back to Anvera
+              {copy.backToAnvera}
             </a>
           </section>
 
@@ -101,17 +110,16 @@ export default function NorthstarCoffeeDemo() {
             }
           >
             <span>
-              Northstar Coffee
+              {copy.brand}
             </span>
 
             <div>
               <h2>
-                Coffee worth slowing down for
+                {copy.featureTitle}
               </h2>
 
               <p>
-                Roasted with care and shipped with clear,
-                simple policies.
+                {copy.featureBody}
               </p>
             </div>
           </aside>

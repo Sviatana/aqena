@@ -9,6 +9,10 @@ import {
 } from "next/navigation";
 
 import {
+  getServerDictionary,
+} from "@/i18n/server";
+
+import {
   answerFromKnowledge,
 } from "@/lib/rag/answer";
 
@@ -72,6 +76,11 @@ export async function sendPlaygroundMessage(
   assistantId: string,
   formData: FormData,
 ) {
+  const copy =
+    (
+      await getServerDictionary()
+    ).dashboard.playground;
+
   const question =
     questionValue(
       formData,
@@ -80,7 +89,7 @@ export async function sendPlaygroundMessage(
   if (!question) {
     playgroundError(
       assistantId,
-      "Ask a question first.",
+      copy.errors.questionRequired,
     );
   }
 
@@ -90,7 +99,7 @@ export async function sendPlaygroundMessage(
   ) {
     playgroundError(
       assistantId,
-      "Playground questions can be up to 2,000 characters.",
+      copy.errors.questionTooLong,
     );
   }
 
@@ -168,7 +177,7 @@ export async function sendPlaygroundMessage(
   if (sourceCountError) {
     playgroundError(
       assistantId,
-      "We could not check this assistant's knowledge.",
+      copy.errors.knowledgeCheckFailed,
     );
   }
 
@@ -178,7 +187,7 @@ export async function sendPlaygroundMessage(
   ) {
     playgroundError(
       assistantId,
-      "Process at least one knowledge source before using the Playground.",
+      copy.errors.knowledgeRequired,
     );
   }
 
@@ -230,7 +239,7 @@ export async function sendPlaygroundMessage(
   ) {
     playgroundError(
       assistantId,
-      "We could not check your monthly message allowance.",
+      copy.errors.allowanceCheckFailed,
     );
   }
 
@@ -257,8 +266,8 @@ export async function sendPlaygroundMessage(
     playgroundError(
       assistantId,
       isPro
-        ? "You have reached your Pro plan message limit for this month."
-        : "You have reached the Free plan limit of 50 messages this month.",
+        ? copy.errors.proLimit
+        : copy.errors.freeLimit,
     );
   }
 
@@ -307,7 +316,7 @@ export async function sendPlaygroundMessage(
 
     playgroundError(
       assistantId,
-      "We could not open the Playground conversation.",
+      copy.errors.conversationOpenFailed,
     );
   }
 
@@ -348,7 +357,7 @@ export async function sendPlaygroundMessage(
   if (historyError) {
     playgroundError(
       assistantId,
-      "We could not load the conversation history.",
+      copy.errors.historyLoadFailed,
     );
   }
 
@@ -395,7 +404,7 @@ export async function sendPlaygroundMessage(
 
         fallbackMessage:
           assistant.fallback_message
-          || "I could not find that in the available company knowledge.",
+          || copy.errors.defaultFallback,
       });
   } catch (error) {
     console.error(
@@ -412,7 +421,7 @@ export async function sendPlaygroundMessage(
 
     playgroundError(
       assistantId,
-      "Anvera could not answer that question. Please try again.",
+      copy.errors.answerFailed,
     );
   }
 
@@ -474,7 +483,7 @@ export async function sendPlaygroundMessage(
 
     playgroundError(
       assistantId,
-      "The answer was generated but could not be saved. Please try again.",
+      copy.errors.answerSaveFailed,
     );
   }
 
@@ -484,7 +493,7 @@ export async function sendPlaygroundMessage(
   if (!commit) {
     playgroundError(
       assistantId,
-      "We could not save this Playground exchange.",
+      copy.errors.exchangeSaveFailed,
     );
   }
 
@@ -492,8 +501,8 @@ export async function sendPlaygroundMessage(
     playgroundError(
       assistantId,
       commit.plan_name === "pro"
-        ? "You have reached your Pro plan message limit for this month."
-        : "You have reached the Free plan limit of 50 messages this month.",
+        ? copy.errors.proLimit
+        : copy.errors.freeLimit,
     );
   }
 
@@ -509,7 +518,7 @@ export async function sendPlaygroundMessage(
     playgroundUrl(
       assistantId,
       "success",
-      "Answer generated.",
+      copy.errors.answerGenerated,
     ),
   );
 }
@@ -518,6 +527,11 @@ export async function sendPlaygroundMessage(
 export async function clearPlaygroundChat(
   assistantId: string,
 ) {
+  const copy =
+    (
+      await getServerDictionary()
+    ).dashboard.playground;
+
   const supabase =
     await createClient();
 
@@ -596,7 +610,7 @@ export async function clearPlaygroundChat(
 
     playgroundError(
       assistantId,
-      "We could not clear this Playground conversation.",
+      copy.errors.clearFailed,
     );
   }
 
@@ -605,7 +619,7 @@ export async function clearPlaygroundChat(
       playgroundUrl(
         assistantId,
         "success",
-        "Playground is already clear.",
+        copy.errors.alreadyClear,
       ),
     );
   }
@@ -644,7 +658,7 @@ export async function clearPlaygroundChat(
 
     playgroundError(
       assistantId,
-      "We could not clear this Playground conversation.",
+      copy.errors.clearFailed,
     );
   }
 
@@ -656,7 +670,7 @@ export async function clearPlaygroundChat(
     playgroundUrl(
       assistantId,
       "success",
-      "Playground conversation cleared.",
+      copy.errors.cleared,
     ),
   );
 }

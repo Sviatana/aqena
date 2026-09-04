@@ -5,6 +5,10 @@ import {
   type ComponentPropsWithoutRef,
 } from "react";
 
+import {
+  useLocale,
+} from "@/i18n/client";
+
 import styles from "./auth.module.css";
 
 type PasswordInputProps = Omit<
@@ -18,6 +22,13 @@ export function PasswordInput(
   const [visible, setVisible] =
     useState(false);
 
+  const {
+    dictionary,
+  } = useLocale();
+
+  const copy =
+    dictionary.auth.password;
+
   return (
     <div className={styles.passwordWrap}>
       <input
@@ -30,8 +41,8 @@ export function PasswordInput(
         type="button"
         aria-label={
           visible
-            ? "Hide password"
-            : "Show password"
+            ? copy.hide
+            : copy.show
         }
         aria-pressed={visible}
         onClick={() => {

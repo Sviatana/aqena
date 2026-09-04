@@ -4,12 +4,14 @@ import {
   useFormStatus,
 } from "react-dom";
 
+import {
+  useLocale,
+} from "@/i18n/client";
 
 type PlaygroundQuestionFieldProps = {
   disabled: boolean;
   knowledgeReady: boolean;
 };
-
 
 export function PlaygroundQuestionField({
   disabled,
@@ -20,12 +22,20 @@ export function PlaygroundQuestionField({
   } =
     useFormStatus();
 
+  const {
+    dictionary,
+  } =
+    useLocale();
+
+  const copy =
+    dictionary.dashboard.playground;
+
   return (
     <>
       <label
         htmlFor="playground-question"
       >
-        Ask a question
+        {copy.questionLabel}
       </label>
 
       <textarea
@@ -45,8 +55,8 @@ export function PlaygroundQuestionField({
         name="question"
         placeholder={
           knowledgeReady
-            ? "Ask about your company knowledge…"
-            : "Process a knowledge source first"
+            ? copy.questionPlaceholder
+            : copy.knowledgeFirstPlaceholder
         }
       />
     </>

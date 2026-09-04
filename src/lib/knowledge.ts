@@ -10,6 +10,22 @@ export const MAX_KNOWLEDGE_FILE_BYTES =
 const UUID_PATTERN =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
+export type KnowledgeFileValidationMessages = {
+  empty: string;
+  tooLarge: string;
+  unsupported: string;
+};
+
+const DEFAULT_FILE_VALIDATION_MESSAGES:
+KnowledgeFileValidationMessages = {
+  empty:
+    "Choose a non-empty document.",
+  tooLarge:
+    "Documents can be up to 5 MB.",
+  unsupported:
+    "Use a PDF, TXT or Markdown document.",
+};
+
 export function isUuid(
   value: string,
 ) {
@@ -27,25 +43,31 @@ export function knowledgeSourceLimit(
 function fileExtension(
   fileName: string,
 ) {
-  const dot = fileName.lastIndexOf(".");
+  const dot =
+    fileName.lastIndexOf(".");
 
   return dot >= 0
-    ? fileName.slice(dot).toLowerCase()
+    ? fileName
+        .slice(dot)
+        .toLowerCase()
     : "";
 }
 
 export function validateKnowledgeFile(
   file: File,
+  messages:
+    KnowledgeFileValidationMessages =
+      DEFAULT_FILE_VALIDATION_MESSAGES,
 ) {
   if (file.size <= 0) {
-    return "Choose a non-empty document.";
+    return messages.empty;
   }
 
   if (
     file.size
     > MAX_KNOWLEDGE_FILE_BYTES
   ) {
-    return "Documents can be up to 5 MB.";
+    return messages.tooLarge;
   }
 
   const extension =
@@ -64,7 +86,7 @@ export function validateKnowledgeFile(
           : false;
 
   if (!validMime) {
-    return "Use a PDF, TXT or Markdown document.";
+    return messages.unsupported;
   }
 
   return null;

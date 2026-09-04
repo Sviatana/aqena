@@ -4,6 +4,10 @@ import {
   useFormStatus,
 } from "react-dom";
 
+import {
+  useLocale,
+} from "@/i18n/client";
+
 import styles from "../../../dashboard.module.css";
 
 export function PlaygroundClearButton() {
@@ -11,6 +15,14 @@ export function PlaygroundClearButton() {
     pending,
   } =
     useFormStatus();
+
+  const {
+    dictionary,
+  } =
+    useLocale();
+
+  const copy =
+    dictionary.dashboard.playground;
 
   return (
     <button
@@ -24,8 +36,7 @@ export function PlaygroundClearButton() {
         (event) => {
           if (
             !window.confirm(
-              "Clear this Playground conversation? "
-              + "Your monthly usage will not be reset.",
+              copy.clearConfirm,
             )
           ) {
             event.preventDefault();
@@ -35,8 +46,8 @@ export function PlaygroundClearButton() {
       type="submit"
     >
       {pending
-        ? "Clearing…"
-        : "Clear chat"}
+        ? copy.clearing
+        : copy.clearChat}
     </button>
   );
 }

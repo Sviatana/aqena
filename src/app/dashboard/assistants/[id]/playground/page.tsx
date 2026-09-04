@@ -10,6 +10,9 @@ import {
 } from "@/app/dashboard/playground-actions";
 
 import {
+  getServerDictionary,
+} from "@/i18n/server";
+import {
   createClient,
 } from "@/lib/supabase/server";
 
@@ -134,6 +137,11 @@ export default async function PlaygroundPage({
 
   const query =
     await searchParams;
+
+  const copy =
+    (
+      await getServerDictionary()
+    ).dashboard.playground;
 
   const supabase =
     await createClient();
@@ -381,7 +389,7 @@ export default async function PlaygroundPage({
             `/dashboard/assistants/${assistant.id}`
           }
         >
-          ← Back to assistant
+          {copy.backToAssistant}
         </Link>
 
         <div
@@ -408,8 +416,8 @@ export default async function PlaygroundPage({
             }
           >
             {isPro
-              ? "Pro"
-              : "Free"}
+              ? copy.proPlan
+              : copy.freePlan}
           </span>
         </div>
       </div>
@@ -425,7 +433,7 @@ export default async function PlaygroundPage({
               styles.playgroundEyebrow
             }
           >
-            Playground
+            {copy.eyebrow}
           </span>
 
           <h1>
@@ -433,8 +441,7 @@ export default async function PlaygroundPage({
           </h1>
 
           <p>
-            Test grounded answers against this
-            assistant&apos;s ready knowledge sources
+            {copy.intro}
           </p>
         </div>
 
@@ -444,7 +451,7 @@ export default async function PlaygroundPage({
           }
         >
           <span>
-            Messages this month
+            {copy.messagesThisMonth}
           </span>
 
           <strong>
@@ -454,9 +461,10 @@ export default async function PlaygroundPage({
           </strong>
 
           <small>
-            {playgroundCount}
-            {" "}
-            sent from Playground
+            {copy.sentFromTemplate.replace(
+              "{count}",
+              String(playgroundCount),
+            )}
           </small>
         </div>
       </header>
@@ -491,8 +499,7 @@ export default async function PlaygroundPage({
           }
           data-kind="warning"
         >
-          Process at least one knowledge source
-          before asking questions
+          {copy.knowledgeRequired}
         </div>
       ) : null}
 
@@ -504,8 +511,8 @@ export default async function PlaygroundPage({
           data-kind="warning"
         >
           {isPro
-            ? "You have reached your monthly Pro message limit"
-            : "You have used all 50 Free messages for this month"}
+            ? copy.proLimitReached
+            : copy.freeLimitReached}
         </div>
       ) : null}
 
@@ -544,12 +551,12 @@ export default async function PlaygroundPage({
                 </span>
 
                 <h2>
-                  Start a conversation
+                  {copy.startConversation}
                 </h2>
 
                 <p>
                   {assistant.welcome_message
-                  || "Ask a question about the knowledge you added to this assistant"}
+                  || copy.welcomeFallback}
                 </p>
               </div>
             ) : (
@@ -590,7 +597,7 @@ export default async function PlaygroundPage({
                         >
                           {assistantMessage
                             ? assistant.name
-                            : "You"}
+                            : copy.you}
                         </div>
 
                         <div
@@ -611,7 +618,7 @@ export default async function PlaygroundPage({
                                   }
                                 >
                                   <summary>
-                                    Sources
+                                    {copy.sources}
                                   </summary>
 
                                   <div
@@ -642,7 +649,7 @@ export default async function PlaygroundPage({
                                             </strong>
 
                                             <small>
-                                              Knowledge source
+                                              {copy.knowledgeSource}
                                             </small>
                                           </div>
                                         </div>
@@ -681,8 +688,7 @@ export default async function PlaygroundPage({
                 }
               >
                 <small>
-                  Answers are limited to your
-                  uploaded knowledge
+                  {copy.composerNote}
                 </small>
 
                 <PlaygroundSubmitButton
@@ -706,7 +712,7 @@ export default async function PlaygroundPage({
             }
           >
             <span>
-              Ready sources
+              {copy.readySources}
             </span>
 
             <strong>
@@ -714,8 +720,7 @@ export default async function PlaygroundPage({
             </strong>
 
             <p>
-              Only sources marked Ready can be
-              retrieved for answers
+              {copy.readySourcesDescription}
             </p>
           </div>
 
@@ -725,17 +730,15 @@ export default async function PlaygroundPage({
             }
           >
             <span>
-              Context
+              {copy.context}
             </span>
 
             <strong>
-              Last 8 messages
+              {copy.lastEightMessages}
             </strong>
 
             <p>
-              Conversation history helps with
-              follow-up questions but is never
-              treated as factual evidence
+              {copy.contextDescription}
             </p>
           </div>
 
@@ -745,16 +748,15 @@ export default async function PlaygroundPage({
             }
           >
             <span>
-              Knowledge search
+              {copy.knowledgeSearch}
             </span>
 
             <strong>
-              Best 5 matches
+              {copy.bestFiveMatches}
             </strong>
 
             <p>
-              Anvera checks the most relevant
-              passages before answering
+              {copy.knowledgeSearchDescription}
             </p>
           </div>
         </aside>

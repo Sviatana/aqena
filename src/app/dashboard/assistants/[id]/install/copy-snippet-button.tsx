@@ -4,6 +4,10 @@ import {
   useState,
 } from "react";
 
+import {
+  useLocale,
+} from "@/i18n/client";
+
 type CopySnippetButtonProps = {
   snippet: string;
   className: string;
@@ -18,6 +22,14 @@ export default function CopySnippetButton({
     setCopied,
   ] =
     useState(false);
+
+  const {
+    dictionary,
+  } =
+    useLocale();
+
+  const copy =
+    dictionary.dashboard.install;
 
   async function copySnippet() {
     try {
@@ -56,8 +68,8 @@ export default function CopySnippetButton({
       type="button"
     >
       {copied
-        ? "Copied"
-        : "Copy code"}
+        ? copy.copied
+        : copy.copyCode}
     </button>
   );
 }

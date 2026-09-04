@@ -213,6 +213,11 @@ type AdminScenario = {
     error: unknown;
   };
 
+  rateLimit?: {
+    data: unknown;
+    error: unknown;
+  };
+
   history?: {
     data: unknown;
     error: unknown;
@@ -279,22 +284,73 @@ function buildAdmin(
 
   const rpc =
     vi.fn(
-      async () =>
-        scenario.commit
-        ?? {
-          data: [
-            {
-              allowed:
-                true,
+      async (
+        functionName: string,
+        args?: unknown,
+      ) => {
+        if (
+          functionName
+          === "consume_widget_rate_limit"
+        ) {
+          if (
+            !args
+            || typeof args
+              !== "object"
+          ) {
+            throw new Error(
+              "Missing rate-limit RPC args",
+            );
+          }
 
-              plan_name:
-                "pro",
-            },
-          ],
+          return (
+            scenario.rateLimit
+            ?? {
+              data: [
+                {
+                  allowed:
+                    true,
 
-          error:
-            null,
-        },
+                  retry_after_seconds:
+                    0,
+
+                  requests_used:
+                    1,
+                },
+              ],
+
+              error:
+                null,
+            }
+          );
+        }
+
+        if (
+          functionName
+          === "commit_widget_exchange"
+        ) {
+          return (
+            scenario.commit
+            ?? {
+              data: [
+                {
+                  allowed:
+                    true,
+
+                  plan_name:
+                    "pro",
+                },
+              ],
+
+              error:
+                null,
+            }
+          );
+        }
+
+        throw new Error(
+          `Unexpected RPC in integration test: ${functionName}`,
+        );
+      },
     );
 
   const from =
@@ -335,9 +391,17 @@ function buildAdmin(
 
 function widgetRequest(
   body: unknown,
+  locale?: "ru" | "en",
+  clientIp =
+    "203.0.113.10",
 ) {
+  const localeQuery =
+    locale
+      ? `?locale=${locale}`
+      : "";
+
   return new Request(
-    `http://localhost/api/public/assistants/${PUBLIC_ID}/messages`,
+    `http://localhost/api/public/assistants/${PUBLIC_ID}/messages${localeQuery}`,
     {
       method:
         "POST",
@@ -345,6 +409,9 @@ function widgetRequest(
       headers: {
         "Content-Type":
           "application/json",
+
+        "CF-Connecting-IP":
+          clientIp,
       },
 
       body:
@@ -423,6 +490,125 @@ describe(
 
 
     it(
+      "rejects an oversized Content-Length before touching Supabase",
+      async () => {
+        const request =
+          new Request(
+            `http://localhost/api/public/assistants/${PUBLIC_ID}/messages`,
+            {
+              method:
+                "POST",
+
+              headers: {
+                "Content-Type":
+                  "application/json",
+
+                "Content-Length":
+                  "32769",
+
+                "CF-Connecting-IP":
+                  "203.0.113.10",
+              },
+
+              body:
+                JSON.stringify({
+                  question:
+                    "small body",
+                }),
+            },
+          );
+
+        const response =
+          await POST(
+            request,
+            routeContext(),
+          );
+
+        const payload =
+          await response.json() as {
+            error?: string;
+          };
+
+        expect(
+          response.status,
+        ).toBe(413);
+
+        expect(
+          payload.error,
+        ).toBe(
+          "The request is too large.",
+        );
+
+        expect(
+          mocks.createAdminClient,
+        ).not.toHaveBeenCalled();
+      },
+    );
+
+
+    it(
+      "rejects an oversized streamed JSON body before touching Supabase",
+      async () => {
+        const request =
+          new Request(
+            `http://localhost/api/public/assistants/${PUBLIC_ID}/messages`,
+            {
+              method:
+                "POST",
+
+              headers: {
+                "Content-Type":
+                  "application/json",
+
+                "CF-Connecting-IP":
+                  "203.0.113.10",
+              },
+
+              body:
+                JSON.stringify({
+                  question:
+                    "x".repeat(
+                      40_000,
+                    ),
+                }),
+            },
+          );
+
+        expect(
+          request.headers.get(
+            "content-length",
+          ),
+        ).toBeNull();
+
+        const response =
+          await POST(
+            request,
+            routeContext(),
+          );
+
+        const payload =
+          await response.json() as {
+            error?: string;
+          };
+
+        expect(
+          response.status,
+        ).toBe(413);
+
+        expect(
+          payload.error,
+        ).toBe(
+          "The request is too large.",
+        );
+
+        expect(
+          mocks.createAdminClient,
+        ).not.toHaveBeenCalled();
+      },
+    );
+
+
+    it(
       "rejects an empty question before touching Supabase",
       async () => {
         const response =
@@ -447,6 +633,43 @@ describe(
           payload.error,
         ).toBe(
           "Ask a question first.",
+        );
+
+        expect(
+          mocks.createAdminClient,
+        ).not.toHaveBeenCalled();
+      },
+    );
+
+
+    it(
+      "returns Russian validation copy when locale is ru",
+      async () => {
+        const response =
+          await POST(
+            widgetRequest(
+              {
+                question:
+                  "   ",
+              },
+              "ru",
+            ),
+            routeContext(),
+          );
+
+        const payload =
+          await response.json() as {
+            error?: string;
+          };
+
+        expect(
+          response.status,
+        ).toBe(400);
+
+        expect(
+          payload.error,
+        ).toBe(
+          "Сначала задайте вопрос.",
         );
 
         expect(
@@ -539,6 +762,314 @@ describe(
         expect(
           mocks.answerFromKnowledge,
         ).not.toHaveBeenCalled();
+      },
+    );
+
+
+    it(
+      "rate limits a published Pro assistant before conversation creation or RAG",
+      async () => {
+        const admin =
+          buildAdmin({
+            assistant: {
+              data: {
+                id:
+                  ASSISTANT_ID,
+
+                owner_id:
+                  OWNER_ID,
+
+                name:
+                  "Northstar Coffee Support",
+
+                instructions:
+                  "Answer from company knowledge.",
+
+                fallback_message:
+                  "I could not find that.",
+
+                status:
+                  "ready",
+
+                is_published:
+                  true,
+              },
+
+              error:
+                null,
+            },
+
+            subscription: {
+              data: {
+                plan:
+                  "pro",
+
+                status:
+                  "active",
+              },
+
+              error:
+                null,
+            },
+
+            rateLimit: {
+              data: [
+                {
+                  allowed:
+                    false,
+
+                  retry_after_seconds:
+                    37,
+
+                  requests_used:
+                    21,
+                },
+              ],
+
+              error:
+                null,
+            },
+          });
+
+        mocks.createAdminClient
+          .mockReturnValue(
+            admin,
+          );
+
+        const clientIp =
+          "203.0.113.77";
+
+        const response =
+          await POST(
+            widgetRequest(
+              {
+                question:
+                  "Do you ship orders?",
+              },
+              "en",
+              clientIp,
+            ),
+            routeContext(),
+          );
+
+        const payload =
+          await response.json() as {
+            error?: string;
+          };
+
+        expect(
+          response.status,
+        ).toBe(429);
+
+        expect(
+          payload.error,
+        ).toBe(
+          "Too many questions in a short time. Please try again shortly.",
+        );
+
+        expect(
+          response.headers.get(
+            "retry-after",
+          ),
+        ).toBe(
+          "37",
+        );
+
+        expect(
+          response.headers.get(
+            "cache-control",
+          ),
+        ).toBe(
+          "no-store",
+        );
+
+        const rateLimitCall =
+          admin.rpc.mock.calls.find(
+            (call) =>
+              call[0]
+              === "consume_widget_rate_limit",
+          );
+
+        expect(
+          rateLimitCall,
+        ).toBeDefined();
+
+        expect(
+          rateLimitCall?.[1],
+        ).toEqual({
+          p_key_hash:
+            expect.stringMatching(
+              /^[0-9a-f]{64}$/,
+            ),
+        });
+
+        expect(
+          JSON.stringify(
+            rateLimitCall?.[1],
+          ),
+        ).not.toContain(
+          clientIp,
+        );
+
+        expect(
+          admin.from,
+        ).not.toHaveBeenCalledWith(
+          "usage_monthly",
+        );
+
+        expect(
+          admin.from,
+        ).not.toHaveBeenCalledWith(
+          "conversations",
+        );
+
+        expect(
+          admin.from,
+        ).not.toHaveBeenCalledWith(
+          "messages",
+        );
+
+        expect(
+          mocks.retrievePublicKnowledge,
+        ).not.toHaveBeenCalled();
+
+        expect(
+          mocks.answerFromKnowledge,
+        ).not.toHaveBeenCalled();
+
+        expect(
+          admin.rpc.mock.calls.some(
+            (call) =>
+              call[0]
+              === "commit_widget_exchange",
+          ),
+        ).toBe(false);
+      },
+    );
+
+
+    it(
+      "does not create a new conversation when RAG fails",
+      async () => {
+        const admin =
+          buildAdmin({
+            assistant: {
+              data: {
+                id:
+                  ASSISTANT_ID,
+
+                owner_id:
+                  OWNER_ID,
+
+                name:
+                  "Northstar Coffee Support",
+
+                instructions:
+                  "Answer from company knowledge.",
+
+                fallback_message:
+                  "I could not find that.",
+
+                status:
+                  "ready",
+
+                is_published:
+                  true,
+              },
+
+              error:
+                null,
+            },
+
+            subscription: {
+              data: {
+                plan:
+                  "pro",
+
+                status:
+                  "active",
+              },
+
+              error:
+                null,
+            },
+
+            usage: {
+              data: {
+                message_count:
+                  12,
+              },
+
+              error:
+                null,
+            },
+          });
+
+        mocks.createAdminClient
+          .mockReturnValue(
+            admin,
+          );
+
+        mocks.retrievePublicKnowledge
+          .mockRejectedValue(
+            new Error(
+              "Embedding unavailable",
+            ),
+          );
+
+        const response =
+          await POST(
+            widgetRequest({
+              question:
+                "Do you ship orders?",
+            }),
+            routeContext(),
+          );
+
+        const payload =
+          await response.json() as {
+            error?: string;
+          };
+
+        expect(
+          response.status,
+        ).toBe(503);
+
+        expect(
+          payload.error,
+        ).toBe(
+          "The assistant could not answer that question. Please try again.",
+        );
+
+        expect(
+          mocks.retrievePublicKnowledge,
+        ).toHaveBeenCalledTimes(
+          1,
+        );
+
+        expect(
+          mocks.answerFromKnowledge,
+        ).not.toHaveBeenCalled();
+
+        expect(
+          admin.from,
+        ).not.toHaveBeenCalledWith(
+          "conversations",
+        );
+
+        expect(
+          admin.from,
+        ).not.toHaveBeenCalledWith(
+          "messages",
+        );
+
+        expect(
+          admin.rpc.mock.calls.some(
+            (call) =>
+              call[0]
+              === "commit_widget_exchange",
+          ),
+        ).toBe(false);
       },
     );
 
@@ -763,23 +1294,7 @@ describe(
           expect.objectContaining({
             question,
 
-            history: [
-              {
-                role:
-                  "user",
-
-                content:
-                  "Earlier question",
-              },
-
-              {
-                role:
-                  "assistant",
-
-                content:
-                  "Earlier answer",
-              },
-            ],
+            history: [],
 
             assistantInstructions:
               "Answer only from Northstar knowledge.",

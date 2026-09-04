@@ -8,6 +8,14 @@ import {
 } from "next/navigation";
 
 import {
+  getServerDictionary,
+} from "@/i18n/server";
+
+import {
+  isMockBillingEnabled,
+} from "@/lib/billing-mode";
+
+import {
   createAdminClient,
 } from "@/lib/supabase/admin";
 import {
@@ -73,6 +81,11 @@ function billingError(
 export async function completeMockUpgrade(
   formData: FormData,
 ) {
+  const copy =
+    (
+      await getServerDictionary()
+    ).dashboard.billing;
+
   const supabase =
     await createClient();
 
@@ -137,14 +150,11 @@ export async function completeMockUpgrade(
   }
 
   if (
-    process.env.BILLING_MODE
-      ?.trim()
-      .toLowerCase()
-    !== "mock"
+    !isMockBillingEnabled()
   ) {
     billingError(
       assistantId,
-      "Mock billing is not enabled for this environment.",
+      copy.errors.mockDisabledAction,
     );
   }
 
@@ -201,7 +211,7 @@ export async function completeMockUpgrade(
   ) {
     billingError(
       assistantId,
-      "We could not complete the mock upgrade. Please try again.",
+      copy.errors.upgradeFailed,
     );
   }
 

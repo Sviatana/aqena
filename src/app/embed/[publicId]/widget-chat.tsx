@@ -16,12 +16,20 @@ import {
   useState,
 } from "react";
 
+import {
+  publicWidgetCopy,
+} from "@/i18n/public-widget";
+import type {
+  PublicWidgetLocale,
+} from "@/i18n/public-widget";
+
 import styles from "./widget.module.css";
 
 type WidgetChatProps = {
   assistantName: string;
   brandColor: string;
   publicId: string;
+  locale: PublicWidgetLocale;
   standaloneReturnHref: string;
   welcomeMessage: string;
 };
@@ -112,11 +120,17 @@ export default function WidgetChat({
   assistantName,
   brandColor,
   publicId,
+  locale,
   standaloneReturnHref,
   welcomeMessage,
 }: WidgetChatProps) {
   const router =
     useRouter();
+
+  const copy =
+    publicWidgetCopy[
+      locale
+    ];
 
   const brandContrast =
     readableTextColor(
@@ -230,7 +244,7 @@ export default function WidgetChat({
       > 2_000
     ) {
       setError(
-        "Questions can be up to 2,000 characters.",
+        copy.questionTooLong,
       );
 
       return;
@@ -260,7 +274,7 @@ export default function WidgetChat({
     try {
       const response =
         await fetch(
-          `/api/public/assistants/${publicId}/messages`,
+          `/api/public/assistants/${publicId}/messages?locale=${locale}`,
           {
             method:
               "POST",
@@ -293,7 +307,7 @@ export default function WidgetChat({
       ) {
         throw new Error(
           payload.error
-          || "The assistant could not answer. Please try again.",
+          || copy.answerFailed,
         );
       }
 
@@ -329,7 +343,7 @@ export default function WidgetChat({
         requestError
         instanceof Error
           ? requestError.message
-          : "The assistant could not answer. Please try again.",
+          : copy.answerFailed,
       );
     } finally {
       setPending(false);
@@ -389,7 +403,11 @@ export default function WidgetChat({
         widgetStyle
       }
       aria-label={
-        `${assistantName} chat`
+        copy.chatAriaLabel
+          .replace(
+            "{name}",
+            assistantName,
+          )
       }
     >
       <header
@@ -422,13 +440,15 @@ export default function WidgetChat({
             </strong>
 
             <span>
-              Ask about our company
+              {copy.headerSubtitle}
             </span>
           </div>
         </div>
 
         <button
-          aria-label="Close chat"
+          aria-label={
+            copy.closeChat
+          }
           className={
             styles.closeButton
           }
@@ -489,7 +509,9 @@ export default function WidgetChat({
               className={
                 `${styles.assistantBubble} ${styles.thinking}`
               }
-              aria-label="Assistant is thinking"
+              aria-label={
+                copy.assistantThinking
+              }
             >
               <span />
               <span />
@@ -524,7 +546,9 @@ export default function WidgetChat({
           }
         >
           <textarea
-            aria-label="Ask a question"
+            aria-label={
+              copy.askQuestion
+            }
             disabled={
               pending
             }
@@ -541,7 +565,9 @@ export default function WidgetChat({
             onKeyDown={
               onKeyDown
             }
-            placeholder="Ask a question"
+            placeholder={
+              copy.askQuestion
+            }
             rows={
               1
             }
@@ -551,7 +577,9 @@ export default function WidgetChat({
           />
 
           <button
-            aria-label="Send message"
+            aria-label={
+              copy.sendMessage
+            }
             disabled={
               pending
               || !question.trim()
@@ -567,7 +595,7 @@ export default function WidgetChat({
             styles.footerNote
           }
         >
-          Answers are based on the company knowledge provided
+          {copy.footerNote}
         </div>
       </footer>
     </section>

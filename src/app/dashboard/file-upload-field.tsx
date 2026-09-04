@@ -4,6 +4,10 @@ import {
   useState,
 } from "react";
 
+import {
+  useLocale,
+} from "@/i18n/client";
+
 import styles from "./dashboard.module.css";
 
 type FileUploadFieldProps = {
@@ -13,11 +17,18 @@ type FileUploadFieldProps = {
 export default function FileUploadField({
   disabled,
 }: FileUploadFieldProps) {
+  const {
+    dictionary,
+  } = useLocale();
+
+  const copy =
+    dictionary.dashboard.knowledge;
+
   const [
     fileName,
     setFileName,
   ] = useState(
-    "No file selected",
+    copy.noFileSelected,
   );
 
   return (
@@ -39,7 +50,7 @@ export default function FileUploadField({
             styles.fileChooseButton
           }
         >
-          Choose a document
+          {copy.chooseDocument}
         </span>
 
         <span
@@ -67,7 +78,7 @@ export default function FileUploadField({
 
           setFileName(
             file?.name
-              ?? "No file selected",
+              ?? copy.noFileSelected,
           );
         }}
         required
@@ -75,7 +86,7 @@ export default function FileUploadField({
       />
 
       <small>
-        Documents stay private to your workspace
+        {copy.privateDocument}
       </small>
     </label>
   );

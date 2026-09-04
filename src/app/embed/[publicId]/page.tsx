@@ -1,7 +1,13 @@
 import {
+  cookies,
+} from "next/headers";
+import {
   notFound,
 } from "next/navigation";
 
+import {
+  normalizePublicWidgetLocale,
+} from "@/i18n/public-widget";
 import {
   createAdminClient,
 } from "@/lib/supabase/admin";
@@ -22,6 +28,7 @@ type PageProps = {
 
   searchParams: Promise<{
     returnTo?: string;
+    locale?: string;
   }>;
 };
 
@@ -35,7 +42,23 @@ export default async function EmbedPage({
 
   const {
     returnTo,
+    locale:
+      requestedLocale,
   } = await searchParams;
+
+  const cookieStore =
+    await cookies();
+
+  const locale =
+    normalizePublicWidgetLocale(
+      requestedLocale
+      || cookieStore
+        .get(
+          "anvera_locale",
+        )
+        ?.value,
+      "ru",
+    );
 
   const standaloneReturnHref =
     typeof returnTo
@@ -120,6 +143,9 @@ export default async function EmbedPage({
         }
         publicId={
           publicId
+        }
+        locale={
+          locale
         }
         standaloneReturnHref={
           standaloneReturnHref
