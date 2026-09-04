@@ -1001,7 +1001,7 @@ export const ru = {
       basicCustomization:
         "Базовая настройка",
       freeLimit:
-        "Чат на сайте не включён",
+        "Виджет с ассистентом не входит в пакет",
       bestForWebsites:
         "Лучше всего для сайтов",
       proName:
@@ -1025,7 +1025,7 @@ export const ru = {
       advancedCustomization:
         "Расширенная настройка",
       proNote:
-        "Чат на сайте включён",
+        "Виджет с ассистентом встраивается на сайт",
     },
 
     faq: {

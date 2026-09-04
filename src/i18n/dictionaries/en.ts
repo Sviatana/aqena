@@ -1000,7 +1000,7 @@ export const en = {
       basicCustomization:
         "Basic customization",
       freeLimit:
-        "Website chat not included",
+        "Assistant widget is not included in the plan",
       bestForWebsites:
         "Best for websites",
       proName:
@@ -1024,7 +1024,7 @@ export const en = {
       advancedCustomization:
         "Advanced customization",
       proNote:
-        "Website chat included",
+        "Assistant widget can be embedded on your website",
     },
 
     faq: {

@@ -4642,3 +4642,33 @@ select {
     padding-inline: 7px;
   }
 }
+
+/* ANVERA_PRICING_NOTE_SPACING_START */
+
+/*
+  Pricing footer notes use longer RU/EN copy.
+  Keep comfortable space from the rounded frame and
+  allow natural wrapping on narrow screens.
+*/
+
+.pricing-card .plan-limit,
+.pricing-card .plan-note {
+  min-height: 52px;
+  padding: 12px 14px;
+  box-sizing: border-box;
+  align-items: center;
+  line-height: 1.4;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+@media (max-width: 560px) {
+  .pricing-card .plan-limit,
+  .pricing-card .plan-note {
+    min-height: 52px;
+    padding: 12px;
+  }
+}
+
+/* ANVERA_PRICING_NOTE_SPACING_END */
