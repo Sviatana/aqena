@@ -857,10 +857,6 @@ export default async function Home() {
                   <CheckIcon />
                   {copy.pricing.basicCustomization}
                 </li>
-                <li>
-                  <CheckIcon />
-                  {copy.pricing.anveraBranding}
-                </li>
               </ul>
 
               <div className="plan-limit">
@@ -915,7 +911,7 @@ export default async function Home() {
                 </li>
                 <li>
                   <CheckIcon />
-                  {copy.pricing.removeBranding}
+                  {copy.pricing.customBranding}
                 </li>
                 <li>
                   <CheckIcon />

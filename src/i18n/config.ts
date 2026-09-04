@@ -587,7 +587,6 @@ export type Dictionary = {
       freeMessages: string;
       playground: string;
       basicCustomization: string;
-      anveraBranding: string;
       freeLimit: string;
       bestForWebsites: string;
       proName: string;
@@ -598,7 +597,7 @@ export type Dictionary = {
       proSources: string;
       proMessages: string;
       addWebsite: string;
-      removeBranding: string;
+      customBranding: string;
       advancedCustomization: string;
       proNote: string;
     };

@@ -175,7 +175,7 @@ export const ru = {
       featureEmbed:
         "Установка на сайт",
       featureBranding:
-        "Удаление брендинга Anvera",
+        "Индивидуальное брендирование",
       featureCustomization:
         "Расширенная настройка",
 
@@ -1000,8 +1000,6 @@ export const ru = {
         "Тестирование",
       basicCustomization:
         "Базовая настройка",
-      anveraBranding:
-        "Брендинг Anvera",
       freeLimit:
         "Чат на сайте не включён",
       bestForWebsites:
@@ -1022,8 +1020,8 @@ export const ru = {
         "2 000 сообщений / месяц",
       addWebsite:
         "Установка на сайт",
-      removeBranding:
-        "Удаление брендинга Anvera",
+      customBranding:
+        "Индивидуальное брендирование",
       advancedCustomization:
         "Расширенная настройка",
       proNote:

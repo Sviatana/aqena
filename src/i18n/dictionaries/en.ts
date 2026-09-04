@@ -174,7 +174,7 @@ export const en = {
       featureEmbed:
         "Website embed",
       featureBranding:
-        "Remove Anvera branding",
+        "Custom branding",
       featureCustomization:
         "Advanced customization",
 
@@ -999,8 +999,6 @@ export const en = {
         "Playground",
       basicCustomization:
         "Basic customization",
-      anveraBranding:
-        "Anvera branding",
       freeLimit:
         "Website chat not included",
       bestForWebsites:
@@ -1021,8 +1019,8 @@ export const en = {
         "2,000 messages / month",
       addWebsite:
         "Add to your website",
-      removeBranding:
-        "Remove Anvera branding",
+      customBranding:
+        "Custom branding",
       advancedCustomization:
         "Advanced customization",
       proNote:
