@@ -54,7 +54,7 @@ export default async function EmbedPage({
       requestedLocale
       || cookieStore
         .get(
-          "anvera_locale",
+          "aqena_locale",
         )
         ?.value,
       "ru",

@@ -1,4 +1,4 @@
-import { AnveraLogo } from "@/components/anvera-brand";
+import { AqenaLogo } from "@/components/aqena-brand";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -63,7 +63,7 @@ export default async function UpdatePasswordPage({
           className={styles.logo}
           href="/"
         >
-          <AnveraLogo
+          <AqenaLogo
             width={108}
           />
         </Link>

@@ -108,7 +108,7 @@ function commonHeaders() {
     "HTTP-Referer":
       siteUrl,
     "X-OpenRouter-Title":
-      "Anvera",
+      "AQENA",
   };
 }
 

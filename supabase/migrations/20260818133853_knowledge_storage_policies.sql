@@ -1,4 +1,4 @@
--- Anvera private knowledge-document storage policies.
+-- AQENA private knowledge-document storage policies.
 --
 -- Object paths use:
 --   user_id/assistant_id/source_id/file.ext

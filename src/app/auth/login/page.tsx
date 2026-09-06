@@ -1,4 +1,4 @@
-import { AnveraLogo } from "@/components/anvera-brand";
+import { AqenaLogo } from "@/components/aqena-brand";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -63,7 +63,7 @@ export default async function LoginPage({
           className={styles.logo}
           href="/"
         >
-          <AnveraLogo
+          <AqenaLogo
             width={108}
           />
         </Link>
@@ -162,7 +162,7 @@ export default async function LoginPage({
           </form>
 
           <p className={styles.switch}>
-            {copy.login.newToAnvera}{" "}
+            {copy.login.newToAQENA}{" "}
             <Link href="/auth/sign-up">
               {copy.login.createAccount}
             </Link>

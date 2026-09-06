@@ -22,7 +22,7 @@ test.beforeEach(
     await context.addCookies([
       {
         name:
-          "anvera_locale",
+          "aqena_locale",
 
         value:
           "en",
@@ -36,7 +36,7 @@ test.beforeEach(
 
 
 test.describe(
-  "Anvera public browser smoke",
+  "AQENA public browser smoke",
   () => {
     test(
       "guest landing routes to sign in and sign up",
@@ -312,7 +312,7 @@ test.describe(
 
         const widgetHost =
           page.locator(
-            `[data-anvera-widget="${NORTHSTAR_PUBLIC_ID}"]`,
+            `[data-aqena-widget="${NORTHSTAR_PUBLIC_ID}"]`,
           );
 
         await expect(

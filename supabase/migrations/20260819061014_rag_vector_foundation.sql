@@ -1,4 +1,4 @@
--- Anvera RAG vector foundation.
+-- AQENA RAG vector foundation.
 --
 -- OpenRouter:
 --   qwen/qwen3-embedding-8b

@@ -1,4 +1,4 @@
--- Knowledge files are handled only by trusted Anvera
+-- Knowledge files are handled only by trusted AQENA
 -- server routes after user, assistant and plan checks.
 --
 -- The Supabase server secret bypasses Storage RLS.

@@ -1,10 +1,10 @@
 NORTHSTAR COFFEE
 Customer Support Knowledge Base
-Test document for Anvera knowledge ingestion and retrieval
+Test document for AQENA knowledge ingestion and retrieval
 
 Document purpose
 
-This document contains fictional but realistic operating information for Northstar Coffee. It is designed for testing document upload, text extraction, chunking, retrieval, source attribution, and grounded customer-support answers in Anvera.
+This document contains fictional but realistic operating information for Northstar Coffee. It is designed for testing document upload, text extraction, chunking, retrieval, source attribution, and grounded customer-support answers in AQENA.
 
 All names, addresses, policies, prices, and operational details in this document are test data.
 

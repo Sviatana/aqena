@@ -1,5 +1,5 @@
 -- Add per-assistant brand color used by customer-facing chat UI.
--- Existing assistants keep the current Anvera dark neutral as default.
+-- Existing assistants keep the current AQENA dark neutral as default.
 
 alter table public.assistants
   add column brand_color text not null default '#1d1e1a'

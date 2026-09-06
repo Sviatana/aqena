@@ -1839,35 +1839,35 @@ footer {
 }
 
 /* =========================================================
-   ANVERA — FINAL LANDING DESIGN SYSTEM
+   AQENA — FINAL LANDING DESIGN SYSTEM
 ========================================================= */
 
 :root {
-  --anvera-bg: #f7f6f2;
-  --anvera-bg-alt: #f0efea;
+  --aqena-bg: #f7f6f2;
+  --aqena-bg-alt: #f0efea;
 
-  --anvera-surface: #ffffff;
-  --anvera-surface-soft: #faf9f6;
+  --aqena-surface: #ffffff;
+  --aqena-surface-soft: #faf9f6;
 
-  --anvera-text: #181713;
-  --anvera-text-soft: #5d5952;
-  --anvera-muted: #908b83;
+  --aqena-text: #181713;
+  --aqena-text-soft: #5d5952;
+  --aqena-muted: #908b83;
 
-  --anvera-line: #ded9d0;
-  --anvera-line-strong: #d0cbc2;
+  --aqena-line: #ded9d0;
+  --aqena-line-strong: #d0cbc2;
 
-  --anvera-green: #477255;
-  --anvera-sage: #7e9175;
-  --anvera-sage-soft: #eef2e9;
-  --anvera-sage-medium: #dce6d5;
+  --aqena-green: #477255;
+  --aqena-sage: #7e9175;
+  --aqena-sage-soft: #eef2e9;
+  --aqena-sage-medium: #dce6d5;
 
-  --anvera-radius-sm: 14px;
-  --anvera-radius: 22px;
+  --aqena-radius-sm: 14px;
+  --aqena-radius: 22px;
 
-  --anvera-shadow:
+  --aqena-shadow:
     0 14px 34px rgba(43, 38, 31, 0.045);
 
-  --anvera-shadow-product:
+  --aqena-shadow-product:
     0 26px 64px rgba(43, 38, 31, 0.075);
 }
 
@@ -1883,8 +1883,8 @@ html {
 body {
   overflow-x: hidden;
 
-  color: var(--anvera-text);
-  background: var(--anvera-bg);
+  color: var(--aqena-text);
+  background: var(--aqena-bg);
 }
 
 main > section {
@@ -2008,7 +2008,7 @@ main > section {
 .hero-lead {
   max-width: 560px;
 
-  color: var(--anvera-text-soft);
+  color: var(--aqena-text-soft);
 }
 
 .section-heading h2,
@@ -2035,7 +2035,7 @@ main > section {
 .preview-copy > p,
 .faq-heading > p {
 
-  color: var(--anvera-text-soft);
+  color: var(--aqena-text-soft);
 }
 
 .section-kicker,
@@ -2062,7 +2062,7 @@ main > section {
       rgba(126, 145, 117, 0.09),
       transparent 27%
     ),
-    var(--anvera-bg);
+    var(--aqena-bg);
 }
 
 .hero-grid {
@@ -2123,12 +2123,12 @@ main > section {
 
   overflow: visible;
 
-  border: 1px solid var(--anvera-line);
+  border: 1px solid var(--aqena-line);
   border-radius: 20px;
 
   background: #fff;
 
-  box-shadow: var(--anvera-shadow-product);
+  box-shadow: var(--aqena-shadow-product);
 }
 
 .assistant-shell {
@@ -2187,7 +2187,7 @@ main > section {
 ========================================================= */
 
 .problem-section {
-  background: var(--anvera-bg-alt);
+  background: var(--aqena-bg-alt);
 }
 
 .problem-section .section-heading {
@@ -2215,10 +2215,10 @@ main > section {
 
   overflow: hidden;
 
-  border: 1px solid var(--anvera-line);
-  border-radius: var(--anvera-radius);
+  border: 1px solid var(--aqena-line);
+  border-radius: var(--aqena-radius);
 
-  background: var(--anvera-line);
+  background: var(--aqena-line);
 }
 
 .problem-grid article {
@@ -2230,7 +2230,7 @@ main > section {
 
   padding: 26px;
 
-  background: var(--anvera-surface-soft);
+  background: var(--aqena-surface-soft);
 }
 
 .problem-grid h3 {
@@ -2242,7 +2242,7 @@ main > section {
 ========================================================= */
 
 .how-section {
-  background: var(--anvera-bg);
+  background: var(--aqena-bg);
 }
 
 .how-section .section-heading {
@@ -2270,12 +2270,12 @@ main > section {
 
   overflow: hidden;
 
-  border: 1px solid var(--anvera-line);
-  border-radius: var(--anvera-radius);
+  border: 1px solid var(--aqena-line);
+  border-radius: var(--aqena-radius);
 
-  background: var(--anvera-surface);
+  background: var(--aqena-surface);
 
-  box-shadow: var(--anvera-shadow);
+  box-shadow: var(--aqena-shadow);
 }
 
 .step-card h3 {
@@ -2308,13 +2308,13 @@ main > section {
 
   border-radius: 13px;
 
-  color: var(--anvera-text);
-  background: var(--anvera-bg-alt);
+  color: var(--aqena-text);
+  background: var(--aqena-bg-alt);
 }
 
 .code-mini-ui span {
   color: #40513e;
-  background: var(--anvera-sage-medium);
+  background: var(--aqena-sage-medium);
 }
 
 /* =========================================================
@@ -2365,12 +2365,12 @@ main > section {
 
   overflow: hidden;
 
-  border: 1px solid var(--anvera-line);
-  border-radius: var(--anvera-radius);
+  border: 1px solid var(--aqena-line);
+  border-radius: var(--aqena-radius);
 
-  background: var(--anvera-line);
+  background: var(--aqena-line);
 
-  box-shadow: var(--anvera-shadow);
+  box-shadow: var(--aqena-shadow);
 }
 
 .trust-item {
@@ -2386,7 +2386,7 @@ main > section {
 
   padding: 24px;
 
-  background: var(--anvera-surface-soft);
+  background: var(--aqena-surface-soft);
 }
 
 .trust-item-accent {
@@ -2394,7 +2394,7 @@ main > section {
     linear-gradient(
       135deg,
       #fafbf8 0%,
-      var(--anvera-sage-soft) 100%
+      var(--aqena-sage-soft) 100%
     );
 }
 
@@ -2403,7 +2403,7 @@ main > section {
 
   padding-top: 3px;
 
-  color: var(--anvera-muted);
+  color: var(--aqena-muted);
 
 }
 
@@ -2436,7 +2436,7 @@ main > section {
 }
 
 .trust-proof > span {
-  color: var(--anvera-green);
+  color: var(--aqena-green);
 }
 
 /* =========================================================
@@ -2444,7 +2444,7 @@ main > section {
 ========================================================= */
 
 .preview-section {
-  background: var(--anvera-bg);
+  background: var(--aqena-bg);
 }
 
 .preview-panel {
@@ -2463,7 +2463,7 @@ main > section {
 
   overflow: hidden;
 
-  color: var(--anvera-text);
+  color: var(--aqena-text);
 
   border: 1px solid #d4ddd0;
   border-radius: 25px;
@@ -2475,7 +2475,7 @@ main > section {
       #eef2e9 100%
     );
 
-  box-shadow: var(--anvera-shadow);
+  box-shadow: var(--aqena-shadow);
 }
 
 .preview-copy h2 {
@@ -2485,7 +2485,7 @@ main > section {
 .preview-copy > p {
   max-width: 470px;
 
-  color: var(--anvera-text-soft);
+  color: var(--aqena-text-soft);
 }
 
 .preview-list,
@@ -2496,7 +2496,7 @@ main > section {
 }
 
 .preview-list li::before {
-  color: var(--anvera-green);
+  color: var(--aqena-green);
 }
 
 .preview-chat {
@@ -2504,12 +2504,12 @@ main > section {
 
   overflow: hidden;
 
-  border: 1px solid var(--anvera-line);
+  border: 1px solid var(--aqena-line);
   border-radius: 20px;
 
   background: #fff;
 
-  box-shadow: var(--anvera-shadow);
+  box-shadow: var(--aqena-shadow);
 }
 
 /* =========================================================
@@ -2517,7 +2517,7 @@ main > section {
 ========================================================= */
 
 .pricing-section {
-  background: var(--anvera-bg-alt);
+  background: var(--aqena-bg-alt);
 }
 
 .pricing-section .section-heading {
@@ -2558,16 +2558,16 @@ main > section {
 
   padding: 27px;
 
-  border: 1px solid var(--anvera-line);
-  border-radius: var(--anvera-radius);
+  border: 1px solid var(--aqena-line);
+  border-radius: var(--aqena-radius);
 
   background: #fff;
 
-  box-shadow: var(--anvera-shadow);
+  box-shadow: var(--aqena-shadow);
 }
 
 .pricing-card-pro {
-  color: var(--anvera-text);
+  color: var(--aqena-text);
 
   border-color: #cfdcca;
 
@@ -2575,20 +2575,20 @@ main > section {
     linear-gradient(
       180deg,
       #fbfcfa 0%,
-      var(--anvera-sage-soft) 100%
+      var(--aqena-sage-soft) 100%
     );
 }
 
 .popular-badge {
   color: #496046;
-  background: var(--anvera-sage-medium);
+  background: var(--aqena-sage-medium);
 }
 
 .plan-heading p,
 .pricing-card-pro .plan-heading p,
 .price span,
 .pricing-card-pro .price span {
-  color: var(--anvera-text-soft);
+  color: var(--aqena-text-soft);
 }
 
 .price {
@@ -2608,7 +2608,7 @@ main > section {
 
 .button-plan-primary {
   color: #fff;
-  background: var(--anvera-text);
+  background: var(--aqena-text);
 }
 
 .pricing-card ul {
@@ -2624,7 +2624,7 @@ main > section {
 .plan-note {
   margin-top: auto;
 
-  color: var(--anvera-text-soft);
+  color: var(--aqena-text-soft);
 }
 
 /* =========================================================
@@ -2665,7 +2665,7 @@ main > section {
 .faq-list details p {
   padding-bottom: 22px;
 
-  color: var(--anvera-text-soft);
+  color: var(--aqena-text-soft);
 }
 
 /* =========================================================
@@ -2683,7 +2683,7 @@ main > section {
 
   padding: 38px 44px;
 
-  color: var(--anvera-text);
+  color: var(--aqena-text);
 
   border: 1px solid #d4ddd0;
   border-radius: 24px;
@@ -2692,7 +2692,7 @@ main > section {
     linear-gradient(
       135deg,
       #fafbf8 0%,
-      var(--anvera-sage-soft) 100%
+      var(--aqena-sage-soft) 100%
     );
 }
 
@@ -2702,7 +2702,7 @@ main > section {
 
 .button-light {
   color: #fff;
-  background: var(--anvera-text);
+  background: var(--aqena-text);
 }
 
 /* =========================================================
@@ -2710,8 +2710,8 @@ main > section {
 ========================================================= */
 
 .site-footer {
-  background: var(--anvera-bg);
-  border-top: 1px solid var(--anvera-line);
+  background: var(--aqena-bg);
+  border-top: 1px solid var(--aqena-line);
 }
 
 /* =========================================================
@@ -2746,7 +2746,7 @@ main > section {
   .pricing-card:hover {
     transform: translateY(-2px);
 
-    border-color: var(--anvera-line-strong);
+    border-color: var(--aqena-line-strong);
 
     box-shadow:
       0 18px 42px rgba(43, 38, 31, 0.065);
@@ -2995,7 +2995,7 @@ summary:focus-visible {
 }
 
 /* =========================================================
-   ANVERA — FINAL VISUAL POLISH
+   AQENA — FINAL VISUAL POLISH
 ========================================================= */
 
 /* ---------------------------------------------------------
@@ -3011,13 +3011,13 @@ summary:focus-visible {
       rgba(126, 145, 117, 0.10),
       transparent 28%
     ),
-    var(--anvera-bg);
+    var(--aqena-bg);
 }
 
 /*
   Previous iterations used an orange decorative dot.
   Force small hero status / eyebrow indicators into
-  the same calm sage palette as the rest of Anvera.
+  the same calm sage palette as the rest of AQENA.
 */
 
 .hero .eyebrow span:first-child,
@@ -3025,7 +3025,7 @@ summary:focus-visible {
 .hero .badge-dot,
 .hero .status-dot,
 .hero .accent-dot {
-  background: var(--anvera-sage) !important;
+  background: var(--aqena-sage) !important;
   box-shadow: none !important;
 }
 
@@ -3069,7 +3069,7 @@ summary:focus-visible {
 
 .product-window,
 .preview-chat {
-  color: var(--anvera-text);
+  color: var(--aqena-text);
 }
 
 .product-window small,
@@ -3144,7 +3144,7 @@ summary:focus-visible {
 
   border-radius: 9px;
 
-  background: var(--anvera-bg-alt);
+  background: var(--aqena-bg-alt);
 }
 
 .pricing-card-pro .plan-limit,
@@ -3213,7 +3213,7 @@ summary:focus-visible {
         rgba(126, 145, 117, 0.08),
         transparent 31%
       ),
-      var(--anvera-bg);
+      var(--aqena-bg);
   }
 
   .hero-grid {
@@ -3479,7 +3479,7 @@ summary:focus-visible {
   }
 }
 
-/* ==== ANVERA FINAL HERO + PRICING POLISH START ==== */
+/* ==== AQENA FINAL HERO + PRICING POLISH START ==== */
 
 /* -----------------------------------------
    HERO — FINAL PREMIUM POLISH
@@ -3713,9 +3713,9 @@ width: 100% !important;
   }
 }
 
-/* ==== ANVERA FINAL HERO + PRICING POLISH END ==== */
+/* ==== AQENA FINAL HERO + PRICING POLISH END ==== */
 
-/* ANVERA_PREMIUM_REFINEMENT_START */
+/* AQENA_PREMIUM_REFINEMENT_START */
 
 /*
   Final visual calibration
@@ -3723,7 +3723,7 @@ width: 100% !important;
   No structural product sections are rebuilt here.
 */
 
-.anvera-hero-final-scope {
+.aqena-hero-final-scope {
   min-height: calc(100svh - 76px);
   padding-top: clamp(54px, 6vh, 76px) !important;
   padding-bottom: clamp(44px, 5vh, 64px) !important;
@@ -3740,7 +3740,7 @@ width: 100% !important;
 
 /* ---------- Hero eyebrow ---------- */
 
-.anvera-hero-eyebrow-final {
+.aqena-hero-eyebrow-final {
   width: fit-content;
 
   margin-bottom: 26px !important;
@@ -3750,7 +3750,7 @@ width: 100% !important;
 
 /* ---------- Hero heading ---------- */
 
-.anvera-hero-title-final {
+.aqena-hero-title-final {
   max-width: 610px !important;
 
   margin-top: 0 !important;
@@ -3763,7 +3763,7 @@ width: 100% !important;
 
 /* ---------- Hero supporting paragraph ---------- */
 
-.anvera-hero-lede-final {
+.aqena-hero-lede-final {
   max-width: 555px !important;
 
   margin-top: 0 !important;
@@ -3778,9 +3778,9 @@ width: 100% !important;
   without scaling it again.
 */
 
-.anvera-hero-final-scope [class*="hero-preview"],
-.anvera-hero-final-scope [class*="hero-visual"],
-.anvera-hero-final-scope [class*="product-preview"] {
+.aqena-hero-final-scope [class*="hero-preview"],
+.aqena-hero-final-scope [class*="hero-visual"],
+.aqena-hero-final-scope [class*="product-preview"] {
   transform: translateX(-18px) !important;
   filter: none !important;
 }
@@ -3790,15 +3790,15 @@ width: 100% !important;
   These selectors intentionally stay inside the hero scope.
 */
 
-.anvera-hero-final-scope [class*="mockup"],
-.anvera-hero-final-scope [class*="preview"] {
+.aqena-hero-final-scope [class*="mockup"],
+.aqena-hero-final-scope [class*="preview"] {
   box-shadow:
     0 24px 55px rgba(30, 31, 27, 0.075) !important;
 }
 
 /* ---------- Pricing bottom captions ---------- */
 
-.anvera-price-note-final {
+.aqena-price-note-final {
   display: flex !important;
   align-items: center !important;
 
@@ -3817,7 +3817,7 @@ width: 100% !important;
   color: #77746d !important;
 }
 
-.anvera-price-note-final-pro {
+.aqena-price-note-final-pro {
   color: #65705f !important;
 }
 
@@ -3825,11 +3825,11 @@ width: 100% !important;
 
 @media (min-width: 1180px) {
 
-  .anvera-hero-final-scope {
+  .aqena-hero-final-scope {
     padding-top: clamp(48px, 5.5vh, 68px) !important;
   }
 
-  .anvera-hero-title-final {
+  .aqena-hero-title-final {
     max-width: 590px !important;
   }
 }
@@ -3838,20 +3838,20 @@ width: 100% !important;
 
 @media (max-width: 1024px) {
 
-  .anvera-hero-final-scope {
+  .aqena-hero-final-scope {
     min-height: auto;
     padding-top: 52px !important;
     padding-bottom: 58px !important;
   }
 
-  .anvera-hero-title-final {
+  .aqena-hero-title-final {
     max-width: 650px !important;
 
   }
 
-  .anvera-hero-final-scope [class*="hero-preview"],
-  .anvera-hero-final-scope [class*="hero-visual"],
-  .anvera-hero-final-scope [class*="product-preview"] {
+  .aqena-hero-final-scope [class*="hero-preview"],
+  .aqena-hero-final-scope [class*="hero-visual"],
+  .aqena-hero-final-scope [class*="product-preview"] {
     transform: none !important;
   }
 }
@@ -3860,7 +3860,7 @@ width: 100% !important;
 
 @media (max-width: 767px) {
 
-  .anvera-hero-final-scope {
+  .aqena-hero-final-scope {
     min-height: auto;
 
     padding-top: 34px !important;
@@ -3874,12 +3874,12 @@ width: 100% !important;
       ) !important;
   }
 
-  .anvera-hero-eyebrow-final {
+  .aqena-hero-eyebrow-final {
     margin-bottom: 24px !important;
 
   }
 
-  .anvera-hero-title-final {
+  .aqena-hero-title-final {
     max-width: 100% !important;
 
     margin-bottom: 22px !important;
@@ -3887,20 +3887,20 @@ width: 100% !important;
     text-wrap: pretty;
   }
 
-  .anvera-hero-lede-final {
+  .aqena-hero-lede-final {
     max-width: 100% !important;
 
     margin-bottom: 24px !important;
 
   }
 
-  .anvera-hero-final-scope [class*="mockup"],
-  .anvera-hero-final-scope [class*="preview"] {
+  .aqena-hero-final-scope [class*="mockup"],
+  .aqena-hero-final-scope [class*="preview"] {
     box-shadow:
       0 18px 40px rgba(30, 31, 27, 0.055) !important;
   }
 
-  .anvera-price-note-final {
+  .aqena-price-note-final {
     margin-top: 16px !important;
     padding-top: 12px !important;
 
@@ -3909,17 +3909,17 @@ width: 100% !important;
 
 @media (max-width: 420px) {
 
-  .anvera-hero-title-final {
+  .aqena-hero-title-final {
 
   }
 }
 
-/* ANVERA_PREMIUM_REFINEMENT_END */
+/* AQENA_PREMIUM_REFINEMENT_END */
 
-/* ANVERA TYPOGRAPHY FINAL SCALE */
+/* AQENA TYPOGRAPHY FINAL SCALE */
 
 .hero h1,
-.anvera-hero-title-final {
+.aqena-hero-title-final {
   max-width: 10.8ch;
   margin: 0;
 
@@ -4018,7 +4018,7 @@ width: 100% !important;
 
 @media (max-width: 900px) {
   .hero h1,
-  .anvera-hero-title-final {
+  .aqena-hero-title-final {
     max-width: 12ch;
 
   }
@@ -4036,7 +4036,7 @@ width: 100% !important;
 
 @media (max-width: 640px) {
   .hero h1,
-  .anvera-hero-title-final {
+  .aqena-hero-title-final {
     max-width: none;
 
   }
@@ -4084,7 +4084,7 @@ width: 100% !important;
   }
 }
 
-/* === ANVERA TYPOGRAPHY SYSTEM START === */
+/* === AQENA TYPOGRAPHY SYSTEM START === */
 
 /*
   One typography source of truth for the complete landing.
@@ -4182,7 +4182,7 @@ select {
 }
 
 .hero h1,
-.anvera-hero-title-final {
+.aqena-hero-title-final {
   max-width: 610px;
   font-size: var(--type-display);
   font-weight: 580;
@@ -4484,7 +4484,7 @@ select {
   }
 
   .hero h1,
-  .anvera-hero-title-final {
+  .aqena-hero-title-final {
     max-width: 640px;
   }
 }
@@ -4504,7 +4504,7 @@ select {
   }
 
   .hero h1,
-  .anvera-hero-title-final {
+  .aqena-hero-title-final {
     max-width: none;
     font-size: var(--type-display);
     font-weight: 580;
@@ -4554,7 +4554,7 @@ select {
 }
 }
 
-/* === ANVERA TYPOGRAPHY SYSTEM END === */
+/* === AQENA TYPOGRAPHY SYSTEM END === */
 
 .preview-demo-button {
   display: inline-flex;
@@ -4587,8 +4587,8 @@ select {
   outline-offset: 3px;
 }
 
-/* ANVERA_LANGUAGE_SWITCH_V1 */
-.anvera-language-switch {
+/* AQENA_LANGUAGE_SWITCH_V1 */
+.aqena-language-switch {
   position: fixed;
   z-index: 1000;
   top: 14px;
@@ -4604,7 +4604,7 @@ select {
   backdrop-filter: blur(10px);
 }
 
-.anvera-language-switch button {
+.aqena-language-switch button {
   min-width: 38px;
   min-height: 30px;
   padding: 4px 9px;
@@ -4620,30 +4620,30 @@ select {
   cursor: pointer;
 }
 
-.anvera-language-switch button[aria-pressed="true"] {
+.aqena-language-switch button[aria-pressed="true"] {
   background: #1d1e1a;
   color: #fbfaf7;
 }
 
-.anvera-language-switch button:focus-visible {
+.aqena-language-switch button:focus-visible {
   outline: 2px solid #1d1e1a;
   outline-offset: 2px;
 }
 
 @media (max-width: 720px) {
-  .anvera-language-switch {
+  .aqena-language-switch {
     top: 10px;
     right: 10px;
   }
 
-  .anvera-language-switch button {
+  .aqena-language-switch button {
     min-width: 34px;
     min-height: 28px;
     padding-inline: 7px;
   }
 }
 
-/* ANVERA_PRICING_NOTE_SPACING_START */
+/* AQENA_PRICING_NOTE_SPACING_START */
 
 /*
   Pricing footer notes use longer RU/EN copy.
@@ -4671,4 +4671,4 @@ select {
   }
 }
 
-/* ANVERA_PRICING_NOTE_SPACING_END */
+/* AQENA_PRICING_NOTE_SPACING_END */

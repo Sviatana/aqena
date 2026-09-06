@@ -189,7 +189,7 @@ export async function answerFromKnowledge(
   }
 
   const systemPrompt = `
-You are the grounded answer engine for Anvera.
+You are the grounded answer engine for AQENA.
 
 Your only factual knowledge for this answer is the KNOWLEDGE SOURCES supplied in the current user message.
 

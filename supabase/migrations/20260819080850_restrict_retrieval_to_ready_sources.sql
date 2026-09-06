@@ -1,4 +1,4 @@
--- Anvera retrieval must use only successfully
+-- AQENA retrieval must use only successfully
 -- processed knowledge sources.
 --
 -- Old chunks can temporarily remain while a source

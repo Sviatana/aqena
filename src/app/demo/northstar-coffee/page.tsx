@@ -100,7 +100,7 @@ export default async function NorthstarCoffeeDemo() {
               }
               href="/"
             >
-              {copy.backToAnvera}
+              {copy.backToAQENA}
             </a>
           </section>
 

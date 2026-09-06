@@ -43,12 +43,12 @@ describe(
       () => {
         process.env
           .NEXT_PUBLIC_SITE_URL =
-          "https://anvera.example/";
+          "https://aqena.example/";
 
         expect(
           canonicalSiteUrl(),
         ).toBe(
-          "https://anvera.example",
+          "https://aqena.example",
         );
       },
     );
@@ -104,7 +104,7 @@ describe(
       () => {
         process.env
           .NEXT_PUBLIC_SITE_URL =
-          "https://user:pass@anvera.example";
+          "https://user:pass@aqena.example";
 
         expect(
           () =>

@@ -11,10 +11,10 @@ Locale =
   "ru";
 
 export const LOCALE_COOKIE_NAME =
-  "anvera_locale";
+  "aqena_locale";
 
 export const LOCALE_STORAGE_KEY =
-  "anvera_locale";
+  "aqena_locale";
 
 export const LOCALE_COOKIE_MAX_AGE_SECONDS =
   60 * 60 * 24 * 365;
@@ -639,7 +639,7 @@ export type Dictionary = {
       eyebrow: string;
       title: string;
       lead: string;
-      backToAnvera: string;
+      backToAQENA: string;
       featureTitle: string;
       featureBody: string;
     };
@@ -669,7 +669,7 @@ export type Dictionary = {
       subtitle: string;
       forgotPassword: string;
       submit: string;
-      newToAnvera: string;
+      newToAQENA: string;
       createAccount: string;
     };
 

@@ -93,7 +93,7 @@
     )
   ) {
     console.error(
-      "Anvera widget: invalid data-assistant-id",
+      "AQENA widget: invalid data-assistant-id",
     );
 
     return;
@@ -105,12 +105,12 @@
       window.location.href,
     );
 
-  const anveraOrigin =
+  const aqenaOrigin =
     scriptUrl.origin;
 
   const existing =
     document.querySelector(
-      `[data-anvera-widget="${assistantId}"]`,
+      `[data-aqena-widget="${assistantId}"]`,
     );
 
   if (existing) {
@@ -123,7 +123,7 @@
     );
 
   host.setAttribute(
-    "data-anvera-widget",
+    "data-aqena-widget",
     assistantId,
   );
 
@@ -147,7 +147,7 @@
       all: initial;
     }
 
-    .anvera-root {
+    .aqena-root {
       position: fixed;
       right: 24px;
       bottom: 24px;
@@ -158,7 +158,7 @@
         sans-serif;
     }
 
-    .anvera-launcher {
+    .aqena-launcher {
       display: flex;
       align-items: center;
       gap: 9px;
@@ -178,14 +178,14 @@
       cursor: pointer;
     }
 
-    .anvera-dot {
+    .aqena-dot {
       width: 8px;
       height: 8px;
       border-radius: 50%;
       background: #b9cbb3;
     }
 
-    .anvera-panel {
+    .aqena-panel {
       position: absolute;
       right: 0;
       bottom: 64px;
@@ -213,7 +213,7 @@
         visibility 160ms ease;
     }
 
-    .anvera-panel[data-open="true"] {
+    .aqena-panel[data-open="true"] {
       opacity: 1;
       visibility: visible;
       transform:
@@ -221,7 +221,7 @@
         scale(1);
     }
 
-    .anvera-frame {
+    .aqena-frame {
       display: block;
       width: 100%;
       height: 100%;
@@ -230,17 +230,17 @@
     }
 
     @media (max-width: 520px) {
-      .anvera-root {
+      .aqena-root {
         right: 14px;
         bottom: 14px;
         left: 14px;
       }
 
-      .anvera-launcher {
+      .aqena-launcher {
         margin-left: auto;
       }
 
-      .anvera-panel {
+      .aqena-panel {
         position: fixed;
         inset: 10px;
         width: auto;
@@ -257,7 +257,7 @@
     );
 
   root.className =
-    "anvera-root";
+    "aqena-root";
 
   const panel =
     document.createElement(
@@ -265,7 +265,7 @@
     );
 
   panel.className =
-    "anvera-panel";
+    "aqena-panel";
 
   panel.dataset.open =
     "false";
@@ -276,10 +276,10 @@
     );
 
   frame.className =
-    "anvera-frame";
+    "aqena-frame";
 
   frame.src =
-    `${anveraOrigin}/embed/${encodeURIComponent(
+    `${aqenaOrigin}/embed/${encodeURIComponent(
       assistantId,
     )}?locale=${locale}`;
 
@@ -300,7 +300,7 @@
     );
 
   launcher.className =
-    "anvera-launcher";
+    "aqena-launcher";
 
   launcher.type =
     "button";
@@ -321,7 +321,7 @@
     );
 
   dot.className =
-    "anvera-dot";
+    "aqena-dot";
 
   dot.setAttribute(
     "aria-hidden",
@@ -396,7 +396,7 @@
     (event) => {
       if (
         event.origin
-        !== anveraOrigin
+        !== aqenaOrigin
         || event.source
           !== frame.contentWindow
       ) {
@@ -406,7 +406,7 @@
       if (
         event.data
         ?.type
-        === "anvera:close"
+        === "aqena:close"
       ) {
         setOpen(
           false,

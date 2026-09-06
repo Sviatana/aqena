@@ -42,14 +42,14 @@ Promise<Metadata> {
       default:
         dictionary.metadata.title,
       template:
-        "%s | Anvera",
+        "%s | AQENA",
     },
     description:
       dictionary
         .metadata
         .description,
     applicationName:
-      "Anvera",
+      "AQENA",
     creator:
       "AI24Solutions",
     publisher:

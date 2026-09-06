@@ -1,4 +1,4 @@
-import { AnveraLogo } from "@/components/anvera-brand";
+import { AqenaLogo } from "@/components/aqena-brand";
 import Link from "next/link";
 
 import {
@@ -35,7 +35,7 @@ export default async function ResetSentPage({
           className={styles.logo}
           href="/"
         >
-          <AnveraLogo
+          <AqenaLogo
             width={108}
           />
         </Link>

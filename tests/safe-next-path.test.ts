@@ -59,7 +59,7 @@ describe(
         expect(
           new URL(
             malicious,
-            "https://anvera.example",
+            "https://aqena.example",
           ).origin,
         ).toBe(
           "https://evil.example",

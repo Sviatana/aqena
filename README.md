@@ -1,18 +1,18 @@
-# Anvera
+# AQENA
 
-Anvera is a SaaS MVP for building grounded AI knowledge assistants for small businesses.
+AQENA is a SaaS MVP for building grounded AI knowledge assistants for small businesses.
 
 Businesses can create an assistant, add company knowledge, test answers in a private Playground, upgrade through a mock Pro checkout and publish the assistant as a website chat widget.
 
-Anvera uses retrieval-augmented generation (RAG). Company facts must be supported by retrieved knowledge. If the available sources do not support an answer, the assistant returns the configured fallback message instead of inventing information.
+AQENA uses retrieval-augmented generation (RAG). Company facts must be supported by retrieved knowledge. If the available sources do not support an answer, the assistant returns the configured fallback message instead of inventing information.
 
 ## Live application
 
-Production: `https://anvera.ai24solutions.online`
+Production: `https://aqena.ai24solutions.online`
 
-Northstar Coffee demo: `https://anvera.ai24solutions.online/demo/northstar-coffee`
+Northstar Coffee demo: `https://aqena.ai24solutions.online/demo/northstar-coffee`
 
-Repository: `Sviatana/anvera`
+Repository: `Sviatana/aqena`
 
 ## Product flow
 
@@ -45,7 +45,7 @@ Repository: `Sviatana/anvera`
 - Playwright
 - GitHub Actions
 
-Anvera is a single Next.js application. There is no separate backend microservice.
+AQENA is a single Next.js application. There is no separate backend microservice.
 
 ## Architecture
 
@@ -142,7 +142,7 @@ Assistant owners can configure:
 - fallback message
 - business color for the customer-facing website chat
 
-The business color is applied to the website chat UI. It is not the Anvera platform brand color.
+The business color is applied to the website chat UI. It is not the AQENA platform brand color.
 
 ## Plans
 
@@ -153,7 +153,7 @@ The business color is applied to the website chat UI. It is not the Anvera platf
 - 50 messages per month
 - Playground
 - basic customization
-- Anvera branding
+- AQENA branding
 - no website embedding
 
 ### Pro
@@ -164,7 +164,7 @@ Mock price: `$29 / month`
 - up to 100 knowledge sources
 - 2,000 messages per month
 - website embedding
-- removal of Anvera branding
+- removal of AQENA branding
 - advanced customization
 
 Billing uses `BILLING_MODE=mock`.
@@ -190,7 +190,7 @@ Published Pro assistants can be embedded with:
 
 ```html
 <script
-  src="https://YOUR_ANVERA_DOMAIN/widget.js"
+  src="https://YOUR_AQENA_DOMAIN/widget.js"
   data-assistant-id="PUBLIC_ASSISTANT_ID"
   async
 ></script>
@@ -398,7 +398,7 @@ OPENROUTER_API_KEY
 
 Production application:
 
-`https://anvera.ai24solutions.online`
+`https://aqena.ai24solutions.online`
 
 ## Supabase migrations
 

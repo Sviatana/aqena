@@ -5,7 +5,7 @@ import type {
 export const en = {
   metadata: {
     title:
-      "Anvera — Customer support built from your company knowledge",
+      "AQENA — Customer support built from your company knowledge",
     description:
       "Turn your company knowledge into reliable customer answers and add your assistant to your website.",
     keywords: [
@@ -157,7 +157,7 @@ export const en = {
       mockCheckout:
         "Mock checkout",
       productName:
-        "Anvera Pro",
+        "AQENA Pro",
       demoExplanation:
         "No real payment will be processed. This demo checkout activates Pro without collecting or storing payment card information.",
       price:
@@ -273,7 +273,7 @@ export const en = {
       bestFiveMatches:
         "Best 5 matches",
       knowledgeSearchDescription:
-        "Anvera checks the most relevant passages before answering.",
+        "AQENA checks the most relevant passages before answering.",
 
       questionLabel:
         "Ask a question",
@@ -320,7 +320,7 @@ export const en = {
         defaultFallback:
           "I could not find that in the available company knowledge.",
         answerFailed:
-          "Anvera could not answer that question. Please try again.",
+          "AQENA could not answer that question. Please try again.",
         answerSaveFailed:
           "The answer was generated but could not be saved. Please try again.",
         exchangeSaveFailed:
@@ -383,7 +383,7 @@ export const en = {
       sourcesTitle:
         "Knowledge sources",
       sourcesDescription:
-        "Sources move through Pending, Processing, Ready or Failed as Anvera prepares them for answers.",
+        "Sources move through Pending, Processing, Ready or Failed as AQENA prepares them for answers.",
       sourceCounterTemplate:
         "{count} for this assistant",
 
@@ -522,7 +522,7 @@ export const en = {
       instructions:
         "Instructions",
       instructionsHint:
-        "Define tone and answer boundaries. Leaving this empty restores Anvera's safe knowledge-only instructions.",
+        "Define tone and answer boundaries. Leaving this empty restores AQENA's safe knowledge-only instructions.",
 
       welcomeMessage:
         "Welcome message",
@@ -549,7 +549,7 @@ export const en = {
       playgroundLauncherTitle:
         "Test this assistant",
       playgroundLauncherBody:
-        "Ask real questions, inspect grounded answers and review the sources Anvera used.",
+        "Ask real questions, inspect grounded answers and review the sources AQENA used.",
       playgroundLauncherOpen:
         "Open Playground",
 
@@ -620,7 +620,7 @@ export const en = {
       instructionsPlaceholder:
         "Answer only from the company knowledge. Keep answers concise and say when the information is not available.",
       instructionsHint:
-        "If you leave this empty, Anvera will use the safe default: answer only from uploaded company knowledge.",
+        "If you leave this empty, AQENA will use the safe default: answer only from uploaded company knowledge.",
 
       brandColor:
         "Brand color",
@@ -697,13 +697,13 @@ export const en = {
       deleteAccountBody:
         "Your account, all assistants, knowledge, conversations, usage data and stored documents will be permanently deleted.",
       deleteAccountConfirm:
-        "I understand that my Anvera account and all related data will be permanently deleted.",
+        "I understand that my AQENA account and all related data will be permanently deleted.",
       deleteAccountButton:
         "Delete account",
       deleteAccountFailed:
         "We could not delete your account. Please try again.",
       accountDeletedSuccess:
-        "Your Anvera account and related data were deleted.",
+        "Your AQENA account and related data were deleted.",
 
       confirmationRequired:
         "Confirm that you understand this deletion cannot be undone.",
@@ -713,7 +713,7 @@ export const en = {
 
     shell: {
       homeLabel:
-        "Anvera home",
+        "AQENA home",
       navigationLabel:
         "Dashboard navigation",
       assistants:
@@ -780,7 +780,7 @@ export const en = {
 
   landing: {
     homeLabel:
-      "Anvera home",
+      "AQENA home",
 
     navigation: {
       howItWorks:
@@ -819,7 +819,7 @@ export const en = {
       trustNoCard:
         "No credit card to start",
       productPreviewLabel:
-        "Anvera product preview",
+        "AQENA product preview",
       assistantTitle:
         "Northstar Coffee Assistant",
       ready:
@@ -874,7 +874,7 @@ export const en = {
       thirdTitle:
         "An assistant should know when to stop",
       thirdBody:
-        "If your company knowledge does not contain the answer, Anvera should say so instead of guessing.",
+        "If your company knowledge does not contain the answer, AQENA should say so instead of guessing.",
     },
 
     how: {
@@ -916,11 +916,11 @@ export const en = {
       title:
         "Answers you can verify before customers rely on them",
       body:
-        "Anvera starts with your company knowledge and keeps the source behind every answer easy to check.",
+        "AQENA starts with your company knowledge and keeps the source behind every answer easy to check.",
       firstTitle:
         "Company knowledge first",
       firstBody:
-        "Answers come from the guides, policies and FAQs you provide. If the information is missing, Anvera says so.",
+        "Answers come from the guides, policies and FAQs you provide. If the information is missing, AQENA says so.",
       firstProof:
         "Your knowledge",
       secondTitle:
@@ -1049,7 +1049,7 @@ export const en = {
       fourthQuestion:
         "Can I add the assistant to my website?",
       fourthAnswer:
-        "Yes. Website chat is included in Pro. Add Anvera to your website with the provided embed code and let customers ask questions directly from your company knowledge.",
+        "Yes. Website chat is included in Pro. Add AQENA to your website with the provided embed code and let customers ask questions directly from your company knowledge.",
       fifthQuestion:
         "Will I be charged during the product demo?",
       fifthAnswer:
@@ -1065,7 +1065,7 @@ export const en = {
 
     footer: {
       tagline:
-        "Anvera by AI24Solutions — AI support grounded in your company knowledge",
+        "AQENA by AI24Solutions — AI support grounded in your company knowledge",
     },
   },
 
@@ -1089,8 +1089,8 @@ export const en = {
         "Good coffee for everyday rituals",
       lead:
         "Small-batch coffee, straightforward shipping and support from people who care about the cup. Use the assistant in the lower-right corner if you have a question.",
-      backToAnvera:
-        "Back to Anvera",
+      backToAQENA:
+        "Back to AQENA",
       featureTitle:
         "Coffee worth slowing down for",
       featureBody:
@@ -1100,7 +1100,7 @@ export const en = {
 
   auth: {
     homeLabel:
-      "Anvera home",
+      "AQENA home",
 
     common: {
       email:
@@ -1137,8 +1137,8 @@ export const en = {
         "Forgot password?",
       submit:
         "Sign in",
-      newToAnvera:
-        "New to Anvera?",
+      newToAQENA:
+        "New to AQENA?",
       createAccount:
         "Create an account",
     },
@@ -1153,7 +1153,7 @@ export const en = {
       title:
         "Create your account",
       subtitle:
-        "Set up Anvera and build your first assistant",
+        "Set up AQENA and build your first assistant",
       submit:
         "Create account",
       alreadyHaveAccount:
@@ -1185,7 +1185,7 @@ export const en = {
       heroTitle:
         "Get back to your assistants and company knowledge",
       heroBody:
-        "Enter the email you use for Anvera. We will send you a secure link to choose a new password.",
+        "Enter the email you use for AQENA. We will send you a secure link to choose a new password.",
       title:
         "Reset your password",
       subtitle:
@@ -1206,7 +1206,7 @@ export const en = {
       title:
         "Reset link sent",
       accountPrefix:
-        "If an Anvera account exists for",
+        "If an AQENA account exists for",
       accountSuffix:
         "you will receive an email with a secure password reset link.",
       back:
@@ -1217,7 +1217,7 @@ export const en = {
       kicker:
         "Secure your account",
       heroTitle:
-        "Choose a new password for Anvera",
+        "Choose a new password for AQENA",
       heroBody:
         "Use a password you do not use for other services.",
       title:

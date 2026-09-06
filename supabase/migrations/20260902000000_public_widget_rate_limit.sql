@@ -1,5 +1,5 @@
 -- =========================================================
--- Anvera public widget abuse protection
+-- AQENA public widget abuse protection
 -- =========================================================
 --
 -- The application hashes:

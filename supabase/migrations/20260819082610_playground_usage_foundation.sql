@@ -1,4 +1,4 @@
--- Anvera Playground foundation.
+-- AQENA Playground foundation.
 --
 -- One authenticated Playground conversation per
 -- assistant/user pair.

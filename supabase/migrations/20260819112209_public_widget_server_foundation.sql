@@ -1,9 +1,9 @@
--- Anvera public widget server foundation.
+-- AQENA public widget server foundation.
 --
 -- Important security model:
 --
 -- Browsers never call these functions directly.
--- Only the Anvera server, using the service_role key,
+-- Only the AQENA server, using the service_role key,
 -- can execute them.
 --
 -- Public visitors identify an assistant only by public_id.

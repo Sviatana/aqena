@@ -1,4 +1,4 @@
-import { AnveraLogo } from "@/components/anvera-brand";
+import { AqenaLogo } from "@/components/aqena-brand";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -84,7 +84,7 @@ export default async function DashboardLayout({
           className={styles.brand}
           href="/"
         >
-          <AnveraLogo
+          <AqenaLogo
             width={104}
           />
         </Link>

@@ -1,4 +1,4 @@
--- Allow an authenticated Anvera user to read and remove
+-- Allow an authenticated AQENA user to read and remove
 -- only knowledge documents stored under:
 --
 --   user_id/assistant_id/source_id/file

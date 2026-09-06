@@ -1,11 +1,11 @@
-# Anvera final regression report
+# AQENA final regression report
 
 ## Release snapshot
 
-- Product: Anvera
-- Repository: `Sviatana/anvera`
-- Production: `https://anvera.ai24solutions.online`
-- Northstar Coffee demo: `https://anvera.ai24solutions.online/demo/northstar-coffee`
+- Product: AQENA
+- Repository: `Sviatana/aqena`
+- Production: `https://aqena.ai24solutions.online`
+- Northstar Coffee demo: `https://aqena.ai24solutions.online/demo/northstar-coffee`
 - Release commit: `207f873ba13e50714bedef012ab665c981a09b8d`
 - Latest successful CI run: `32365964793`
 - CI result: `success`
@@ -20,7 +20,7 @@ This report records the final regression status of the submitted SaaS MVP. It se
 
 | Requirement | Status | Implementation | Verification |
 | --- | --- | --- | --- |
-| Focused SaaS product for company knowledge assistants | PASS | Single-purpose Anvera application for building grounded knowledge assistants | Product flow and production application reviewed |
+| Focused SaaS product for company knowledge assistants | PASS | Single-purpose AQENA application for building grounded knowledge assistants | Product flow and production application reviewed |
 | Descriptive landing page | PASS | Hero, product value, workflow, features, pricing, FAQ and CTA | Production landing returns HTTP 200 and browser smoke covers guest navigation |
 | Email and password authentication | PASS | Supabase Auth with sign up, confirmation, sign in, recovery and password update | Production authentication flow manually verified; auth pages covered by browser smoke |
 | Protected dashboard | PASS | Authenticated dashboard and assistant routes | Route protection implemented through server-side auth checks |
@@ -286,11 +286,11 @@ Free standard shipping on orders of $50 or more within the contiguous United Sta
 ## Release history relevant to final verification
 
 ```text
-207f873 docs: finalize Anvera project documentation
+207f873 docs: finalize AQENA project documentation
 163d2f4 docs: add Northstar demo knowledge source
 fee0023 test: add integration and browser e2e coverage
-db19bfe feat: finalize Anvera customization and branding
-7e5cfd5 feat: complete Anvera SaaS MVP
+db19bfe feat: finalize AQENA customization and branding
+7e5cfd5 feat: complete AQENA SaaS MVP
 3ba3f12 feat: add Supabase data foundation
 ```
 
@@ -308,7 +308,7 @@ The production demo itself uses real Supabase persistence and the real RAG pipel
 
 ## Final submission status
 
-Anvera is ready for final demonstration as a functioning SaaS MVP.
+AQENA is ready for final demonstration as a functioning SaaS MVP.
 
 Core acceptance path:
 

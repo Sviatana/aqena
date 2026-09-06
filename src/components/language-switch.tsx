@@ -19,7 +19,7 @@ export function LanguageSwitch() {
       aria-label={
         copy.label
       }
-      className="anvera-language-switch"
+      className="aqena-language-switch"
       role="group"
     >
       <button

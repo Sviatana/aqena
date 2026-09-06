@@ -1,9 +1,9 @@
 import Link from "next/link";
 
 import {
-  AnveraLogo,
-  AnveraMark,
-} from "@/components/anvera-brand";
+  AqenaLogo,
+  AqenaMark,
+} from "@/components/aqena-brand";
 import {
   getServerDictionary,
 } from "@/i18n/server";
@@ -135,7 +135,7 @@ export default async function Home() {
             href="/"
             aria-label={copy.homeLabel}
           >
-            <AnveraLogo
+            <AqenaLogo
               priority
               width={108}
             />
@@ -190,7 +190,7 @@ export default async function Home() {
         </div>
       </header>
 
-      <section className="hero anvera-hero-final-scope">
+      <section className="hero aqena-hero-final-scope">
         <div className="container hero-grid">
           <div className="hero-copy">
             <div className="eyebrow">
@@ -198,7 +198,7 @@ export default async function Home() {
               {copy.hero.eyebrow}
             </div>
 
-            <h1 className="anvera-hero-title-final">
+            <h1 className="aqena-hero-title-final">
               {copy.hero.title}
             </h1>
 
@@ -271,11 +271,11 @@ export default async function Home() {
               <div className="assistant-shell">
                 <aside className="assistant-sidebar">
                   <div className="sidebar-brand">
-                    <AnveraMark
+                    <AqenaMark
                       className="mini-mark-image"
                       size={22}
                     />
-                    <strong>Anvera</strong>
+                    <strong>AQENA</strong>
                   </div>
 
                   <div className="sidebar-label">
@@ -1025,7 +1025,7 @@ export default async function Home() {
             href="/"
             aria-label={copy.homeLabel}
           >
-            <AnveraLogo
+            <AqenaLogo
               width={108}
             />
           </Link>

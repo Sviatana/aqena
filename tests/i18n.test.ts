@@ -81,7 +81,7 @@ function stringLeaves(
 }
 
 describe(
-  "Anvera i18n configuration",
+  "AQENA i18n configuration",
   () => {
     it(
       "supports only ru and en with ru as default",

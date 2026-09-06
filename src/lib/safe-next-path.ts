@@ -1,5 +1,5 @@
 const SAFE_BASE_URL =
-  "https://anvera.invalid";
+  "https://aqena.invalid";
 
 export function safeNextPath(
   value:

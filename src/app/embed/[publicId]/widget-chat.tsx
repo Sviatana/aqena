@@ -187,7 +187,7 @@ export default function WidgetChat({
     );
 
   const storageKey =
-    `anvera:widget:${publicId}`;
+    `aqena:widget:${publicId}`;
 
   useEffect(
     () => {
@@ -381,7 +381,7 @@ export default function WidgetChat({
       window.parent.postMessage(
         {
           type:
-            "anvera:close",
+            "aqena:close",
         },
         "*",
       );
