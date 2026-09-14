@@ -86,7 +86,7 @@ export const ru = {
       backToAssistantButton:
         "Назад к ассистенту",
       upgradeCta:
-        "Перейти на Pro — $29/месяц",
+        "Оформить Pro →",
       keepTesting:
         "Продолжить тестирование",
 
@@ -184,7 +184,7 @@ export const ru = {
       mockDisabledPage:
         "Тестовый режим оплаты не включён в этом окружении.",
       disclaimer:
-        "Данные карты не запрашиваются. Этот сценарий существует только для демонстрации ограничения функций по тарифу в MVP.",
+        "Платёжные данные на сайте не запрашиваются. Способ оплаты согласуется после отправки заявки.",
 
       summaryTitle:
         "Что изменится",
@@ -206,6 +206,70 @@ export const ru = {
         "Установка на сайт",
       included:
         "Включено",
+      manual:
+        "По заявке",
+
+      requestBadge:
+        "ОФОРМЛЕНИЕ PRO",
+      requestExplanation:
+        "Оставьте данные для оформления оплаты. Мы свяжемся с вами по указанному контакту. После подтверждения оплаты тариф Pro будет активирован.",
+      standardPriceBelarus:
+        "79 BYN / месяц",
+      promoPriceBelarus:
+        "49 BYN / месяц",
+      standardPriceRussia:
+        "2 490 ₽ / месяц",
+      promoPriceRussia:
+        "1 490 ₽ / месяц",
+      standardPriceInternational:
+        "$29 / month",
+      promoPriceInternational:
+        "$19 / month",
+      priceLock:
+        "Акционная цена фиксируется на 12 месяцев с момента подключения для первых 100 пользователей при непрерывной подписке.",
+
+      customerName:
+        "Имя",
+      customerNamePlaceholder:
+        "Как к вам обращаться",
+      companyName:
+        "Компания / ИП",
+      companyNamePlaceholder:
+        "Необязательно",
+      country:
+        "Страна",
+      countryPlaceholder:
+        "Выберите страну",
+      countryBelarus:
+        "Беларусь",
+      countryRussia:
+        "Россия",
+      countryOther:
+        "Другая страна",
+      email:
+        "Email",
+      emailPlaceholder:
+        "name@example.com",
+      contactMethod:
+        "Удобный способ связи",
+      contactTelegram:
+        "Telegram",
+      contactPhone:
+        "Телефон",
+      contactValue:
+        "Контакт",
+      contactValuePlaceholder:
+        "@username или номер телефона",
+      note:
+        "Комментарий",
+      notePlaceholder:
+        "Например, название сайта или вопрос по подключению. Необязательно.",
+      submitRequest:
+        "Отправить заявку на оплату",
+      requestSuccessTitle:
+        "Заявка получена",
+      requestSuccessBody:
+        "Мы свяжемся с вами для оформления оплаты. После подтверждения оплаты тариф Pro будет активирован.",
 
       errors: {
         subscriptionLoadFailed:
@@ -214,6 +278,10 @@ export const ru = {
           "Тестовый режим оплаты не включён для этого окружения.",
         upgradeFailed:
           "Не удалось активировать тестовый Pro. Попробуйте ещё раз.",
+        requestInvalid:
+          "Проверьте данные формы и попробуйте ещё раз.",
+        requestFailed:
+          "Не удалось отправить заявку. Попробуйте ещё раз.",
       },
     },
 
@@ -1001,17 +1069,33 @@ export const ru = {
       basicCustomization:
         "Базовая настройка",
       freeLimit:
-        "Виджет с ассистентом не входит в пакет",
+        "Встроить виджет на сайт можно, подключившись к тарифу Pro.",
+      freeUpgradeLink:
+        "Посмотреть тариф Pro →",
       bestForWebsites:
-        "Лучше всего для сайтов",
+        "АКЦИЯ · ПЕРВЫЕ 100 ПОЛЬЗОВАТЕЛЕЙ",
       proName:
         "Pro",
       proDescription:
         "Для ассистентов, готовых работать с реальными клиентами",
+      proOldPrice:
+        "79 BYN",
+      proPrice:
+        "49 BYN",
+      showSecondaryPrice:
+        true,
+      proSecondaryLabel:
+        "Для России:",
+      proSecondaryOldPrice:
+        "2 490 ₽",
+      proSecondaryPrice:
+        "1 490 ₽ / месяц",
+      proPriceLock:
+        "Акционная цена фиксируется на 12 месяцев с момента подключения при непрерывной подписке.",
       perMonth:
         "/ месяц",
       choosePro:
-        "Выбрать Pro",
+        "Оформить Pro",
       proAssistants:
         "До 5 ассистентов",
       proSources:
@@ -1025,7 +1109,7 @@ export const ru = {
       advancedCustomization:
         "Расширенная настройка",
       proNote:
-        "Виджет с ассистентом встраивается на сайт",
+        "После заявки мы свяжемся с вами для оформления оплаты. Pro активируется после подтверждения оплаты.",
     },
 
     faq: {
@@ -1054,7 +1138,7 @@ export const ru = {
       fifthQuestion:
         "Будут ли списываться деньги во время демонстрации?",
       fifthAnswer:
-        "Нет. В текущем MVP используется явно обозначенная тестовая оплата, которая не собирает реальные данные банковской карты.",
+        "Нет. В приложении вы оставляете заявку на Pro. Мы связываемся с вами для оформления оплаты, а доступ активируется после подтверждения оплаты.",
     },
 
     cta: {

@@ -4672,3 +4672,57 @@ select {
 }
 
 /* AQENA_PRICING_NOTE_SPACING_END */
+
+
+/* AQENA_FREE_PRO_NOTICE */
+.plan-limit {
+  display: grid;
+  gap: 6px;
+}
+
+.plan-upgrade-link {
+  width: fit-content;
+  color: inherit;
+  font-weight: 650;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* AQENA_MANUAL_PRO_PRICING */
+.launch-price-block {
+  margin-top: 22px;
+}
+
+.launch-old-price {
+  margin-bottom: 2px;
+  color: #77766f;
+  font-size: 14px;
+}
+
+.launch-old-price del,
+.launch-secondary-price del {
+  opacity: 0.72;
+}
+
+.launch-secondary-price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+  margin-top: 9px;
+  color: #616159;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.launch-secondary-price strong {
+  color: #252621;
+  font-weight: 680;
+}
+
+.launch-price-lock {
+  margin-top: 10px !important;
+  color: #76756d !important;
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+}

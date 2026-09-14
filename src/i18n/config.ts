@@ -133,11 +133,46 @@ export type Dictionary = {
       mock: string;
       websiteEmbed: string;
       included: string;
+      manual: string;
+
+      requestBadge: string;
+      requestExplanation: string;
+      standardPriceBelarus: string;
+      promoPriceBelarus: string;
+      standardPriceRussia: string;
+      promoPriceRussia: string;
+      standardPriceInternational: string;
+      promoPriceInternational: string;
+      priceLock: string;
+
+      customerName: string;
+      customerNamePlaceholder: string;
+      companyName: string;
+      companyNamePlaceholder: string;
+      country: string;
+      countryPlaceholder: string;
+      countryBelarus: string;
+      countryRussia: string;
+      countryOther: string;
+      email: string;
+      emailPlaceholder: string;
+      contactMethod: string;
+      contactTelegram: string;
+      contactPhone: string;
+      contactValue: string;
+      contactValuePlaceholder: string;
+      note: string;
+      notePlaceholder: string;
+      submitRequest: string;
+      requestSuccessTitle: string;
+      requestSuccessBody: string;
 
       errors: {
         subscriptionLoadFailed: string;
         mockDisabledAction: string;
         upgradeFailed: string;
+        requestInvalid: string;
+        requestFailed: string;
       };
     };
 
@@ -588,9 +623,17 @@ export type Dictionary = {
       playground: string;
       basicCustomization: string;
       freeLimit: string;
+      freeUpgradeLink: string;
       bestForWebsites: string;
       proName: string;
       proDescription: string;
+      proOldPrice: string;
+      proPrice: string;
+      showSecondaryPrice: boolean;
+      proSecondaryLabel: string;
+      proSecondaryOldPrice: string;
+      proSecondaryPrice: string;
+      proPriceLock: string;
       perMonth: string;
       choosePro: string;
       proAssistants: string;

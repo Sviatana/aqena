@@ -174,3 +174,135 @@
     padding: 20px;
   }
 }
+
+/* AQENA_MANUAL_REQUEST_FORM */
+.requestBadge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 10px;
+  border: 1px solid #d4d8cf;
+  border-radius: 999px;
+  background: #f0f3ed;
+  color: #596454;
+  font-size: 11px;
+  font-weight: 680;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.priceOptions {
+  display: grid;
+  gap: 0;
+  margin-top: 24px;
+  border-top: 1px solid #e1dfd8;
+}
+
+.priceOption {
+  display: grid;
+  grid-template-columns:
+    minmax(95px, 1fr)
+    auto
+    auto;
+  align-items: baseline;
+  gap: 10px;
+  padding: 12px 0;
+  border-bottom: 1px solid #e1dfd8;
+  font-size: 13px;
+}
+
+.priceOption span {
+  color: #74736c;
+}
+
+.priceOption del {
+  color: #929087;
+}
+
+.priceOption strong {
+  color: #191a17;
+  font-size: 15px;
+  font-weight: 680;
+}
+
+.priceLock {
+  margin-top: 12px !important;
+  color: #6e6d65 !important;
+  font-size: 12px !important;
+}
+
+.fieldGrid {
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.field {
+  display: grid;
+  gap: 7px;
+  margin-top: 14px;
+  color: #55564f;
+  font-size: 12px;
+  font-weight: 620;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  border: 1px solid #d8d7d0;
+  border-radius: 9px;
+  background: #fff;
+  color: #1d1e1a;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 450;
+  outline: none;
+}
+
+.input {
+  min-height: 44px;
+  padding: 0 12px;
+}
+
+.textarea {
+  min-height: 100px;
+  padding: 11px 12px;
+  resize: vertical;
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: #8c9284;
+  box-shadow:
+    0 0 0 3px
+    rgba(101, 115, 95, 0.09);
+}
+
+.success {
+  margin-top: 26px;
+  padding: 16px;
+  border: 1px solid #c7d4c1;
+  border-radius: 12px;
+  background: #f2f6ef;
+  color: #394534;
+}
+
+.success strong {
+  font-size: 14px;
+}
+
+.success p {
+  color: #586454 !important;
+}
+
+@media (max-width: 620px) {
+  .fieldGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .priceOption {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}

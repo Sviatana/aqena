@@ -1,19 +1,17 @@
 import Link from "next/link";
+
 import {
   notFound,
   redirect,
 } from "next/navigation";
 
 import {
-  completeMockUpgrade,
+  submitManualBillingRequest,
 } from "@/app/dashboard/billing-actions";
+
 import {
   getServerDictionary,
 } from "@/i18n/server";
-
-import {
-  isMockBillingEnabled,
-} from "@/lib/billing-mode";
 
 import {
   createClient,
@@ -26,6 +24,7 @@ type PageProps = {
   searchParams: Promise<{
     assistant?: string;
     error?: string;
+    submitted?: string;
   }>;
 };
 
@@ -74,6 +73,8 @@ export default async function UpgradePage({
   const [
     assistantResult,
     subscriptionResult,
+    profileResult,
+    requestResult,
   ] = await Promise.all([
     supabase
       .from("assistants")
@@ -100,6 +101,36 @@ export default async function UpgradePage({
         userId,
       )
       .maybeSingle(),
+
+    supabase
+      .from("profiles")
+      .select(
+        "display_name",
+      )
+      .eq(
+        "id",
+        userId,
+      )
+      .maybeSingle(),
+
+    supabase
+      .from("billing_requests")
+      .select(
+        "id,status",
+      )
+      .eq(
+        "user_id",
+        userId,
+      )
+      .in(
+        "status",
+        [
+          "pending",
+          "contacted",
+          "paid",
+        ],
+      )
+      .maybeSingle(),
   ]);
 
   if (
@@ -114,6 +145,14 @@ export default async function UpgradePage({
   ) {
     throw new Error(
       copy.errors.subscriptionLoadFailed,
+    );
+  }
+
+  if (
+    requestResult.error
+  ) {
+    throw new Error(
+      copy.errors.requestFailed,
     );
   }
 
@@ -135,8 +174,22 @@ export default async function UpgradePage({
     );
   }
 
-  const mockEnabled =
-    isMockBillingEnabled();
+  const defaultName =
+    profileResult.data?.display_name
+      ?.trim()
+    ?? "";
+
+  const defaultEmail =
+    typeof claimsData?.claims?.email
+      === "string"
+      ? claimsData.claims.email
+      : "";
+
+  const submitted =
+    query.submitted === "1"
+    || Boolean(
+      requestResult.data,
+    );
 
   return (
     <div
@@ -208,10 +261,10 @@ export default async function UpgradePage({
         >
           <span
             className={
-              styles.mockBadge
+              styles.requestBadge
             }
           >
-            {copy.mockCheckout}
+            {copy.requestBadge}
           </span>
 
           <h2>
@@ -219,22 +272,76 @@ export default async function UpgradePage({
           </h2>
 
           <p>
-            {copy.demoExplanation}
+            {copy.requestExplanation}
           </p>
 
           <div
             className={
-              styles.price
+              styles.priceOptions
             }
           >
-            <strong>
-              {copy.price}
-            </strong>
+            <div
+              className={
+                styles.priceOption
+              }
+            >
+              <span>
+                {copy.countryBelarus}
+              </span>
 
-            <span>
-              {copy.perMonth}
-            </span>
+              <del>
+                {copy.standardPriceBelarus}
+              </del>
+
+              <strong>
+                {copy.promoPriceBelarus}
+              </strong>
+            </div>
+
+            <div
+              className={
+                styles.priceOption
+              }
+            >
+              <span>
+                {copy.countryRussia}
+              </span>
+
+              <del>
+                {copy.standardPriceRussia}
+              </del>
+
+              <strong>
+                {copy.promoPriceRussia}
+              </strong>
+            </div>
+
+            <div
+              className={
+                styles.priceOption
+              }
+            >
+              <span>
+                {copy.countryOther}
+              </span>
+
+              <del>
+                {copy.standardPriceInternational}
+              </del>
+
+              <strong>
+                {copy.promoPriceInternational}
+              </strong>
+            </div>
           </div>
+
+          <p
+            className={
+              styles.priceLock
+            }
+          >
+            {copy.priceLock}
+          </p>
 
           <div
             className={
@@ -273,10 +380,25 @@ export default async function UpgradePage({
             )}
           </div>
 
-          {mockEnabled ? (
+          {submitted ? (
+            <div
+              className={
+                styles.success
+              }
+              role="status"
+            >
+              <strong>
+                {copy.requestSuccessTitle}
+              </strong>
+
+              <p>
+                {copy.requestSuccessBody}
+              </p>
+            </div>
+          ) : (
             <form
               action={
-                completeMockUpgrade
+                submitManualBillingRequest
               }
               className={
                 styles.form
@@ -290,23 +412,202 @@ export default async function UpgradePage({
                 }
               />
 
+              <div
+                className={
+                  styles.fieldGrid
+                }
+              >
+                <label
+                  className={
+                    styles.field
+                  }
+                >
+                  <span>
+                    {copy.customerName}
+                  </span>
+
+                  <input
+                    className={
+                      styles.input
+                    }
+                    defaultValue={
+                      defaultName
+                    }
+                    maxLength={120}
+                    name="customerName"
+                    placeholder={
+                      copy.customerNamePlaceholder
+                    }
+                    required
+                  />
+                </label>
+
+                <label
+                  className={
+                    styles.field
+                  }
+                >
+                  <span>
+                    {copy.companyName}
+                  </span>
+
+                  <input
+                    className={
+                      styles.input
+                    }
+                    maxLength={160}
+                    name="companyName"
+                    placeholder={
+                      copy.companyNamePlaceholder
+                    }
+                  />
+                </label>
+
+                <label
+                  className={
+                    styles.field
+                  }
+                >
+                  <span>
+                    {copy.country}
+                  </span>
+
+                  <select
+                    className={
+                      styles.input
+                    }
+                    defaultValue=""
+                    name="pricingRegion"
+                    required
+                  >
+                    <option
+                      disabled
+                      value=""
+                    >
+                      {copy.countryPlaceholder}
+                    </option>
+
+                    <option value="by">
+                      {copy.countryBelarus}
+                    </option>
+
+                    <option value="ru">
+                      {copy.countryRussia}
+                    </option>
+
+                    <option value="intl">
+                      {copy.countryOther}
+                    </option>
+                  </select>
+                </label>
+
+                <label
+                  className={
+                    styles.field
+                  }
+                >
+                  <span>
+                    {copy.email}
+                  </span>
+
+                  <input
+                    className={
+                      styles.input
+                    }
+                    defaultValue={
+                      defaultEmail
+                    }
+                    maxLength={320}
+                    name="email"
+                    placeholder={
+                      copy.emailPlaceholder
+                    }
+                    required
+                    type="email"
+                  />
+                </label>
+
+                <label
+                  className={
+                    styles.field
+                  }
+                >
+                  <span>
+                    {copy.contactMethod}
+                  </span>
+
+                  <select
+                    className={
+                      styles.input
+                    }
+                    defaultValue="telegram"
+                    name="contactMethod"
+                    required
+                  >
+                    <option value="telegram">
+                      {copy.contactTelegram}
+                    </option>
+
+                    <option value="phone">
+                      {copy.contactPhone}
+                    </option>
+                  </select>
+                </label>
+
+                <label
+                  className={
+                    styles.field
+                  }
+                >
+                  <span>
+                    {copy.contactValue}
+                  </span>
+
+                  <input
+                    className={
+                      styles.input
+                    }
+                    maxLength={160}
+                    name="contactValue"
+                    placeholder={
+                      copy.contactValuePlaceholder
+                    }
+                    required
+                  />
+                </label>
+              </div>
+
+              <label
+                className={
+                  styles.field
+                }
+              >
+                <span>
+                  {copy.note}
+                </span>
+
+                <textarea
+                  className={
+                    styles.textarea
+                  }
+                  maxLength={1000}
+                  name="note"
+                  placeholder={
+                    copy.notePlaceholder
+                  }
+                  rows={4}
+                />
+              </label>
+
               <button
                 className={
                   styles.submit
                 }
                 type="submit"
               >
-                {copy.completeMockUpgrade}
+                {copy.submitRequest}
               </button>
             </form>
-          ) : (
-            <div
-              className={
-                styles.error
-              }
-            >
-              {copy.mockDisabledPage}
-            </div>
           )}
 
           <p
@@ -377,7 +678,7 @@ export default async function UpgradePage({
               </span>
 
               <strong>
-                {copy.mock}
+                {copy.manual}
               </strong>
             </div>
 

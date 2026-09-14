@@ -259,6 +259,72 @@ export type Database = {
         }
         Relationships: []
       }
+      billing_requests: {
+        Row: {
+          assistant_id: string | null
+          company_name: string | null
+          contact_method: string
+          contact_value: string
+          created_at: string
+          currency: string
+          customer_name: string
+          email: string
+          id: string
+          note: string | null
+          offer_code: string
+          price_lock_months: number
+          pricing_region: string
+          promo_amount_minor: number
+          requested_plan: string
+          standard_amount_minor: number
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          assistant_id?: string | null
+          company_name?: string | null
+          contact_method: string
+          contact_value: string
+          created_at?: string
+          currency: string
+          customer_name: string
+          email: string
+          id?: string
+          note?: string | null
+          offer_code?: string
+          price_lock_months?: number
+          pricing_region: string
+          promo_amount_minor: number
+          requested_plan?: string
+          standard_amount_minor: number
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          assistant_id?: string | null
+          company_name?: string | null
+          contact_method?: string
+          contact_value?: string
+          created_at?: string
+          currency?: string
+          customer_name?: string
+          email?: string
+          id?: string
+          note?: string | null
+          offer_code?: string
+          price_lock_months?: number
+          pricing_region?: string
+          promo_amount_minor?: number
+          requested_plan?: string
+          standard_amount_minor?: number
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       subscriptions: {
         Row: {
           billing_mode: string

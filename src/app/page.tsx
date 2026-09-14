@@ -860,11 +860,23 @@ export default async function Home() {
               </ul>
 
               <div className="plan-limit">
-                {copy.pricing.freeLimit}
+                <span>
+                  {copy.pricing.freeLimit}
+                </span>
+
+                <a
+                  className="plan-upgrade-link"
+                  href="#pro-plan"
+                >
+                  {copy.pricing.freeUpgradeLink}
+                </a>
               </div>
             </article>
 
-            <article className="pricing-card pricing-card-pro">
+            <article
+              className="pricing-card pricing-card-pro"
+              id="pro-plan"
+            >
               <div className="popular-badge">
                 {copy.pricing.bestForWebsites}
               </div>
@@ -878,11 +890,42 @@ export default async function Home() {
                 </p>
               </div>
 
-              <div className="price">
-                <strong>$29</strong>
-                <span>
-                  {copy.pricing.perMonth}
-                </span>
+              <div className="launch-price-block">
+                <div className="launch-old-price">
+                  <del>
+                    {copy.pricing.proOldPrice}
+                  </del>
+                </div>
+
+                <div className="price">
+                  <strong>
+                    {copy.pricing.proPrice}
+                  </strong>
+
+                  <span>
+                    {copy.pricing.perMonth}
+                  </span>
+                </div>
+
+                {copy.pricing.showSecondaryPrice ? (
+                  <div className="launch-secondary-price">
+                    <span>
+                      {copy.pricing.proSecondaryLabel}
+                    </span>
+
+                    <del>
+                      {copy.pricing.proSecondaryOldPrice}
+                    </del>
+
+                    <strong>
+                      {copy.pricing.proSecondaryPrice}
+                    </strong>
+                  </div>
+                ) : null}
+
+                <p className="launch-price-lock">
+                  {copy.pricing.proPriceLock}
+                </p>
               </div>
 
               <a

@@ -1,9 +1,6 @@
 "use server";
 
 import {
-  revalidatePath,
-} from "next/cache";
-import {
   redirect,
 } from "next/navigation";
 
@@ -12,12 +9,16 @@ import {
 } from "@/i18n/server";
 
 import {
-  isMockBillingEnabled,
-} from "@/lib/billing-mode";
+  isBillingEmail,
+  isContactMethod,
+  isPricingRegion,
+  pricingForRegion,
+} from "@/lib/manual-billing";
 
 import {
   createAdminClient,
 } from "@/lib/supabase/admin";
+
 import {
   createClient,
 } from "@/lib/supabase/server";
@@ -39,7 +40,10 @@ function formText(
 
 function upgradeUrl(
   assistantId: string,
-  error?: string,
+  options?: {
+    error?: string;
+    submitted?: boolean;
+  },
 ) {
   const params =
     new URLSearchParams();
@@ -51,10 +55,17 @@ function upgradeUrl(
     );
   }
 
-  if (error) {
+  if (options?.error) {
     params.set(
       "error",
-      error,
+      options.error,
+    );
+  }
+
+  if (options?.submitted) {
+    params.set(
+      "submitted",
+      "1",
     );
   }
 
@@ -73,12 +84,14 @@ function billingError(
   redirect(
     upgradeUrl(
       assistantId,
-      message,
+      {
+        error: message,
+      },
     ),
   );
 }
 
-export async function completeMockUpgrade(
+export async function submitManualBillingRequest(
   formData: FormData,
 ) {
   const copy =
@@ -124,25 +137,38 @@ export async function completeMockUpgrade(
     );
   }
 
-  const {
-    data: assistant,
-    error: assistantError,
-  } = await supabase
-    .from("assistants")
-    .select("id")
-    .eq(
-      "id",
-      assistantId,
-    )
-    .eq(
-      "owner_id",
-      userId,
-    )
-    .maybeSingle();
+  const [
+    assistantResult,
+    subscriptionResult,
+  ] = await Promise.all([
+    supabase
+      .from("assistants")
+      .select("id")
+      .eq(
+        "id",
+        assistantId,
+      )
+      .eq(
+        "owner_id",
+        userId,
+      )
+      .maybeSingle(),
+
+    supabase
+      .from("subscriptions")
+      .select(
+        "plan,status",
+      )
+      .eq(
+        "user_id",
+        userId,
+      )
+      .maybeSingle(),
+  ]);
 
   if (
-    assistantError
-    || !assistant
+    assistantResult.error
+    || !assistantResult.data
   ) {
     redirect(
       "/dashboard",
@@ -150,84 +176,201 @@ export async function completeMockUpgrade(
   }
 
   if (
-    !isMockBillingEnabled()
+    subscriptionResult.error
   ) {
     billingError(
       assistantId,
-      copy.errors.mockDisabledAction,
+      copy.errors.subscriptionLoadFailed,
     );
   }
 
-  const now =
-    new Date();
+  if (
+    subscriptionResult.data?.plan
+      === "pro"
+    && subscriptionResult.data?.status
+      === "active"
+  ) {
+    redirect(
+      `/dashboard/assistants/${assistantId}/install`,
+    );
+  }
 
-  const periodEnd =
-    new Date(
-      now.getTime(),
+  const customerName =
+    formText(
+      formData,
+      "customerName",
     );
 
-  periodEnd.setUTCMonth(
-    periodEnd.getUTCMonth()
-    + 1,
-  );
+  const companyName =
+    formText(
+      formData,
+      "companyName",
+    );
+
+  const pricingRegion =
+    formText(
+      formData,
+      "pricingRegion",
+    );
+
+  const email =
+    formText(
+      formData,
+      "email",
+    ).toLowerCase();
+
+  const contactMethod =
+    formText(
+      formData,
+      "contactMethod",
+    );
+
+  const contactValue =
+    formText(
+      formData,
+      "contactValue",
+    );
+
+  const note =
+    formText(
+      formData,
+      "note",
+    );
+
+  if (
+    customerName.length < 1
+    || customerName.length > 120
+    || companyName.length > 160
+    || !isPricingRegion(
+      pricingRegion,
+    )
+    || !isBillingEmail(
+      email,
+    )
+    || !isContactMethod(
+      contactMethod,
+    )
+    || contactValue.length < 2
+    || contactValue.length > 160
+    || note.length > 1000
+  ) {
+    billingError(
+      assistantId,
+      copy.errors.requestInvalid,
+    );
+  }
+
+  const pricing =
+    pricingForRegion(
+      pricingRegion,
+    );
 
   const admin =
     createAdminClient();
 
   const {
-    data: subscription,
-    error: updateError,
-  } = await admin
-    .from("subscriptions")
-    .update({
-      plan: "pro",
-      status: "active",
-      billing_mode: "mock",
-      mock_checkout_completed_at:
-        now.toISOString(),
-      current_period_start:
-        now.toISOString(),
-      current_period_end:
-        periodEnd.toISOString(),
-      updated_at:
-        now.toISOString(),
-    })
-    .eq(
-      "user_id",
-      userId,
-    )
-    .select(
-      "plan,status",
-    )
-    .maybeSingle();
+    data: existing,
+    error: existingError,
+  } =
+    await admin
+      .from("billing_requests")
+      .select(
+        "id,status",
+      )
+      .eq(
+        "user_id",
+        userId,
+      )
+      .in(
+        "status",
+        [
+          "pending",
+          "contacted",
+          "paid",
+        ],
+      )
+      .maybeSingle();
 
-  if (
-    updateError
-    || !subscription
-    || subscription.plan
-      !== "pro"
-    || subscription.status
-      !== "active"
-  ) {
+  if (existingError) {
     billingError(
       assistantId,
-      copy.errors.upgradeFailed,
+      copy.errors.requestFailed,
     );
   }
 
-  revalidatePath(
-    "/dashboard",
-  );
+  if (existing) {
+    redirect(
+      upgradeUrl(
+        assistantId,
+        {
+          submitted: true,
+        },
+      ),
+    );
+  }
 
-  revalidatePath(
-    `/dashboard/assistants/${assistantId}`,
-  );
+  const {
+    error: insertError,
+  } =
+    await admin
+      .from("billing_requests")
+      .insert({
+        user_id: userId,
+        assistant_id:
+          assistantId,
+        requested_plan: "pro",
+        status: "pending",
+        pricing_region:
+          pricingRegion,
+        currency:
+          pricing.currency,
+        promo_amount_minor:
+          pricing.promoAmountMinor,
+        standard_amount_minor:
+          pricing.standardAmountMinor,
+        price_lock_months: 12,
+        offer_code:
+          "launch_first_100",
+        customer_name:
+          customerName,
+        company_name:
+          companyName || null,
+        email,
+        contact_method:
+          contactMethod,
+        contact_value:
+          contactValue,
+        note:
+          note || null,
+      });
 
-  revalidatePath(
-    `/dashboard/assistants/${assistantId}/install`,
-  );
+  if (insertError) {
+    if (
+      insertError.code
+        === "23505"
+    ) {
+      redirect(
+        upgradeUrl(
+          assistantId,
+          {
+            submitted: true,
+          },
+        ),
+      );
+    }
+
+    billingError(
+      assistantId,
+      copy.errors.requestFailed,
+    );
+  }
 
   redirect(
-    `/dashboard/assistants/${assistantId}/install?upgraded=1`,
+    upgradeUrl(
+      assistantId,
+      {
+        submitted: true,
+      },
+    ),
   );
 }

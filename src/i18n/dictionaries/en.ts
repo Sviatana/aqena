@@ -85,7 +85,7 @@ export const en = {
       backToAssistantButton:
         "Back to assistant",
       upgradeCta:
-        "Upgrade to Pro — $29/month",
+        "Get Pro →",
       keepTesting:
         "Keep testing",
 
@@ -183,7 +183,7 @@ export const en = {
       mockDisabledPage:
         "Mock billing is not enabled in this environment.",
       disclaimer:
-        "No card details are requested. This flow exists only to demonstrate subscription gating in the MVP.",
+        "Payment details are not collected on this website. Payment is arranged after you submit the request.",
 
       summaryTitle:
         "Upgrade summary",
@@ -205,6 +205,70 @@ export const en = {
         "Website embed",
       included:
         "Included",
+      manual:
+        "Manual request",
+
+      requestBadge:
+        "GET PRO",
+      requestExplanation:
+        "Leave your contact details to arrange payment. We will contact you using the details below. Pro will be activated after payment is confirmed.",
+      standardPriceBelarus:
+        "79 BYN / month",
+      promoPriceBelarus:
+        "49 BYN / month",
+      standardPriceRussia:
+        "2,490 RUB / month",
+      promoPriceRussia:
+        "1,490 RUB / month",
+      standardPriceInternational:
+        "$29 / month",
+      promoPriceInternational:
+        "$19 / month",
+      priceLock:
+        "The promotional price is locked for 12 months from activation for the first 100 users with an uninterrupted subscription.",
+
+      customerName:
+        "Name",
+      customerNamePlaceholder:
+        "Your name",
+      companyName:
+        "Company",
+      companyNamePlaceholder:
+        "Optional",
+      country:
+        "Country",
+      countryPlaceholder:
+        "Choose your country",
+      countryBelarus:
+        "Belarus",
+      countryRussia:
+        "Russia",
+      countryOther:
+        "Other country",
+      email:
+        "Email",
+      emailPlaceholder:
+        "name@example.com",
+      contactMethod:
+        "Preferred contact",
+      contactTelegram:
+        "Telegram",
+      contactPhone:
+        "Phone",
+      contactValue:
+        "Contact",
+      contactValuePlaceholder:
+        "@username or phone number",
+      note:
+        "Comment",
+      notePlaceholder:
+        "For example, your website or a setup question. Optional.",
+      submitRequest:
+        "Submit payment request",
+      requestSuccessTitle:
+        "Request received",
+      requestSuccessBody:
+        "We will contact you to arrange payment. Pro will be activated after payment is confirmed.",
 
       errors: {
         subscriptionLoadFailed:
@@ -213,6 +277,10 @@ export const en = {
           "Mock billing is not enabled for this environment.",
         upgradeFailed:
           "We could not complete the mock upgrade. Please try again.",
+        requestInvalid:
+          "Please check the form details and try again.",
+        requestFailed:
+          "We could not submit your request. Please try again.",
       },
     },
 
@@ -1000,17 +1068,33 @@ export const en = {
       basicCustomization:
         "Basic customization",
       freeLimit:
-        "Assistant widget is not included in the plan",
+        "You can embed the widget on your website with the Pro plan.",
+      freeUpgradeLink:
+        "View Pro →",
       bestForWebsites:
-        "Best for websites",
+        "LAUNCH OFFER · FIRST 100 USERS",
       proName:
         "Pro",
       proDescription:
         "For assistants ready to support real customers",
+      proOldPrice:
+        "$29",
+      proPrice:
+        "$19",
+      showSecondaryPrice:
+        false,
+      proSecondaryLabel:
+        "Russia:",
+      proSecondaryOldPrice:
+        "2,490 RUB",
+      proSecondaryPrice:
+        "1,490 RUB / month",
+      proPriceLock:
+        "Promotional price is locked for 12 months from activation with an uninterrupted subscription.",
       perMonth:
         "/ month",
       choosePro:
-        "Choose Pro",
+        "Get Pro",
       proAssistants:
         "Up to 5 assistants",
       proSources:
@@ -1024,7 +1108,7 @@ export const en = {
       advancedCustomization:
         "Advanced customization",
       proNote:
-        "Assistant widget can be embedded on your website",
+        "After your request, we will contact you to arrange payment. Pro is activated after payment is confirmed.",
     },
 
     faq: {
@@ -1053,7 +1137,7 @@ export const en = {
       fifthQuestion:
         "Will I be charged during the product demo?",
       fifthAnswer:
-        "No. The MVP uses a clearly labelled mock checkout and does not collect real card details.",
+        "No. You submit a Pro request in the app. We contact you to arrange payment, and access is activated after payment is confirmed.",
     },
 
     cta: {
