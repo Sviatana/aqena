@@ -4727,3 +4727,145 @@ select {
   font-size: 12px !important;
   line-height: 1.5 !important;
 }
+
+/* =========================================================
+   AQENA_LEADS_PRICING_SYNC_V1
+
+   Pricing visual system:
+   - neutral white cards
+   - graphite typography
+   - black primary CTA
+   - orange as the only promotional/accent color
+   - no sage/green styling inside pricing cards
+   ========================================================= */
+
+.pricing-grid {
+  --lime: #f59a23;
+  --aqena-sage: #f59a23;
+  --aqena-sage-medium: #fff0dc;
+  --aqena-sage-soft: #fffaf4;
+}
+
+.pricing-card {
+  border: 1px solid #dedbd4;
+  border-radius: 18px;
+  background: #ffffff;
+  box-shadow: 0 10px 32px rgba(23, 23, 20, 0.045);
+}
+
+.pricing-card-pro {
+  border: 1.5px solid #f29a2e !important;
+  background: #ffffff !important;
+  box-shadow:
+    0 16px 42px rgba(23, 23, 20, 0.07),
+    0 0 0 1px rgba(242, 154, 46, 0.04);
+}
+
+.pricing-card .plan-heading h3,
+.pricing-card-pro .plan-heading h3 {
+  color: #171714;
+}
+
+.pricing-card .plan-heading p,
+.pricing-card-pro .plan-heading p {
+  color: #6b6962;
+}
+
+.popular-badge {
+  top: 26px;
+  right: 26px;
+  padding: 7px 11px;
+  border: 1px solid #f29a2e;
+  border-radius: 999px;
+  background: #fff2df;
+  color: #a65200;
+  box-shadow: none;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.pricing-card .price,
+.pricing-card-pro .price {
+  color: #171714;
+}
+
+.pricing-card-pro .launch-old-price,
+.pricing-card-pro .launch-secondary-price,
+.pricing-card-pro .launch-price-lock {
+  color: #77746d !important;
+}
+
+.pricing-card-pro .launch-secondary-price strong {
+  color: #171714;
+}
+
+/*
+ * All plan checkmarks/icons use the same orange accent.
+ * These selectors safely cover pseudo-elements, SVGs
+ * and native list markers used by the current markup.
+ */
+.pricing-card li::before,
+.pricing-card-pro li::before,
+.pricing-card li::marker,
+.pricing-card-pro li::marker {
+  color: #f29a2e !important;
+}
+
+.pricing-card li svg,
+.pricing-card-pro li svg {
+  color: #f29a2e !important;
+  stroke: #f29a2e !important;
+}
+
+/*
+ * Remove any inherited sage tint from the Pro card.
+ */
+.pricing-card-pro,
+.pricing-card-pro::before,
+.pricing-card-pro::after {
+  background-color: #ffffff;
+}
+
+/*
+ * Keep notes quiet and secondary instead of creating
+ * another visual accent.
+ */
+.pricing-card p,
+.pricing-card-pro p {
+  text-wrap: pretty;
+}
+
+/*
+ * Desktop rhythm: cards read as one product family.
+ */
+@media (min-width: 821px) {
+  .pricing-card {
+    padding: 30px;
+  }
+
+  .pricing-card-pro {
+    padding: 30px;
+  }
+}
+
+/*
+ * Mobile: badge must not collide with plan title.
+ */
+@media (max-width: 820px) {
+  .popular-badge {
+    position: static;
+    display: inline-flex;
+    width: fit-content;
+    margin: 0 0 18px;
+    white-space: normal;
+  }
+
+  .pricing-card,
+  .pricing-card-pro {
+    border-radius: 16px;
+  }
+}
