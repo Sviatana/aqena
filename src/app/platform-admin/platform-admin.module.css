@@ -377,3 +377,11 @@
     width: 100%;
   }
 }
+
+/* AQENA_PLATFORM_OWNER_ACTION_CONFIRMATION */
+
+.activateButton:disabled,
+.cancelButton:disabled {
+  cursor: wait;
+  opacity: 0.62;
+}

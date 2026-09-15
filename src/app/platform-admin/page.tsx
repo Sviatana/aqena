@@ -8,6 +8,10 @@ import {
   activateManualProRequest,
   cancelManualProRequest,
 } from "./actions";
+
+import {
+  OwnerActionButton,
+} from "./owner-action-button";
 import {
   AqenaLogo,
 } from "@/components/aqena-brand";
@@ -75,6 +79,100 @@ function amount(
   ).format(
     minor / 100,
   );
+}
+
+function subscriptionStatusLabel(
+  value: string | null | undefined,
+) {
+  switch (value) {
+    case "active":
+      return "Активен";
+
+    case "inactive":
+      return "Неактивен";
+
+    case "cancelled":
+    case "canceled":
+      return "Отменён";
+
+    default:
+      return value || "—";
+  }
+}
+
+function billingModeLabel(
+  value: string | null | undefined,
+) {
+  switch (value) {
+    case "manual":
+      return "Ручная оплата";
+
+    case "mock":
+      return "Тестовый / старый режим";
+
+    case "stripe":
+      return "Stripe";
+
+    default:
+      return value || "—";
+  }
+}
+
+function billingRequestStatusLabel(
+  value: string,
+) {
+  switch (value) {
+    case "pending":
+      return "Ожидает оплаты";
+
+    case "contacted":
+      return "Связались";
+
+    case "paid":
+      return "Оплата подтверждена";
+
+    case "activated":
+      return "Pro активирован";
+
+    case "cancelled":
+      return "Отменена";
+
+    default:
+      return value;
+  }
+}
+
+function pricingRegionLabel(
+  value: string,
+) {
+  switch (value) {
+    case "by":
+      return "Беларусь";
+
+    case "ru":
+      return "Россия";
+
+    case "intl":
+      return "Другая страна";
+
+    default:
+      return value;
+  }
+}
+
+function contactMethodLabel(
+  value: string,
+) {
+  switch (value) {
+    case "phone":
+      return "Телефон";
+
+    case "telegram":
+      return "Telegram";
+
+    default:
+      return value;
+  }
 }
 
 export default async function PlatformAdminPage() {
@@ -230,7 +328,7 @@ export default async function PlatformAdminPage() {
         <div className={styles.intro}>
           <div>
             <p className={styles.eyebrow}>
-              AQENA · PLATFORM ADMIN
+              AQENA · ПАНЕЛЬ ВЛАДЕЛЬЦА
             </p>
 
             <h1>
@@ -315,7 +413,7 @@ export default async function PlatformAdminPage() {
                   </th>
 
                   <th>
-                    Billing
+                    Оплата
                   </th>
 
                   <th>
@@ -370,15 +468,17 @@ export default async function PlatformAdminPage() {
 
                         <td>
                           {
-                            subscription?.status
-                              ?? "—"
+                            subscriptionStatusLabel(
+                              subscription?.status,
+                            )
                           }
                         </td>
 
                         <td>
                           {
-                            subscription?.billing_mode
-                              ?? "—"
+                            billingModeLabel(
+                              subscription?.billing_mode,
+                            )
                           }
                         </td>
 
@@ -406,7 +506,7 @@ export default async function PlatformAdminPage() {
           <div className={styles.sectionHeading}>
             <div>
               <p className={styles.eyebrow}>
-                MANUAL PRO
+                РУЧНОЙ PRO
               </p>
 
               <h2>
@@ -485,13 +585,13 @@ export default async function PlatformAdminPage() {
                               </div>
 
                               <div className={styles.secondary}>
-                                {request.contact_method}:{" "}
+                                {contactMethodLabel(request.contact_method)}:{" "}
                                 {request.contact_value}
                               </div>
                             </td>
 
                             <td>
-                              {request.pricing_region}
+                              {pricingRegionLabel(request.pricing_region)}
                             </td>
 
                             <td>
@@ -510,7 +610,11 @@ export default async function PlatformAdminPage() {
                                     : styles.status
                                 }
                               >
-                                {request.status}
+                                {
+                                  billingRequestStatusLabel(
+                                    request.status,
+                                  )
+                                }
                               </span>
                             </td>
 
@@ -546,14 +650,15 @@ export default async function PlatformAdminPage() {
                                           styles.actionForm
                                         }
                                       >
-                                        <button
+                                        <OwnerActionButton
                                           className={
                                             styles.activateButton
                                           }
-                                          type="submit"
+                                          confirmMessage="Оплата действительно получена? После подтверждения пользователю будет активирован тариф Pro."
+                                          pendingLabel="Активируем Pro…"
                                         >
                                           Оплата получена — активировать Pro
-                                        </button>
+                                        </OwnerActionButton>
                                       </form>
 
                                       <form
@@ -567,14 +672,15 @@ export default async function PlatformAdminPage() {
                                           styles.actionForm
                                         }
                                       >
-                                        <button
+                                        <OwnerActionButton
                                           className={
                                             styles.cancelButton
                                           }
-                                          type="submit"
+                                          confirmMessage="Отменить эту заявку? Тариф пользователя изменён не будет."
+                                          pendingLabel="Отменяем…"
                                         >
                                           Отменить заявку
-                                        </button>
+                                        </OwnerActionButton>
                                       </form>
                                     </div>
                                   )
