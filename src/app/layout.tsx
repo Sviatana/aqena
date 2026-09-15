@@ -6,6 +6,7 @@ import {
 } from "next/font/google";
 
 import "./globals.css";
+import "./aqena-app-tokens.css";
 
 import {
   LanguageSwitch,

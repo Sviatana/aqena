@@ -10,9 +10,9 @@
 .checkout,
 .summary {
   min-width: 0;
-  border: 1px solid #deded7;
-  border-radius: 16px;
-  background: #fbfaf7;
+  border: 1px solid var(--aq-app-line);
+  border-radius: var(--aq-app-radius-lg);
+  background: var(--aq-app-surface);
 }
 
 .checkout {
@@ -42,7 +42,7 @@
 .checkout h2,
 .summary h2 {
   margin: 18px 0 0;
-  color: #191a17;
+  color: var(--aq-app-text);
   letter-spacing: -0.025em;
 }
 
@@ -57,7 +57,7 @@
 .checkout p,
 .summary p {
   margin: 9px 0 0;
-  color: #74736c;
+  color: var(--aq-app-text-secondary);
   font-size: 14px;
   line-height: 1.6;
 }
@@ -70,7 +70,7 @@
 }
 
 .price strong {
-  color: #171815;
+  color: var(--aq-app-text);
   font-size: 36px;
   font-weight: 610;
   letter-spacing: -0.04em;
@@ -79,7 +79,7 @@
 
 .price span {
   padding-bottom: 3px;
-  color: #77766f;
+  color: var(--aq-app-text-secondary);
   font-size: 13px;
 }
 
@@ -87,7 +87,7 @@
   display: grid;
   gap: 0;
   margin-top: 24px;
-  border-top: 1px solid #e1dfd8;
+  border-top: 1px solid var(--aq-app-line);
 }
 
 .feature {
@@ -95,14 +95,14 @@
   align-items: flex-start;
   gap: 10px;
   padding: 13px 0;
-  border-bottom: 1px solid #e1dfd8;
-  color: #4f514a;
+  border-bottom: 1px solid var(--aq-app-line);
+  color: var(--aq-app-text-secondary);
   font-size: 13px;
   line-height: 1.45;
 }
 
 .check {
-  color: #65735f;
+  color: var(--aq-app-accent);
   font-weight: 700;
 }
 
@@ -115,9 +115,9 @@
   min-height: 46px;
   padding: 0 18px;
   border: 0;
-  border-radius: 10px;
-  background: #171714;
-  color: #fff;
+  border-radius: var(--aq-app-radius-sm);
+  background: var(--aq-app-text);
+  color: var(--aq-app-surface);
   font: inherit;
   font-size: 13px;
   font-weight: 650;
@@ -126,7 +126,7 @@
 
 .disclaimer {
   margin-top: 12px !important;
-  color: #89867e !important;
+  color: var(--aq-app-text-muted) !important;
   font-size: 12px !important;
   line-height: 1.5 !important;
 }
@@ -134,10 +134,10 @@
 .error {
   margin-top: 20px;
   padding: 12px 14px;
-  border: 1px solid #d9b8ae;
-  border-radius: 10px;
-  background: #fbf0ed;
-  color: #74453b;
+  border: 1px solid var(--aq-app-danger-line);
+  border-radius: var(--aq-app-radius-sm);
+  background: var(--aq-app-danger-soft);
+  color: var(--aq-app-danger);
   font-size: 13px;
   line-height: 1.45;
 }
@@ -152,13 +152,13 @@
   justify-content: space-between;
   gap: 18px;
   padding: 13px 0;
-  border-top: 1px solid #e1dfd8;
-  color: #74736c;
+  border-top: 1px solid var(--aq-app-line);
+  color: var(--aq-app-text-secondary);
   font-size: 13px;
 }
 
 .summaryRow strong {
-  color: #242520;
+  color: var(--aq-app-text);
   font-weight: 620;
 }
 
@@ -176,15 +176,19 @@
 }
 
 /* AQENA_MANUAL_REQUEST_FORM */
+.introBlock {
+  margin-top: 24px;
+}
+
 .requestBadge {
   display: inline-flex;
   align-items: center;
   min-height: 28px;
   padding: 0 10px;
-  border: 1px solid #d4d8cf;
+  border: 1px solid rgba(242, 154, 46, 0.42);
   border-radius: 999px;
-  background: #f0f3ed;
-  color: #596454;
+  background: var(--aq-app-accent-soft);
+  color: var(--aq-app-accent-strong);
   font-size: 11px;
   font-weight: 680;
   letter-spacing: 0.04em;
@@ -195,7 +199,7 @@
   display: grid;
   gap: 0;
   margin-top: 24px;
-  border-top: 1px solid #e1dfd8;
+  border-top: 1px solid var(--aq-app-line);
 }
 
 .priceOption {
@@ -207,20 +211,20 @@
   align-items: baseline;
   gap: 10px;
   padding: 12px 0;
-  border-bottom: 1px solid #e1dfd8;
+  border-bottom: 1px solid var(--aq-app-line);
   font-size: 13px;
 }
 
 .priceOption span {
-  color: #74736c;
+  color: var(--aq-app-text-secondary);
 }
 
 .priceOption del {
-  color: #929087;
+  color: var(--aq-app-text-muted);
 }
 
 .priceOption strong {
-  color: #191a17;
+  color: var(--aq-app-text);
   font-size: 15px;
   font-weight: 680;
 }
@@ -242,7 +246,7 @@
   display: grid;
   gap: 7px;
   margin-top: 14px;
-  color: #55564f;
+  color: var(--aq-app-text-secondary);
   font-size: 12px;
   font-weight: 620;
 }
@@ -250,10 +254,10 @@
 .input,
 .textarea {
   width: 100%;
-  border: 1px solid #d8d7d0;
-  border-radius: 9px;
-  background: #fff;
-  color: #1d1e1a;
+  border: 1px solid var(--aq-app-line-strong);
+  border-radius: var(--aq-app-radius-sm);
+  background: var(--aq-app-surface);
+  color: var(--aq-app-text);
   font: inherit;
   font-size: 14px;
   font-weight: 450;
@@ -273,18 +277,16 @@
 
 .input:focus,
 .textarea:focus {
-  border-color: #8c9284;
-  box-shadow:
-    0 0 0 3px
-    rgba(101, 115, 95, 0.09);
+  border-color: var(--aq-app-accent);
+  box-shadow: var(--aq-app-focus);
 }
 
 .success {
   margin-top: 26px;
   padding: 16px;
   border: 1px solid #c7d4c1;
-  border-radius: 12px;
-  background: #f2f6ef;
+  border-radius: var(--aq-app-radius-md);
+  background: var(--aq-app-success-soft);
   color: #394534;
 }
 
@@ -305,4 +307,30 @@
     grid-template-columns: 1fr;
     gap: 4px;
   }
+}
+
+
+/* AQENA_DS1_BILLING_INTERACTIONS */
+
+.submit {
+  transition:
+    background-color var(--aq-app-transition),
+    transform var(--aq-app-transition);
+}
+
+.submit:hover {
+  background: #2b2b28;
+  transform: translateY(-1px);
+}
+
+.submit:focus-visible,
+.input:focus-visible,
+.textarea:focus-visible {
+  outline: 2px solid var(--aq-app-accent);
+  outline-offset: 2px;
+}
+
+.checkout,
+.summary {
+  box-shadow: var(--aq-app-shadow-xs);
 }

@@ -3,7 +3,7 @@
   height: 100dvh;
   min-height: 420px;
   margin: 0;
-  background: #f5f4ef;
+  background: var(--aq-app-bg);
 }
 
 .widget {
@@ -12,9 +12,10 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: #fbfaf7;
-  color: #1d1e1a;
+  background: var(--aq-app-surface);
+  color: var(--aq-app-text);
   font-family:
+    var(--font-geist-sans),
     Arial,
     Helvetica,
     sans-serif;
@@ -25,9 +26,9 @@
   align-items: center;
   justify-content: space-between;
   gap: 14px;
-  min-height: 70px;
+  min-height: 64px;
   padding: 13px 14px 13px 16px;
-  border-bottom: 1px solid #e0ded7;
+  border-bottom: 1px solid var(--aq-app-line);
   background: rgba(
     251,
     250,
@@ -60,7 +61,7 @@
 }
 
 .identity span {
-  color: #77776f;
+  color: var(--aq-app-text-secondary);
   font-size: 11px;
   line-height: 1.2;
 }
@@ -71,15 +72,15 @@
   width: 38px;
   height: 38px;
   flex: 0 0 auto;
-  border: 1px solid var(--brand-color, #5c6c55);
-  border-radius: 11px;
+  border: 1px solid var(--brand-color, var(--aq-app-accent));
+  border-radius: var(--aq-app-radius-md);
   background:
     color-mix(
       in srgb,
-      var(--brand-color, #5c6c55) 12%,
+      var(--brand-color, var(--aq-app-accent)) 12%,
       white
     );
-  color: var(--brand-color, #5c6c55);
+  color: var(--brand-color, var(--aq-app-accent));
   font-size: 14px;
   font-weight: 720;
 }
@@ -92,9 +93,9 @@
   flex: 0 0 auto;
   padding: 0;
   border: 0;
-  border-radius: 9px;
+  border-radius: var(--aq-app-radius-sm);
   background: transparent;
-  color: #77766f;
+  color: var(--aq-app-text-secondary);
   font: inherit;
   font-size: 22px;
   line-height: 1;
@@ -102,8 +103,8 @@
 }
 
 .closeButton:hover {
-  background: #f0efe9;
-  color: #292a26;
+  background: var(--aq-app-surface-muted);
+  color: var(--aq-app-text);
 }
 
 .messages {
@@ -131,22 +132,22 @@
 .userBubble {
   max-width: 84%;
   padding: 11px 13px;
-  border-radius: 14px;
+  border-radius: var(--aq-app-radius-lg);
   font-size: 13px;
   line-height: 1.52;
 }
 
 .assistantBubble {
-  border: 1px solid #e0ded7;
+  border: 1px solid var(--aq-app-line);
   border-bottom-left-radius: 5px;
-  background: #ffffff;
+  background: var(--aq-app-surface);
   color: #3c3d37;
 }
 
 .userBubble {
   border-bottom-right-radius: 5px;
-  background: var(--brand-color, #1d1e1a);
-  color: var(--brand-contrast, #ffffff);
+  background: var(--brand-color, var(--aq-app-accent));
+  color: var(--brand-contrast, var(--aq-app-surface));
 }
 
 .assistantBubble p,
@@ -194,13 +195,13 @@
 
 .composer {
   padding: 11px 12px 12px;
-  border-top: 1px solid #e0ded7;
-  background: #fbfaf7;
+  border-top: 1px solid var(--aq-app-line);
+  background: var(--aq-app-surface);
 }
 
 .error {
   margin-bottom: 8px;
-  color: #7e463d;
+  color: var(--aq-app-danger);
   font-size: 11px;
   line-height: 1.4;
 }
@@ -211,13 +212,14 @@
   align-items: end;
   gap: 8px;
   padding: 7px 7px 7px 12px;
-  border: 1px solid #d7d6cf;
-  border-radius: 13px;
-  background: #ffffff;
+  border: 1px solid var(--aq-app-line-strong);
+  border-radius: var(--aq-app-radius-md);
+  background: var(--aq-app-surface);
 }
 
 .form:focus-within {
-  border-color: #aeb6a9;
+  border-color: var(--aq-app-accent);
+  box-shadow: var(--aq-app-focus);
 }
 
 .form textarea {
@@ -236,7 +238,7 @@
 }
 
 .form textarea::placeholder {
-  color: #97968e;
+  color: var(--aq-app-text-muted);
 }
 
 .form button {
@@ -246,9 +248,9 @@
   height: 38px;
   padding: 0;
   border: 0;
-  border-radius: 10px;
-  background: var(--brand-color, #1d1e1a);
-  color: var(--brand-contrast, #ffffff);
+  border-radius: var(--aq-app-radius-sm);
+  background: var(--brand-color, var(--aq-app-accent));
+  color: var(--brand-contrast, var(--aq-app-surface));
   font: inherit;
   font-size: 17px;
   cursor: pointer;
@@ -261,7 +263,7 @@
 
 .footerNote {
   margin-top: 7px;
-  color: #96948c;
+  color: var(--aq-app-text-muted);
   font-size: 9px;
   line-height: 1.35;
   text-align: center;
@@ -280,4 +282,29 @@
   .userBubble {
     max-width: 88%;
   }
+}
+
+
+/* AQENA_DS1_WIDGET_INTERACTIONS */
+
+.closeButton,
+.form button {
+  transition:
+    background-color var(--aq-app-transition),
+    color var(--aq-app-transition),
+    transform var(--aq-app-transition);
+}
+
+.closeButton:focus-visible,
+.form button:focus-visible {
+  outline: 2px solid var(--aq-app-accent);
+  outline-offset: 2px;
+}
+
+.form button:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+
+.assistantBubble {
+  box-shadow: var(--aq-app-shadow-xs);
 }

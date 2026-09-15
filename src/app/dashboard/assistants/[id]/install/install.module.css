@@ -11,18 +11,18 @@
   align-items: center;
   min-height: 30px;
   padding: 0 11px;
-  border: 1px solid #d4d8cf;
+  border: 1px solid rgba(242, 154, 46, 0.42);
   border-radius: 999px;
-  background: #f0f3ed;
-  color: #586253;
+  background: var(--aq-app-accent-soft);
+  color: var(--aq-app-accent-strong);
   font-size: 12px;
   font-weight: 650;
 }
 
 .planBadgeLocked {
-  border-color: #dedcd4;
-  background: #f7f6f2;
-  color: #727069;
+  border-color: var(--aq-app-line);
+  background: var(--aq-app-bg);
+  color: var(--aq-app-text-secondary);
 }
 
 .grid {
@@ -37,9 +37,9 @@
 .card,
 .sideCard {
   min-width: 0;
-  border: 1px solid #deded7;
-  border-radius: 16px;
-  background: #fbfaf7;
+  border: 1px solid var(--aq-app-line);
+  border-radius: var(--aq-app-radius-lg);
+  background: var(--aq-app-surface);
 }
 
 .card {
@@ -54,7 +54,7 @@
 .kicker {
   display: block;
   margin-bottom: 8px;
-  color: #7b7c73;
+  color: var(--aq-app-text-muted);
   font-size: 11px;
   font-weight: 680;
   letter-spacing: 0.1em;
@@ -64,7 +64,7 @@
 .card h2,
 .sideCard h2 {
   margin: 0;
-  color: #171815;
+  color: var(--aq-app-text);
   letter-spacing: -0.025em;
 }
 
@@ -81,7 +81,7 @@
 .card > p,
 .sideCard > p {
   margin: 10px 0 0;
-  color: #74736c;
+  color: var(--aq-app-text-secondary);
   font-size: 14px;
   line-height: 1.6;
 }
@@ -93,28 +93,28 @@
   width: 42px;
   height: 42px;
   margin-bottom: 22px;
-  border-radius: 12px;
+  border-radius: var(--aq-app-radius-md);
   font-size: 18px;
   font-weight: 650;
 }
 
 .lockedMark {
   border: 1px solid #d9d7d0;
-  background: #f4f3ef;
-  color: #6f6d66;
+  background: var(--aq-app-surface-muted);
+  color: var(--aq-app-text-secondary);
 }
 
 .readyMark {
-  border: 1px solid #ccd6c8;
-  background: #eef2eb;
-  color: #61715a;
+  border: 1px solid var(--aq-app-success-line);
+  background: var(--aq-app-success-soft);
+  color: var(--aq-app-success);
 }
 
 .featureList {
   display: grid;
   gap: 0;
   margin: 26px 0 0;
-  border-top: 1px solid #e1dfd8;
+  border-top: 1px solid var(--aq-app-line);
 }
 
 .featureRow {
@@ -123,8 +123,8 @@
   justify-content: space-between;
   gap: 20px;
   min-height: 49px;
-  border-bottom: 1px solid #e1dfd8;
-  color: #50514b;
+  border-bottom: 1px solid var(--aq-app-line);
+  color: var(--aq-app-text-secondary);
   font-size: 13px;
 }
 
@@ -147,29 +147,29 @@
   justify-content: center;
   min-height: 44px;
   padding: 0 17px;
-  border-radius: 10px;
+  border-radius: var(--aq-app-radius-sm);
   font-size: 13px;
   font-weight: 620;
   text-decoration: none;
 }
 
 .primaryLink {
-  border: 1px solid #171714;
-  background: #171714;
-  color: #fff;
+  border: 1px solid var(--aq-app-text);
+  background: var(--aq-app-text);
+  color: var(--aq-app-surface);
 }
 
 .secondaryLink {
-  border: 1px solid #d3d1ca;
+  border: 1px solid var(--aq-app-line-strong);
   background: transparent;
-  color: #4e4c46;
+  color: var(--aq-app-text-secondary);
 }
 
 .notice {
   margin-top: 20px;
   padding: 13px 14px;
   border: 1px solid #d4d8cf;
-  border-radius: 10px;
+  border-radius: var(--aq-app-radius-sm);
   background: #f0f3ed;
   color: #5d6759;
   font-size: 13px;
@@ -179,10 +179,10 @@
 .success {
   margin-top: 20px;
   padding: 13px 14px;
-  border: 1px solid #cbd7c7;
-  border-radius: 10px;
-  background: #eef3eb;
-  color: #52604d;
+  border: 1px solid var(--aq-app-success-line);
+  border-radius: var(--aq-app-radius-sm);
+  background: var(--aq-app-success-soft);
+  color: var(--aq-app-success);
   font-size: 13px;
   line-height: 1.5;
 }
@@ -197,11 +197,11 @@
   display: grid;
   gap: 4px;
   padding: 13px 0;
-  border-top: 1px solid #e1dfd8;
+  border-top: 1px solid var(--aq-app-line);
 }
 
 .metaRow span {
-  color: #85827a;
+  color: var(--aq-app-text-muted);
   font-size: 11px;
   font-weight: 620;
   letter-spacing: 0.06em;
@@ -209,7 +209,7 @@
 }
 
 .metaRow strong {
-  color: #242520;
+  color: var(--aq-app-text);
   font-size: 13px;
   font-weight: 620;
 }
@@ -244,9 +244,9 @@
 .snippetCard {
   margin-top: 18px;
   padding: 26px;
-  border: 1px solid #deded7;
-  border-radius: 16px;
-  background: #fbfaf7;
+  border: 1px solid var(--aq-app-line);
+  border-radius: var(--aq-app-radius-lg);
+  background: var(--aq-app-surface);
 }
 
 .snippetHeading {
@@ -258,7 +258,7 @@
 
 .snippetHeading h2 {
   margin: 0;
-  color: #171815;
+  color: var(--aq-app-text);
   font-size: 20px;
   letter-spacing: -0.025em;
   line-height: 1.25;
@@ -267,7 +267,7 @@
 .snippetHeading p {
   max-width: 610px;
   margin: 8px 0 0;
-  color: #74736c;
+  color: var(--aq-app-text-secondary);
   font-size: 13px;
   line-height: 1.55;
 }
@@ -276,8 +276,8 @@
   margin: 20px 0 0;
   overflow-x: auto;
   padding: 16px 17px;
-  border: 1px solid #dfddd6;
-  border-radius: 12px;
+  border: 1px solid var(--aq-app-line);
+  border-radius: var(--aq-app-radius-md);
   background: #20211e;
   color: #f7f6f1;
   font-size: 12px;
@@ -293,7 +293,7 @@
 }
 
 .snippetActions > span {
-  color: #85827a;
+  color: var(--aq-app-text-muted);
   font-size: 11px;
   line-height: 1.4;
 }
@@ -301,10 +301,10 @@
 .copyButton {
   min-height: 38px;
   padding: 0 14px;
-  border: 1px solid #d3d1ca;
-  border-radius: 9px;
-  background: #ffffff;
-  color: #363732;
+  border: 1px solid var(--aq-app-line-strong);
+  border-radius: var(--aq-app-radius-sm);
+  background: var(--aq-app-surface);
+  color: var(--aq-app-text);
   font: inherit;
   font-size: 12px;
   font-weight: 650;
@@ -329,4 +329,41 @@
   .copyButton {
     width: 100%;
   }
+}
+
+
+/* AQENA_DS1_INSTALL_INTERACTIONS */
+
+.primaryLink,
+.secondaryLink,
+.copyButton {
+  transition:
+    background-color var(--aq-app-transition),
+    border-color var(--aq-app-transition),
+    color var(--aq-app-transition),
+    transform var(--aq-app-transition);
+}
+
+.primaryLink:hover {
+  background: #2b2b28;
+  transform: translateY(-1px);
+}
+
+.secondaryLink:hover,
+.copyButton:hover {
+  border-color: var(--aq-app-line-strong);
+  background: var(--aq-app-surface-muted);
+}
+
+.primaryLink:focus-visible,
+.secondaryLink:focus-visible,
+.copyButton:focus-visible {
+  outline: 2px solid var(--aq-app-accent);
+  outline-offset: 2px;
+}
+
+.card,
+.sideCard,
+.snippetCard {
+  box-shadow: var(--aq-app-shadow-xs);
 }

@@ -4,8 +4,8 @@
   grid-template-columns:
     minmax(340px, 0.9fr)
     minmax(460px, 1.1fr);
-  background: #f6f5f0;
-  color: #171714;
+  background: var(--aq-app-bg);
+  color: var(--aq-app-text);
 }
 
 .brandPanel {
@@ -13,7 +13,7 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   min-height: 100%;
   padding: 44px 54px;
   border-right: 1px solid #deddd6;
@@ -27,8 +27,8 @@
   width: 520px;
   height: 520px;
   border-radius: 50%;
-  background: rgba(205, 218, 199, 0.38);
-  filter: blur(1px);
+  background: rgba(242, 154, 46, 0.10);
+  filter: blur(18px);
   pointer-events: none;
 }
 
@@ -36,7 +36,7 @@
   position: relative;
   z-index: 1;
   width: fit-content;
-  color: #171714;
+  color: var(--aq-app-text);
   font-size: 19px;
   font-weight: 680;
   letter-spacing: -0.03em;
@@ -46,8 +46,10 @@
 .brandCopy {
   position: relative;
   z-index: 1;
-  max-width: 470px;
-  padding-bottom: 40px;
+  max-width: 620px;
+  margin-top: auto;
+  margin-bottom: clamp(96px, 12vh, 160px);
+  padding-bottom: 0;
 }
 
 .kicker {
@@ -55,7 +57,7 @@
   align-items: center;
   gap: 9px;
   margin-bottom: 22px;
-  color: #67665f;
+  color: var(--aq-app-text-secondary);
   font-size: 12px;
   font-weight: 650;
   letter-spacing: 0.07em;
@@ -67,22 +69,22 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #7e9175;
+  background: var(--aq-app-accent);
 }
 
 .brandCopy h1 {
-  max-width: 520px;
+  max-width: 620px;
   margin: 0;
-  font-size: clamp(36px, 4vw, 52px);
+  font-size: clamp(36px, 3.6vw, 48px);
   font-weight: 580;
   line-height: 1.04;
   letter-spacing: -0.045em;
 }
 
 .brandCopy p {
-  max-width: 450px;
-  margin: 24px 0 0;
-  color: #66645e;
+  max-width: 540px;
+  margin: 22px 0 0;
+  color: var(--aq-app-text-secondary);
   font-size: 16px;
   line-height: 1.58;
 }
@@ -92,11 +94,11 @@
   align-items: center;
   justify-content: center;
   padding: 48px;
-  background: #fbfaf7;
+  background: var(--aq-app-surface);
 }
 
 .card {
-  width: min(100%, 440px);
+  width: min(100%, 460px);
 }
 
 .cardHeader {
@@ -113,7 +115,7 @@
 
 .cardHeader p {
   margin: 10px 0 0;
-  color: #6e6c65;
+  color: var(--aq-app-text-secondary);
   font-size: 15px;
   line-height: 1.52;
 }
@@ -136,18 +138,19 @@
 }
 
 .forgotLink {
-  color: #687662;
+  color: var(--aq-app-text-secondary);
   font-size: 12px;
   font-weight: 600;
   text-decoration: none;
 }
 
 .forgotLink:hover {
+  color: var(--aq-app-accent-strong);
   text-decoration: underline;
 }
 
 .field label {
-  color: #3f3e39;
+  color: var(--aq-app-text);
   font-size: 13px;
   font-weight: 600;
 }
@@ -156,11 +159,11 @@
   width: 100%;
   min-height: 48px;
   padding: 0 14px;
-  border: 1px solid #d7d5cd;
-  border-radius: 11px;
+  border: 1px solid var(--aq-app-line-strong);
+  border-radius: var(--aq-app-radius-md);
   outline: none;
-  background: #fff;
-  color: #171714;
+  background: var(--aq-app-surface);
+  color: var(--aq-app-text);
   font: inherit;
   transition:
     border-color 160ms ease,
@@ -168,17 +171,17 @@
 }
 
 .field input:focus {
-  border-color: #8a9c82;
-  box-shadow: 0 0 0 3px rgba(126, 145, 117, 0.13);
+  border-color: var(--aq-app-accent);
+  box-shadow: var(--aq-app-focus);
 }
 
 .primaryButton {
   min-height: 48px;
   margin-top: 4px;
   border: 0;
-  border-radius: 11px;
-  background: #171714;
-  color: #fff;
+  border-radius: var(--aq-app-radius-md);
+  background: var(--aq-app-text);
+  color: var(--aq-app-surface);
   font: inherit;
   font-size: 14px;
   font-weight: 620;
@@ -187,33 +190,33 @@
 
 .notice {
   padding: 11px 13px;
-  border: 1px solid #cad8c5;
-  border-radius: 10px;
-  background: #eff4ec;
-  color: #53634d;
+  border: 1px solid var(--aq-app-success-line);
+  border-radius: var(--aq-app-radius-sm);
+  background: var(--aq-app-success-soft);
+  color: var(--aq-app-success);
   font-size: 13px;
   line-height: 1.45;
 }
 
 .error {
   padding: 11px 13px;
-  border: 1px solid #d9b8ae;
-  border-radius: 10px;
-  background: #fbf0ed;
-  color: #74453b;
+  border: 1px solid var(--aq-app-danger-line);
+  border-radius: var(--aq-app-radius-sm);
+  background: var(--aq-app-danger-soft);
+  color: var(--aq-app-danger);
   font-size: 13px;
   line-height: 1.45;
 }
 
 .switch {
   margin: 22px 0 0;
-  color: #716f68;
+  color: var(--aq-app-text-secondary);
   font-size: 14px;
   text-align: center;
 }
 
 .switch a {
-  color: #171714;
+  color: var(--aq-app-text);
   font-weight: 600;
 }
 
@@ -228,9 +231,9 @@
   width: 54px;
   height: 54px;
   margin: 0 auto 22px;
-  border: 1px solid #ccd6c8;
-  border-radius: 16px;
-  background: #eef2eb;
+  border: 1px solid rgba(242, 154, 46, 0.32);
+  border-radius: var(--aq-app-radius-lg);
+  background: var(--aq-app-accent-soft);
   font-size: 22px;
 }
 
@@ -243,20 +246,20 @@
 
 .emailCard p {
   margin: 14px auto 0;
-  color: #6c6a63;
+  color: var(--aq-app-text-secondary);
   font-size: 15px;
   line-height: 1.6;
 }
 
 .emailAddress {
-  color: #24231f;
+  color: var(--aq-app-text);
   font-weight: 620;
 }
 
 .backLink {
   display: inline-flex;
   margin-top: 26px;
-  color: #24231f;
+  color: var(--aq-app-text);
   font-size: 14px;
   font-weight: 600;
 }
@@ -317,12 +320,12 @@
 }
 
 .passwordToggle:hover {
-  background: #f0efe9;
-  color: #24231f;
+  background: var(--aq-app-surface-muted);
+  color: var(--aq-app-text);
 }
 
 .passwordToggle:focus-visible {
-  outline: 2px solid #8a9c82;
+  outline: 2px solid var(--aq-app-accent);
   outline-offset: 1px;
 }
 
@@ -334,4 +337,26 @@
   stroke-width: 1.7;
   stroke-linecap: round;
   stroke-linejoin: round;
+}
+
+
+/* AQENA_DS1_AUTH_INTERACTIONS */
+
+.primaryButton {
+  transition:
+    background-color var(--aq-app-transition),
+    transform var(--aq-app-transition);
+}
+
+.primaryButton:hover {
+  background: #2b2b28;
+  transform: translateY(-1px);
+}
+
+.primaryButton:focus-visible,
+.forgotLink:focus-visible,
+.switch a:focus-visible,
+.backLink:focus-visible {
+  outline: 2px solid var(--aq-app-accent);
+  outline-offset: 3px;
 }

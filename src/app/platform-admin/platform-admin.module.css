@@ -1,7 +1,7 @@
 .page {
   min-height: 100vh;
-  background: #f7f6f2;
-  color: #171714;
+  background: var(--aq-app-bg);
+  color: var(--aq-app-text);
 }
 
 .header {
@@ -9,10 +9,10 @@
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  min-height: 82px;
-  padding: 0 42px;
-  border-bottom: 1px solid #e2dfd8;
-  background: #fbfaf7;
+  min-height: 68px;
+  padding: 0 clamp(24px, 3.5vw, 48px);
+  border-bottom: 1px solid var(--aq-app-line);
+  background: var(--aq-app-surface);
 }
 
 .logo {
@@ -29,16 +29,16 @@
 
 .ownerBadge {
   padding: 7px 11px;
-  border: 1px solid #f0a14a;
+  border: 1px solid var(--aq-app-accent);
   border-radius: 999px;
-  background: #fff2df;
-  color: #9b4b00;
+  background: var(--aq-app-accent-soft);
+  color: var(--aq-app-accent-strong);
   font-size: 12px;
   font-weight: 700;
 }
 
 .backLink {
-  color: #4f4d47;
+  color: var(--aq-app-text-secondary);
   font-size: 14px;
   font-weight: 600;
   text-decoration: none;
@@ -47,7 +47,7 @@
 .content {
   width: min(1320px, calc(100% - 64px));
   margin: 0 auto;
-  padding: 58px 0 90px;
+  padding: 44px 0 80px;
 }
 
 .intro {
@@ -59,7 +59,7 @@
 
 .eyebrow {
   margin: 0 0 10px;
-  color: #817e76;
+  color: var(--aq-app-text-muted);
   font-size: 12px;
   font-weight: 750;
   letter-spacing: 0.09em;
@@ -67,7 +67,7 @@
 
 .intro h1 {
   margin: 0;
-  font-size: clamp(38px, 5vw, 58px);
+  font-size: clamp(34px, 4vw, 46px);
   line-height: 0.98;
   letter-spacing: -0.045em;
 }
@@ -75,7 +75,7 @@
 .subtitle {
   max-width: 720px;
   margin: 18px 0 0;
-  color: #69665f;
+  color: var(--aq-app-text-secondary);
   font-size: 16px;
   line-height: 1.6;
 }
@@ -88,33 +88,33 @@
 }
 
 .metric {
-  padding: 24px;
+  padding: 20px;
   border: 1px solid #dfdcd5;
-  border-radius: 18px;
-  background: #fff;
+  border-radius: var(--aq-app-radius-xl);
+  background: var(--aq-app-surface);
 }
 
 .metric span {
   display: block;
   margin-bottom: 24px;
-  color: #77746d;
+  color: var(--aq-app-text-secondary);
   font-size: 13px;
   font-weight: 650;
 }
 
 .metric strong {
   display: block;
-  font-size: 38px;
+  font-size: 34px;
   line-height: 1;
   letter-spacing: -0.04em;
 }
 
 .section {
   margin-top: 22px;
-  padding: 26px;
+  padding: 22px;
   border: 1px solid #dfdcd5;
-  border-radius: 20px;
-  background: #fff;
+  border-radius: var(--aq-app-radius-xl);
+  background: var(--aq-app-surface);
 }
 
 .sectionHeading {
@@ -133,14 +133,14 @@
 
 .muted,
 .secondary {
-  color: #817e76;
+  color: var(--aq-app-text-muted);
   font-size: 12px;
 }
 
 .tableWrap {
   overflow-x: auto;
-  border: 1px solid #e7e4dd;
-  border-radius: 14px;
+  border: 1px solid var(--aq-app-line);
+  border-radius: var(--aq-app-radius-lg);
 }
 
 .table {
@@ -152,14 +152,14 @@
 .table th,
 .table td {
   padding: 15px 16px;
-  border-bottom: 1px solid #ece9e3;
+  border-bottom: 1px solid var(--aq-app-line);
   text-align: left;
   vertical-align: top;
 }
 
 .table th {
-  background: #faf9f6;
-  color: #77746d;
+  background: var(--aq-app-surface-subtle);
+  color: var(--aq-app-text-secondary);
   font-size: 11px;
   font-weight: 750;
   letter-spacing: 0.045em;
@@ -167,7 +167,7 @@
 }
 
 .table td {
-  color: #45433e;
+  color: var(--aq-app-text-secondary);
   font-size: 13px;
   line-height: 1.45;
 }
@@ -190,22 +190,22 @@
 
 .free {
   background: #efefeb;
-  color: #66645e;
+  color: var(--aq-app-text-secondary);
 }
 
 .pro {
-  background: #fff0dc;
-  color: #a45000;
+  background: var(--aq-app-accent-soft);
+  color: var(--aq-app-accent-strong);
 }
 
 .pending {
-  background: #fff0dc;
-  color: #a45000;
+  background: var(--aq-app-accent-soft);
+  color: var(--aq-app-accent-strong);
 }
 
 .status {
   background: #efefeb;
-  color: #66645e;
+  color: var(--aq-app-text-secondary);
 }
 
 .secondary {
@@ -215,14 +215,14 @@
 .empty {
   padding: 34px;
   border: 1px dashed #d9d5cc;
-  border-radius: 14px;
-  color: #77746d;
+  border-radius: var(--aq-app-radius-lg);
+  color: var(--aq-app-text-secondary);
   text-align: center;
 }
 
 .securityNote {
   margin: 24px 4px 0;
-  color: #817e76;
+  color: var(--aq-app-text-muted);
   font-size: 12px;
   line-height: 1.55;
 }
@@ -273,7 +273,7 @@
   padding: 0 15px;
   border: 1px solid #d7d3cb;
   border-radius: 999px;
-  background: #ffffff;
+  background: var(--aq-app-surface);
   color: #383631;
   font: inherit;
   font-size: 13px;
@@ -289,11 +289,11 @@
 .signOutButton:hover {
   border-color: #bdb8ae;
   background: #f5f3ee;
-  color: #171714;
+  color: var(--aq-app-text);
 }
 
 .signOutButton:focus-visible {
-  outline: 2px solid #f29a2e;
+  outline: 2px solid var(--aq-app-accent);
   outline-offset: 2px;
 }
 
@@ -323,7 +323,7 @@
   justify-content: center;
   min-height: 36px;
   padding: 0 12px;
-  border-radius: 10px;
+  border-radius: var(--aq-app-radius-sm);
   font: inherit;
   font-size: 12px;
   font-weight: 700;
@@ -332,9 +332,9 @@
 }
 
 .activateButton {
-  border: 1px solid #171714;
-  background: #171714;
-  color: #ffffff;
+  border: 1px solid var(--aq-app-text);
+  background: var(--aq-app-text);
+  color: var(--aq-app-surface);
 }
 
 .activateButton:hover {
@@ -343,19 +343,19 @@
 
 .cancelButton {
   border: 1px solid #d8d4cc;
-  background: #ffffff;
-  color: #57544e;
+  background: var(--aq-app-surface);
+  color: var(--aq-app-text-secondary);
 }
 
 .cancelButton:hover {
   border-color: #bbb6ac;
   background: #f7f5f0;
-  color: #171714;
+  color: var(--aq-app-text);
 }
 
 .activateButton:focus-visible,
 .cancelButton:focus-visible {
-  outline: 2px solid #f29a2e;
+  outline: 2px solid var(--aq-app-accent);
   outline-offset: 2px;
 }
 
@@ -384,4 +384,29 @@
 .cancelButton:disabled {
   cursor: wait;
   opacity: 0.62;
+}
+
+
+/* AQENA_DS1_ADMIN_REFINEMENT */
+
+.table tbody tr {
+  transition:
+    background-color var(--aq-app-transition);
+}
+
+.table tbody tr:hover {
+  background: var(--aq-app-surface-subtle);
+}
+
+.backLink:focus-visible,
+.signOutButton:focus-visible,
+.activateButton:focus-visible,
+.cancelButton:focus-visible {
+  outline: 2px solid var(--aq-app-accent);
+  outline-offset: 2px;
+}
+
+.metric,
+.section {
+  box-shadow: var(--aq-app-shadow-xs);
 }

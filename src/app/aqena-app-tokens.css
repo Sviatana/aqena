@@ -1,0 +1,60 @@
+/*
+ * AQENA APPLICATION DESIGN SYSTEM 2026
+ *
+ * Scope:
+ * auth / dashboard / assistant workspace / playground /
+ * install / billing / platform admin / embedded widget.
+ *
+ * Landing adopts the same system separately in DS-2.
+ */
+
+:root {
+  --aq-app-bg: #f7f7f5;
+  --aq-app-sidebar: #f2f2ef;
+
+  --aq-app-surface: #ffffff;
+  --aq-app-surface-subtle: #fafaf8;
+  --aq-app-surface-muted: #f3f3f0;
+
+  --aq-app-text: #1d1d1b;
+  --aq-app-text-secondary: #60605b;
+  --aq-app-text-muted: #898781;
+
+  --aq-app-line: #e3e1da;
+  --aq-app-line-strong: #d5d2ca;
+
+  --aq-app-accent: #f29a2e;
+  --aq-app-accent-hover: #dd861f;
+  --aq-app-accent-strong: #a65308;
+  --aq-app-accent-soft: #fff4e6;
+
+  --aq-app-success: #37684d;
+  --aq-app-success-line: #cbdccd;
+  --aq-app-success-soft: #f0f7f2;
+
+  --aq-app-warning: #80601f;
+  --aq-app-warning-line: #e6d7af;
+  --aq-app-warning-soft: #fff9e9;
+
+  --aq-app-danger: #82483f;
+  --aq-app-danger-line: #e2c4be;
+  --aq-app-danger-soft: #fbf3f1;
+
+  --aq-app-radius-xs: 6px;
+  --aq-app-radius-sm: 8px;
+  --aq-app-radius-md: 10px;
+  --aq-app-radius-lg: 12px;
+  --aq-app-radius-xl: 14px;
+
+  --aq-app-shadow-xs:
+    0 1px 2px rgba(24, 24, 22, 0.035);
+
+  --aq-app-shadow-sm:
+    0 8px 26px rgba(24, 24, 22, 0.055);
+
+  --aq-app-focus:
+    0 0 0 3px rgba(242, 154, 46, 0.16);
+
+  --aq-app-transition:
+    150ms ease;
+}

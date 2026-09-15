@@ -209,9 +209,9 @@ export default async function UpgradePage({
       </Link>
 
       <div
-        style={{
-          marginTop: "28px",
-        }}
+        className={
+          styles.introBlock
+        }
       >
         <div
           className={
