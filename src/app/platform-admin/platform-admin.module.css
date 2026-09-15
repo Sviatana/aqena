@@ -302,3 +302,78 @@
     min-height: 40px;
   }
 }
+
+/* AQENA_PLATFORM_OWNER_MANUAL_PRO_ACTIONS */
+
+.requestActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 250px;
+}
+
+.actionForm {
+  margin: 0;
+}
+
+.activateButton,
+.cancelButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: 10px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.activateButton {
+  border: 1px solid #171714;
+  background: #171714;
+  color: #ffffff;
+}
+
+.activateButton:hover {
+  background: #2b2b27;
+}
+
+.cancelButton {
+  border: 1px solid #d8d4cc;
+  background: #ffffff;
+  color: #57544e;
+}
+
+.cancelButton:hover {
+  border-color: #bbb6ac;
+  background: #f7f5f0;
+  color: #171714;
+}
+
+.activateButton:focus-visible,
+.cancelButton:focus-visible {
+  outline: 2px solid #f29a2e;
+  outline-offset: 2px;
+}
+
+.closedAction {
+  display: inline-flex;
+  min-width: 120px;
+  color: #6c6962;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+@media (max-width: 820px) {
+  .requestActions {
+    min-width: 210px;
+  }
+
+  .activateButton,
+  .cancelButton {
+    width: 100%;
+  }
+}

@@ -3,6 +3,11 @@ import Link from "next/link";
 import {
   signOut,
 } from "@/app/auth/actions";
+
+import {
+  activateManualProRequest,
+  cancelManualProRequest,
+} from "./actions";
 import {
   AqenaLogo,
 } from "@/components/aqena-brand";
@@ -450,6 +455,10 @@ export default async function PlatformAdminPage() {
                         <th>
                           Создана
                         </th>
+
+                        <th>
+                          Действия
+                        </th>
                       </tr>
                     </thead>
 
@@ -510,6 +519,81 @@ export default async function PlatformAdminPage() {
                                 request.created_at,
                               )}
                             </td>
+
+                            <td>
+                              {
+                                [
+                                  "pending",
+                                  "contacted",
+                                  "paid",
+                                ].includes(
+                                  request.status,
+                                )
+                                  ? (
+                                    <div
+                                      className={
+                                        styles.requestActions
+                                      }
+                                    >
+                                      <form
+                                        action={
+                                          activateManualProRequest.bind(
+                                            null,
+                                            request.id,
+                                          )
+                                        }
+                                        className={
+                                          styles.actionForm
+                                        }
+                                      >
+                                        <button
+                                          className={
+                                            styles.activateButton
+                                          }
+                                          type="submit"
+                                        >
+                                          Оплата получена — активировать Pro
+                                        </button>
+                                      </form>
+
+                                      <form
+                                        action={
+                                          cancelManualProRequest.bind(
+                                            null,
+                                            request.id,
+                                          )
+                                        }
+                                        className={
+                                          styles.actionForm
+                                        }
+                                      >
+                                        <button
+                                          className={
+                                            styles.cancelButton
+                                          }
+                                          type="submit"
+                                        >
+                                          Отменить заявку
+                                        </button>
+                                      </form>
+                                    </div>
+                                  )
+                                  : (
+                                    <span
+                                      className={
+                                        styles.closedAction
+                                      }
+                                    >
+                                      {
+                                        request.status
+                                          === "activated"
+                                          ? "Pro активирован"
+                                          : "Заявка закрыта"
+                                      }
+                                    </span>
+                                  )
+                              }
+                            </td>
                           </tr>
                         ),
                       )}
@@ -523,8 +607,8 @@ export default async function PlatformAdminPage() {
         <p className={styles.securityNote}>
           Этот раздел использует серверный административный
           доступ Supabase. Секретный ключ не передаётся
-          в браузер. На этом этапе панель только читает данные
-          и ничего не меняет в аккаунтах клиентов.
+          в браузер. Тариф Pro активируется владельцем платформы
+          вручную только после проверки фактического поступления оплаты.
         </p>
       </section>
     </main>
