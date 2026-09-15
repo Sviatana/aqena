@@ -1,15 +1,25 @@
 "use client";
 
+import { usePathname } from "next/navigation";
+
 import {
   useLocale,
 } from "@/i18n/client";
 
 export function LanguageSwitch() {
+  const pathname = usePathname();
+
   const {
     locale,
     dictionary,
     setLocale,
   } = useLocale();
+
+  if (
+    pathname.startsWith("/platform-admin")
+  ) {
+    return null;
+  }
 
   const copy =
     dictionary.common.language;
