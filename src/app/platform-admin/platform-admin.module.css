@@ -258,3 +258,47 @@
     flex-direction: column;
   }
 }
+
+/* AQENA_PLATFORM_OWNER_LOGOUT */
+
+.signOutForm {
+  margin: 0;
+}
+
+.signOutButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0 15px;
+  border: 1px solid #d7d3cb;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #383631;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.signOutButton:hover {
+  border-color: #bdb8ae;
+  background: #f5f3ee;
+  color: #171714;
+}
+
+.signOutButton:focus-visible {
+  outline: 2px solid #f29a2e;
+  outline-offset: 2px;
+}
+
+@media (max-width: 820px) {
+  .signOutButton {
+    min-height: 40px;
+  }
+}

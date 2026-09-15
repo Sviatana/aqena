@@ -1,6 +1,9 @@
 import Link from "next/link";
 
 import {
+  signOut,
+} from "@/app/auth/actions";
+import {
   AqenaLogo,
 } from "@/components/aqena-brand";
 import {
@@ -203,6 +206,18 @@ export default async function PlatformAdminPage() {
           >
             ← В рабочее пространство
           </Link>
+
+          <form
+            action={signOut}
+            className={styles.signOutForm}
+          >
+            <button
+              className={styles.signOutButton}
+              type="submit"
+            >
+              Выйти
+            </button>
+          </form>
         </div>
       </header>
 
