@@ -12,7 +12,7 @@ import {
   createClient as createServerClient,
 } from "@/lib/supabase/server";
 
-const PLATFORM_OWNER_EMAIL =
+export const PLATFORM_OWNER_EMAIL =
   "ssidaren@gmail.com";
 
 function normalizedEmail(

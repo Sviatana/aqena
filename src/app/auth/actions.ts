@@ -8,6 +8,9 @@ import {
 import {
   canonicalSiteUrl,
 } from "@/lib/site-url";
+import {
+  PLATFORM_OWNER_EMAIL,
+} from "@/lib/platform-owner";
 
 import { createClient } from "@/lib/supabase/server";
 
@@ -144,6 +147,7 @@ export async function signIn(
   const supabase = await createClient();
 
   const {
+    data,
     error,
   } = await supabase.auth.signInWithPassword({
     email,
@@ -157,6 +161,15 @@ export async function signIn(
         copy.signInFailed,
       ),
     );
+  }
+
+  if (
+    data.user?.email
+      ?.trim()
+      .toLowerCase()
+      === PLATFORM_OWNER_EMAIL
+  ) {
+    redirect("/platform-admin");
   }
 
   redirect("/dashboard");
