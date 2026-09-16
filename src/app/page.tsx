@@ -1,3 +1,4 @@
+import { LanguageSwitch } from "@/components/language-switch";
 import Link from "next/link";
 
 import {
@@ -127,7 +128,7 @@ export default async function Home() {
       : copy.navigation.buildAssistant;
 
   return (
-    <main>
+    <main className="aqena-landing">
       <header className="site-header">
         <div className="container header-inner">
           <Link
@@ -180,7 +181,9 @@ export default async function Home() {
                 : copy.navigation.signIn}
             </a>
 
-            <a
+                        <LanguageSwitch variant="header" />
+
+<a
               className="button button-small"
               href={primaryHref}
             >
@@ -190,7 +193,7 @@ export default async function Home() {
         </div>
       </header>
 
-      <section className="hero aqena-hero-final-scope">
+      <section className="hero">
         <div className="container hero-grid">
           <div className="hero-copy">
             <div className="eyebrow">
@@ -198,7 +201,7 @@ export default async function Home() {
               {copy.hero.eyebrow}
             </div>
 
-            <h1 className="aqena-hero-title-final">
+            <h1>
               {copy.hero.title}
             </h1>
 
@@ -823,7 +826,7 @@ export default async function Home() {
               </div>
 
               <div className="price">
-                <strong>$0</strong>
+                <strong>0</strong>
                 <span>
                   {copy.pricing.forever}
                 </span>
@@ -858,19 +861,6 @@ export default async function Home() {
                   {copy.pricing.basicCustomization}
                 </li>
               </ul>
-
-              <div className="plan-limit">
-                <span>
-                  {copy.pricing.freeLimit}
-                </span>
-
-                <a
-                  className="plan-upgrade-link"
-                  href="#pro-plan"
-                >
-                  {copy.pricing.freeUpgradeLink}
-                </a>
-              </div>
             </article>
 
             <article
@@ -885,9 +875,6 @@ export default async function Home() {
                 <h3>
                   {copy.pricing.proName}
                 </h3>
-                <p>
-                  {copy.pricing.proDescription}
-                </p>
               </div>
 
               <div className="launch-price-block">
@@ -922,10 +909,6 @@ export default async function Home() {
                     </strong>
                   </div>
                 ) : null}
-
-                <p className="launch-price-lock">
-                  {copy.pricing.proPriceLock}
-                </p>
               </div>
 
               <a
@@ -961,10 +944,6 @@ export default async function Home() {
                   {copy.pricing.advancedCustomization}
                 </li>
               </ul>
-
-              <div className="plan-note">
-                {copy.pricing.proNote}
-              </div>
             </article>
           </div>
         </div>
@@ -1064,7 +1043,7 @@ export default async function Home() {
       <footer>
         <div className="container footer-inner">
           <Link
-            className="brand footer-brand"
+            className="brand"
             href="/"
             aria-label={copy.homeLabel}
           >

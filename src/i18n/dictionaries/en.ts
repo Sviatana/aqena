@@ -268,7 +268,7 @@ export const en = {
       requestSuccessTitle:
         "Request received",
       requestSuccessBody:
-        "We will contact you to arrange payment. Pro will be activated after payment is confirmed.",
+        "After you submit the request, we will contact you to arrange payment. Pro will be activated after payment is confirmed.",
 
       errors: {
         subscriptionLoadFailed:
