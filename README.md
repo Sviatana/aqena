@@ -92,7 +92,7 @@ Supported sources:
 - Markdown
 - manually pasted text
 
-Uploaded files are limited to 5 MB. Text-based PDFs are extracted on the server. OCR for scanned PDFs is outside the MVP scope.
+Uploaded files are limited to 5 MB. Text-based PDFs are extracted on the server. OCR for scanned PDFs is outside the current product scope.
 
 Chunking configuration:
 
@@ -272,7 +272,6 @@ RAG_MIN_SIMILARITY
 CHAT_HISTORY_MESSAGES
 BILLING_MODE
 ALLOW_MOCK_BILLING
-PLATFORM_OWNER_EMAIL
 ```
 
 Never commit `.env.local` or real credentials.
@@ -310,45 +309,31 @@ npm run deploy
 
 ## Automated tests
 
-The automated suite has three layers.
+Current automated coverage:
 
-### Unit tests
+- Vitest: 24 test files / 92 tests
+- Playwright: 3 browser E2E smoke tests
 
-Four Vitest files contain 8 unit tests covering:
+Vitest coverage includes:
 
-- chunk sizing and overlap
-- knowledge-plan limits
-- file validation
-- safe storage names
-- RAG configuration
-- grounded answer and fallback behavior
+- chunking and knowledge validation;
+- RAG configuration and grounded-answer behavior;
+- authentication and redirect contracts;
+- manual billing and billing-mode behavior;
+- platform-owner login, logout, authorization and billing actions;
+- public widget orchestration and internationalization;
+- security headers and self-service contracts;
+- OpenRouter routing and canonical site URL behavior.
 
-### Integration tests
+`tests/widget-route.integration.test.ts` contains 9 integration tests for the public widget API route with external boundaries mocked.
 
-`tests/widget-route.integration.test.ts` contains 4 integration tests for the real public widget API route with external boundaries mocked.
+The integration coverage includes invalid IDs and questions, plan and publication gates, RAG failures, retrieval and grounded answering, and atomic message/usage persistence.
 
-The integration suite verifies:
+These tests do not write to production Supabase and do not call production OpenRouter services.
 
-- invalid public assistant IDs are rejected before Supabase access
-- empty questions are rejected before Supabase access
-- website access is hidden for assistants whose owner is not on active Pro
-- a published Pro assistant runs through retrieval, grounded answering and atomic commit orchestration
+`tests/e2e/public-smoke.spec.ts` contains 3 Playwright browser smoke tests using Chromium.
 
-These tests do not write to Supabase and do not call OpenRouter.
-
-### Browser E2E smoke
-
-`tests/e2e/public-smoke.spec.ts` contains 3 Playwright tests using Chromium.
-
-The browser smoke verifies:
-
-- guest landing navigation to Sign in and Sign up
-- Login and Sign-up form controls without submitting real credentials
-- the Northstar demo loads the real `widget.js`, renders the launcher and opens/closes the iframe
-
-The iframe network dependency is intercepted during the E2E test, so automated browser tests do not write to Supabase or call OpenRouter.
-
-The automated suite continues to grow with the product. Run `npm test` and `npm run test:e2e` for the current test counts.
+The browser smoke verifies guest authentication navigation, login/sign-up controls and the Northstar demo widget launcher/iframe behavior.
 
 ## Continuous integration
 
@@ -388,6 +373,7 @@ The Worker requires these server-side secrets in the production environment:
 ```text
 SUPABASE_SECRET_KEY
 OPENROUTER_API_KEY
+PLATFORM_OWNER_EMAIL
 ```
 
 `wrangler.jsonc` enables `nodejs_compat`, static asset binding and observability.
@@ -416,9 +402,9 @@ The repository contains migrations for:
 
 Apply pending migrations to a linked Supabase project with the Supabase CLI before running the full application against a new database.
 
-## MVP boundaries
+## Current product boundaries
 
-The MVP intentionally does not include:
+The current product intentionally does not include:
 
 - direct card payment processing
 - OCR for scanned PDFs

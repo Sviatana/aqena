@@ -20,11 +20,17 @@ const owner =
     "utf8",
   );
 
+const loginPage =
+  readFileSync(
+    "src/app/auth/login/page.tsx",
+    "utf8",
+  );
+
 describe(
   "platform owner login routing",
   () => {
     it(
-      "routes the authenticated owner to platform admin",
+      "routes new and existing owner sessions to platform admin",
       () => {
         expect(
           owner,
@@ -57,7 +63,25 @@ describe(
         );
 
         expect(
-          actions,
+          loginPage,
+        ).toContain(
+          "platformOwnerEmail()",
+        );
+
+        expect(
+          loginPage,
+        ).toContain(
+          "supabase.auth.getUser()",
+        );
+
+        expect(
+          loginPage,
+        ).toContain(
+          'redirect("/platform-admin")',
+        );
+
+        expect(
+          loginPage,
         ).toContain(
           'redirect("/dashboard")',
         );

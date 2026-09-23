@@ -7,6 +7,9 @@ import { PasswordInput } from "@/app/auth/password-input";
 import {
   getServerDictionary,
 } from "@/i18n/server";
+import {
+  platformOwnerEmail,
+} from "@/lib/platform-owner";
 import { createClient } from "@/lib/supabase/server";
 
 import styles from "../auth.module.css";
@@ -35,6 +38,24 @@ export default async function LoginPage({
     await supabase.auth.getClaims();
 
   if (data?.claims?.sub) {
+    const {
+      data: userData,
+    } =
+      await supabase.auth.getUser();
+
+    const sessionEmail =
+      userData.user?.email
+        ?.trim()
+        .toLowerCase();
+
+    if (
+      sessionEmail
+      && sessionEmail
+        === platformOwnerEmail()
+    ) {
+      redirect("/platform-admin");
+    }
+
     redirect("/dashboard");
   }
 
