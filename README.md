@@ -1,8 +1,8 @@
 # AQENA
 
-AQENA is a SaaS MVP for building grounded AI knowledge assistants for small businesses.
+AQENA is a production SaaS platform for building grounded AI knowledge assistants for businesses.
 
-Businesses can create an assistant, add company knowledge, test answers in a private Playground, upgrade through a mock Pro checkout and publish the assistant as a website chat widget.
+Businesses can create an assistant, add company knowledge, test answers in a private Playground, request Pro access and publish the assistant as an embeddable website chat widget.
 
 AQENA uses retrieval-augmented generation (RAG). Company facts must be supported by retrieved knowledge. If the available sources do not support an answer, the assistant returns the configured fallback message instead of inventing information.
 
@@ -23,8 +23,8 @@ Repository: `Sviatana/aqena`
 5. Process knowledge into searchable vector chunks
 6. Test grounded answers in the Playground
 7. Review source references
-8. Reach the Free website-embed gate
-9. Upgrade through the mock Pro checkout
+8. Request Pro access for the appropriate pricing region
+9. After payment confirmation, an authorized platform owner activates Pro
 10. Publish the assistant
 11. Copy the installation snippet
 12. Use the assistant through the website widget
@@ -158,8 +158,6 @@ The business color is applied to the website chat UI. It is not the AQENA platfo
 
 ### Pro
 
-Mock price: `$29 / month`
-
 - up to 5 assistants
 - up to 100 knowledge sources
 - 2,000 messages per month
@@ -167,9 +165,9 @@ Mock price: `$29 / month`
 - removal of AQENA branding
 - advanced customization
 
-Billing uses `BILLING_MODE=mock`.
+Pro access currently uses a regional manual-payment workflow. A customer submits a Pro request and, after payment is confirmed outside AQENA, an authorized platform owner activates the plan through the protected administration interface.
 
-The demo checkout activates Pro without collecting or storing real payment card information.
+AQENA does not collect or store payment-card data. A legacy mock-billing path remains available only when both `BILLING_MODE=mock` and `ALLOW_MOCK_BILLING=true` are explicitly enabled. Production keeps mock activation disabled.
 
 ## Playground
 
@@ -265,6 +263,7 @@ NEXT_PUBLIC_SUPABASE_URL
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
 SUPABASE_SECRET_KEY
 OPENROUTER_API_KEY
+PLATFORM_OWNER_EMAIL
 LLM_MODEL
 EMBEDDING_MODEL
 EMBEDDING_DIMENSIONS
@@ -272,6 +271,8 @@ RAG_TOP_K
 RAG_MIN_SIMILARITY
 CHAT_HISTORY_MESSAGES
 BILLING_MODE
+ALLOW_MOCK_BILLING
+PLATFORM_OWNER_EMAIL
 ```
 
 Never commit `.env.local` or real credentials.
@@ -347,12 +348,7 @@ The browser smoke verifies:
 
 The iframe network dependency is intercepted during the E2E test, so automated browser tests do not write to Supabase or call OpenRouter.
 
-Current automated count:
-
-```text
-Vitest: 5 files / 12 tests
-Playwright: 3 browser tests
-```
+The automated suite continues to grow with the product. Run `npm test` and `npm run test:e2e` for the current test counts.
 
 ## Continuous integration
 
@@ -376,7 +372,7 @@ npm run build:cloudflare
 
 CI uses placeholder service configuration for tests and builds. Production credentials are not stored in the workflow.
 
-CI validates the application but does not perform the production deployment itself.
+CI validates the application. Production deployment is handled separately through the configured Cloudflare deployment pipeline after changes reach `main`.
 
 ## Cloudflare
 
@@ -414,6 +410,9 @@ The repository contains migrations for:
 - public widget server foundation
 - atomic widget exchange
 - assistant business color customization
+- public widget rate limiting
+- manual billing requests
+- platform-owner manual Pro administration
 
 Apply pending migrations to a linked Supabase project with the Supabase CLI before running the full application against a new database.
 
@@ -421,7 +420,7 @@ Apply pending migrations to a linked Supabase project with the Supabase CLI befo
 
 The MVP intentionally does not include:
 
-- real payment processing
+- direct card payment processing
 - OCR for scanned PDFs
 - multiple selectable LLM providers in the UI
 - a separate backend microservice

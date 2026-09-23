@@ -1,3 +1,9 @@
+> **Historical release snapshot**
+>
+> This document records an earlier AQENA release and is preserved as regression evidence.
+> It is not the current product specification. For the current architecture, billing model,
+> security controls and development instructions, use `README.md` and the current `main` branch.
+
 # AQENA final regression report
 
 ## Release snapshot

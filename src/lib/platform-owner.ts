@@ -12,15 +12,27 @@ import {
   createClient as createServerClient,
 } from "@/lib/supabase/server";
 
-export const PLATFORM_OWNER_EMAIL =
-  "ssidaren@gmail.com";
-
 function normalizedEmail(
   value: string | undefined,
 ) {
   return (value ?? "")
     .trim()
     .toLowerCase();
+}
+
+export function platformOwnerEmail() {
+  const value =
+    normalizedEmail(
+      process.env.PLATFORM_OWNER_EMAIL,
+    );
+
+  if (!value) {
+    throw new Error(
+      "PLATFORM_OWNER_EMAIL is not configured",
+    );
+  }
+
+  return value;
 }
 
 function platformAdminClient() {
@@ -82,7 +94,7 @@ export async function requirePlatformOwner() {
     normalizedEmail(
       user.email,
     )
-    === PLATFORM_OWNER_EMAIL;
+    === platformOwnerEmail();
 
   const isConfirmed =
     Boolean(

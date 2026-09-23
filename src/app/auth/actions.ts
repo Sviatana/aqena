@@ -9,7 +9,7 @@ import {
   canonicalSiteUrl,
 } from "@/lib/site-url";
 import {
-  PLATFORM_OWNER_EMAIL,
+  platformOwnerEmail,
 } from "@/lib/platform-owner";
 
 import { createClient } from "@/lib/supabase/server";
@@ -167,7 +167,7 @@ export async function signIn(
     data.user?.email
       ?.trim()
       .toLowerCase()
-      === PLATFORM_OWNER_EMAIL
+      === platformOwnerEmail()
   ) {
     redirect("/platform-admin");
   }

@@ -35,7 +35,13 @@ describe(
         expect(
           ownerSource,
         ).toContain(
-          '"ssidaren@gmail.com"',
+          "process.env.PLATFORM_OWNER_EMAIL",
+        );
+
+        expect(
+          ownerSource,
+        ).not.toMatch(
+          /[A-Z0-9._%+-]+@gmail\.com/i,
         );
 
         expect(

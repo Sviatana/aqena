@@ -29,19 +29,25 @@ describe(
         expect(
           owner,
         ).toContain(
-          'export const PLATFORM_OWNER_EMAIL',
+          "export function platformOwnerEmail",
         );
 
         expect(
           owner,
         ).toContain(
-          '"ssidaren@gmail.com"',
+          "process.env.PLATFORM_OWNER_EMAIL",
+        );
+
+        expect(
+          owner,
+        ).not.toMatch(
+          /[A-Z0-9._%+-]+@gmail\.com/i,
         );
 
         expect(
           actions,
         ).toContain(
-          "PLATFORM_OWNER_EMAIL",
+          "platformOwnerEmail()",
         );
 
         expect(
